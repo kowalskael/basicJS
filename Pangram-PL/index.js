@@ -1,31 +1,35 @@
-function PangramCheck(words) {
+function pangramCheck(str) {
 
-	const strWords = words.toLowerCase();
-	const regex = /[a-z&&ąćęłńóśźż]/g;
-	const arrWords = strWords.match(regex).sort();
+	const regex = /[a-z&&ąćęłńóśżź]/g;
 
-	const alphabet = ('abcdefghijklmnoprstuwyząćęłńóśźż').split("");
+	function check() {
+		const checkPangram = str.toLowerCase().match(regex).sort().reduce((acc, letter) => {
+			return acc.includes(letter) ? acc : [...acc, letter]}, []);
 
-	const objAlphabet = {};
-	alphabet.forEach(function(x) {
-		objAlphabet[x] = (objAlphabet[x] || 0) + 1;
-	});
-	console.log('PL litery w alfabecie', objAlphabet);
-
-	const objWords = {};
-	arrWords.forEach(function(x) {
-		objWords[x] = (objWords[x] || 0) + 1;
-	});
-	console.log('PL litery w zdaniu', objWords);
-
-	alphabet.map(objAlphabet => Object.keys(objAlphabet));
-	arrWords.map(objWords => Object.keys(objWords));
-
-	if (alphabet.length == arrWords.length) {
-		console.log('zdanie jest pangramem');
-	} else {
-		console.log('zdanie nie jest pangramem')
+		if (checkPangram.length == 32){
+			console.log('it is pangram');
+		} else {
+			console.log('it is not pangram');
+		}
+		return checkPangram;
 	}
+
+	check();
+
+	function count() {
+		const countLetter = str.toLowerCase().match(regex).sort().reduce((str, index) => {
+			str[index] = (str[index] || 0) + 1;
+			return str;
+		} , {});
+
+		return countLetter;
+	};
+
+	console.log(count());
+
 }
 
-PangramCheck('Tchórz w KGB. Sądź płoć! Fajny mężuś i leń');
+pangramCheck('Dość gróźb fuzją, klnę, pych i małżeństw!');
+
+
+
