@@ -2,9 +2,8 @@ function reverseString(str) {
 
 	const regex = /[a-z]/g;
 
-	return str.toLowerCase().match(regex).sort().reduce((unique, item) => {
-		return unique.includes(item) ? unique : [...unique, item] }, []);
-
+	return str.toLowerCase().match(regex).sort().reduce((acc, letter) => {
+		return acc.includes(letter) ? acc : [...acc, letter] }, []);
 }
 
 let result = reverseString('Jackdaws love my big sphinx of quartz');
