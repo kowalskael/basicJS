@@ -14,15 +14,13 @@ function draw() {
 // actual drawing is done using the CanvasRenderingContext2D
   ctx.clearRect(0, 0, canvas.width, canvas.height); // clearing ctx
   ctx.save();
-
   ctx.translate(400, 400);
 
-  let time = new Date();
+  for ( i = 0; i < 50000; i++) {
+    let time = new Date();
 
-  ctx.rotate(((2 * Math.PI) / 6) * time.getSeconds() + ((2 * Math.PI) / 6000) * time.getMilliseconds());
-  ctx.translate(10, 0);
-
-  for ( i = 0; i < 10000; i++) {
+    ctx.rotate(((2 * Math.PI) / 6) * time.getSeconds() + ((2 * Math.PI) / 6000) * time.getMilliseconds());
+    ctx.translate(10, 0);
     ctx.fillStyle = 'white';
     ctx.fillRect(Math.random() * canvas.width, Math.random() * canvas.height, 1, 1);
   }
