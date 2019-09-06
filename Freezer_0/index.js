@@ -16,19 +16,23 @@ let point = {
     ctx.fillStyle = this.color;
     ctx.fillRect(this.x, this.y, this.width, this.height);
   }
-}
+};
 
+let points = [];
 
 function draw() {
 
   ctx.clearRect(0, 0, canvas.width, canvas.height); // clearing ctx
   ctx.save();
 
-  point.draw();
+  for ( let i = 0; i < 10; i++) {
+    point.draw();
+  }
+
   point.x += point.vx;
 
   if (point.x + point.width > canvas.width || point.x + point.width < 0) {
-    point.vx = 0;
+    point.vx = -point.vx;
   }
 
   ctx.restore();
