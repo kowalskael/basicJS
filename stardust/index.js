@@ -27,7 +27,6 @@ class Point {
     this.y = Math.random() * canvas.height;
     this.width = 2;
     this.height = 2;
-    this.color = 'white';
   }
 
   move() {
@@ -36,40 +35,39 @@ class Point {
   }
 
   draw() {
-    ctx.fillStyle = this.color;
+    ctx.fillStyle = 'white';
     ctx.fillRect(this.x, this.y, this.width, this.height);
   }
-
 };
 
 let points = [];
 
-
-for (let i = 0; i < 10000; i++) {
+for (let i = 0; i < 500; i++) {
   points[i] = new Point;
 }
 
+let count = 0;
+
+setInterval(function counter() {
+  console.log(++count);
+  let randomColor = Math.floor(Math.random()*16777215).toString(16);
+  for (let i = 0; i < 500; i++) {
+    //points[i].fillStyle = '#' + randomColor;
+  }
+}, 2000);
 
 function draw() {
 
-// gets reference to HTML <canvas>
-// <canvas> creates surface for more then one rendering ctx
-// actual drawing is done using the CanvasRenderingContext2D
-
   ctx.clearRect(0, 0, canvas.width, canvas.height); // clearing ctx
-  ctx.save();
 
-  for (let i = 0; i < 10000; i++) {
+  for (let i = 0; i < 500; i++) {
     points[i].draw();
     points[i].move();
   }
 
-
-  ctx.restore();
   window.requestAnimationFrame(draw);
 
   //capturer.capture( canvas );
-
 }
 
 
