@@ -1,19 +1,7 @@
-let capturer;
-
-/*
-window.addEventListener('load', function(){
-  capturer = new CCapture({ format: 'png' } );
-
-  capturer.start();
-  setTimeout(function(){
-    capturer.stop();
-    capturer.save();
-  }, 1500);
-});
- */
+let nextTime = 1000;
 
 function init() {
-  window.requestAnimationFrame(draw);
+  window.requestAnimationFrame(animate);
 }
 
 const canvas = document.getElementById('canvas');
@@ -22,11 +10,12 @@ canvas.height = window.innerHeight;
 let ctx = canvas.getContext('2d');
 
 class Point {
-  constructor(x, y) {
+  constructor() {
     this.x = Math.random() * canvas.width;
     this.y = Math.random() * canvas.height;
     this.width = 2;
     this.height = 2;
+    this.color = 'white';
   }
 
   move() {
@@ -35,43 +24,49 @@ class Point {
   }
 
   draw() {
-    ctx.fillStyle = 'white';
+    ctx.fillStyle = this.color;
     ctx.fillRect(this.x, this.y, this.width, this.height);
   }
+
+  stop() {
+    this.x = this.x;
+    this.y = this.y;
+  }
+
 };
 
 let points = [];
 
-for (let i = 0; i < 500; i++) {
-  points[i] = new Point;
+for (let i = 0; i < 1000; i++) {
+  points[i] = new Point();
 }
 
-let count = 0;
-
-setInterval(function counter() {
-  console.log(++count);
-  let randomColor = Math.floor(Math.random()*16777215).toString(16);
-  for (let i = 0; i < 500; i++) {
-    //points[i].fillStyle = '#' + randomColor;
-  }
-}, 2000);
-
-function draw() {
-
+function draw(time) {
   ctx.clearRect(0, 0, canvas.width, canvas.height); // clearing ctx
-
-  for (let i = 0; i < 500; i++) {
+  for (let i = 0; i < 1000; i++) {
     points[i].draw();
-    points[i].move();
   }
-
-  window.requestAnimationFrame(draw);
-
-  //capturer.capture( canvas );
 }
 
+let loop = setInterval(function() {
+  animate();
+  window.requestAnimationFrame(animate);
+}, 80);
+
+function animate(time) {
+  draw();
+  for (let i = 0; i < 1000; i++) {
+    if (time > nextTime && time < 1500) {
+      points[i].stop();
+    } else {
+      points[i].move();
+    }
+  }
+}
 
 init();
+
+
 
 
 
