@@ -25,9 +25,14 @@ class Point {
   constructor(x, y) {
     this.x = Math.random() * canvas.width;
     this.y = Math.random() * canvas.height;
-    this.width = 1;
-    this.height = 1;
+    this.width = 2;
+    this.height = 2;
     this.color = 'white';
+  }
+
+  move() {
+    this.x = canvas.width - this.x + Math.random() ;
+    this.y = canvas.height - this.y + Math.random();
   }
 
   draw() {
@@ -35,17 +40,15 @@ class Point {
     ctx.fillRect(this.x, this.y, this.width, this.height);
   }
 
-  move() {
-    this.vx = this.vx + 5;
-    this.vy = this.vy + 5;
-  }
 };
 
 let points = [];
 
+
 for (let i = 0; i < 10000; i++) {
   points[i] = new Point;
 }
+
 
 function draw() {
 
@@ -56,12 +59,11 @@ function draw() {
   ctx.clearRect(0, 0, canvas.width, canvas.height); // clearing ctx
   ctx.save();
 
-  let time = new Date();
-
   for (let i = 0; i < 10000; i++) {
     points[i].draw();
     points[i].move();
   }
+
 
   ctx.restore();
   window.requestAnimationFrame(draw);
@@ -69,6 +71,7 @@ function draw() {
   //capturer.capture( canvas );
 
 }
+
 
 init();
 
