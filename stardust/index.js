@@ -1,8 +1,7 @@
-let nextTime = 1000;
-
 function init() {
-  window.requestAnimationFrame(animate);
+  window.requestAnimationFrame(draw);
 }
+
 
 const canvas = document.getElementById('canvas');
 canvas.width = window.innerWidth;
@@ -27,12 +26,6 @@ class Point {
     ctx.fillStyle = this.color;
     ctx.fillRect(this.x, this.y, this.width, this.height);
   }
-
-  stop() {
-    this.x = this.x;
-    this.y = this.y;
-  }
-
 };
 
 let points = [];
@@ -41,30 +34,20 @@ for (let i = 0; i < 1000; i++) {
   points[i] = new Point();
 }
 
-function draw(time) {
+function draw() {
   ctx.clearRect(0, 0, canvas.width, canvas.height); // clearing ctx
-  for (let i = 0; i < 1000; i++) {
-    points[i].draw();
-  }
-}
 
-let loop = setInterval(function() {
-  animate();
-  window.requestAnimationFrame(animate);
-}, 80);
-
-function animate(time) {
-  draw();
   for (let i = 0; i < 1000; i++) {
-    if (time > nextTime && time < 1500) {
-      points[i].stop();
-    } else {
+      points[i].draw();
       points[i].move();
-    }
   }
+
+  window.requestAnimationFrame(draw);
 }
 
 init();
+
+
 
 
 
