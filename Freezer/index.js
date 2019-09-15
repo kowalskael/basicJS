@@ -1,6 +1,4 @@
 let typeofMove = ["up", "down", "left", "right"];
-let chosenType = typeofMove[Math.floor(Math.random() * typeofMove.length)];
-console.log(chosenType);
 
 const canvas = document.getElementById('canvas');
 
@@ -16,6 +14,7 @@ class Point {
     this.width = 5;
     this.height = 5;
     this.color = 'white';
+    this.dir = typeofMove[Math.floor(Math.random() * typeofMove.length)]; // describe which type of movement point is taking
   }
 
   draw() {
@@ -23,29 +22,30 @@ class Point {
     ctx.fillRect(this.x, this.y, this.width, this.height);
   }
 
+
   move() {
-      if (chosenType === "right") {
+      if (this.dir === "right") {
         this.x += this.v;
         if (this.x + this.width > canvas.width) {
-          this.x = canvas.width - this.width;
+          this.x = this.x - this.width;
         }
       }
 
-    if (chosenType === "left") {
+    if (this.dir === "left") {
       this.x -= this.v;
       if (this.x - this.width < 0) {
         this.x = 0;
       }
     }
 
-    if (chosenType === "up") {
+    if (this.dir === "up") {
       this.y -= this.v;
       if (this.y - this.height < 0) {
         this.y = 0;
       }
     }
 
-    if (chosenType === "down") {
+    if (this.dir === "down") {
       this.y += this.v;
       if (this.y + this.height > canvas.height) {
         this.y = canvas.height - this.height;
@@ -57,7 +57,7 @@ class Point {
 
 let points = [];
 
-for ( let i = 0; i < 10; i++) {
+for ( let i = 0; i < 100; i++) {
   points[i] = new Point();
 }
 
@@ -66,7 +66,7 @@ function draw() {
   ctx.clearRect(0, 0, canvas.width, canvas.height); // clearing ctx
   ctx.save();
 
-  for ( let i = 0; i < 10; i++) {
+  for ( let i = 0; i < 100; i++) {
     points[i].draw();
     points[i].move();
   }
