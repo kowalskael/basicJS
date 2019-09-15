@@ -24,18 +24,34 @@ class Point {
   }
 
   move() {
-      if (chosenType == "right") {
+      if (chosenType === "right") {
         this.x += this.v;
-        if (this.x - this.width < 0) {
-          this.x = 0;
-        }
         if (this.x + this.width > canvas.width) {
           this.x = canvas.width - this.width;
         }
-      } else {
+      }
 
+    if (chosenType === "left") {
+      this.x -= this.v;
+      if (this.x - this.width < 0) {
+        this.x = 0;
       }
     }
+
+    if (chosenType === "up") {
+      this.y -= this.v;
+      if (this.y - this.height < 0) {
+        this.y = 0;
+      }
+    }
+
+    if (chosenType === "down") {
+      this.y += this.v;
+      if (this.y + this.height > canvas.height) {
+        this.y = canvas.height - this.height;
+      }
+    }
+  }
 
 }
 
