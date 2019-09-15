@@ -1,4 +1,4 @@
-let isMoving;
+let isMoving = true;
 
 function init() {
   window.requestAnimationFrame(draw);
@@ -20,11 +20,10 @@ class Point {
 
   move() {
     if (isMoving) {
-      this.x = canvas.width - this.x + Math.random() ;
-      this.y = canvas.height - this.y + Math.random();
+
     } else {
-      this.x = canvas.width - this.x + Math.random() * 10;
-      this.y = canvas.height - this.y + Math.random() * 10;
+      this.x = canvas.width - this.x + Math.random();
+      this.y = canvas.height - this.y + Math.random();
     }
   }
 
@@ -36,7 +35,7 @@ class Point {
 
 let points = [];
 
-for (let i = 0; i < 1000; i++) {
+for (let i = 0; i < 5000; i++) {
   points[i] = new Point();
 }
 
@@ -49,7 +48,7 @@ setInterval( () => {
 function draw() {
   ctx.clearRect(0, 0, canvas.width, canvas.height); // clearing ctx
 
-  for (let i = 0; i < 1000; i++) {
+  for (let i = 0; i < 5000; i++) {
       points[i].draw();
       points[i].move();
   }
@@ -57,7 +56,7 @@ function draw() {
   window.requestAnimationFrame(draw);
 }
 
-init()
+init();
 
 
 
