@@ -27,7 +27,7 @@ class Point {
       if (this.dir === "right") {
         this.x += this.v;
         if (this.x + this.width > canvas.width) {
-          this.x = this.x - this.width;
+          this.x = canvas.width - this.width;
         }
       }
 
