@@ -66,7 +66,7 @@ class Point {
 
 let points = [];
 
-for ( let i = 0; i < 700; i++) {
+for ( let i = 0; i < 70; i++) {
   points[i] = new Point();
 }
 
@@ -75,11 +75,15 @@ function draw() {
   ctx.clearRect(0, 0, canvas.width, canvas.height); // clearing ctx
   ctx.save();
 
-  for ( let i = 0; i < 700; i++) {
+  for ( let i = 0; i < 70; i++) {
     points[i].draw();
     points[i].move();
 
-    for ( let j = 0; j < 700; j++) {
+    if (points[i].name === 'freeze') {
+      points[i].color = 'red';
+    }
+
+    /* for ( let j = 0; j < 70; j++) {
       let x = Math.abs(points[i].x - points[j].x);
       let y = Math.abs(points[i].y - points[j].y);
 
@@ -88,11 +92,7 @@ function draw() {
       if ( i !== j && distance < points[j].width) {
 
       }
-
-      if (i !== j && points[i].name === 'freeze') {
-          points[i].color = 'red';
-      }
-    }
+    } */
 
   }
 
