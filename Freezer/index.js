@@ -8,11 +8,12 @@ ctx = canvas.getContext('2d');
 
 class Point {
   constructor() {
+    this.name = 'moving';
     this.x = Math.random() * canvas.width;
     this.y = Math.random() * canvas.height;
     this.v = 1;
-    this.width = 5;
-    this.height = 5;
+    this.width = 2;
+    this.height = 2;
     this.color = 'white';
     this.dir = typeofMove[Math.floor(Math.random() * typeofMove.length)]; // describe which type of movement point is taking
   }
@@ -24,31 +25,39 @@ class Point {
 
 
   move() {
-      if (this.dir === "right") {
+    if (this.dir === "right") {
+      if (this.x + this.width > canvas.width) {
+        this.name = 'freeze';
+
+      } else {
         this.x += this.v;
-        if (this.x + this.width > canvas.width) {
-          this.x = canvas.width - this.width;
-        }
       }
+    }
 
     if (this.dir === "left") {
-      this.x -= this.v;
       if (this.x - this.width < 0) {
-        this.x = 0;
+        this.name = 'freeze';
+
+      } else {
+        this.x -= this.v;
       }
     }
 
     if (this.dir === "up") {
-      this.y -= this.v;
       if (this.y - this.height < 0) {
-        this.y = 0;
+        this.name = 'freeze';
+
+      } else {
+        this.y -= this.v;
       }
     }
 
     if (this.dir === "down") {
-      this.y += this.v;
       if (this.y + this.height > canvas.height) {
-        this.y = canvas.height - this.height;
+        this.name = 'freeze';
+
+      } else {
+        this.y += this.v;
       }
     }
   }
@@ -57,7 +66,7 @@ class Point {
 
 let points = [];
 
-for ( let i = 0; i < 100; i++) {
+for ( let i = 0; i < 700; i++) {
   points[i] = new Point();
 }
 
@@ -66,14 +75,29 @@ function draw() {
   ctx.clearRect(0, 0, canvas.width, canvas.height); // clearing ctx
   ctx.save();
 
-  for ( let i = 0; i < 100; i++) {
+  for ( let i = 0; i < 700; i++) {
     points[i].draw();
     points[i].move();
+
+    for ( let j = 0; j < 700; j++) {
+      let x = Math.abs(points[i].x - points[j].x);
+      let y = Math.abs(points[i].y - points[j].y);
+
+      let distance = Math.sqrt(x * x + y * y);
+
+      if ( i !== j && distance < points[j].width) {
+
+      }
+
+      if (i !== j && points[i].name === 'freeze') {
+          points[i].color = 'red';
+      }
+    }
+
   }
 
   ctx.restore();
   window.requestAnimationFrame(draw);
-
 }
 
 draw();
