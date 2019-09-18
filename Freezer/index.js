@@ -1,5 +1,3 @@
-let typeofMove = ["up", "down", "left", "right"];
-
 const canvas = document.getElementById('canvas');
 
 canvas.width = window.innerWidth;
@@ -15,7 +13,7 @@ class Point {
     this.width = 2;
     this.height = 2;
     this.color = 'white';
-    this.dir = typeofMove[Math.floor(Math.random() * typeofMove.length)]; // describe which type of movement point is taking
+    this.dir = Math.floor(Math.random() * 4); // describe which type of movement point is taking
   }
 
   draw() {
@@ -23,9 +21,8 @@ class Point {
     ctx.fillRect(this.x, this.y, this.width, this.height);
   }
 
-
   move() {
-    if (this.dir === "right") {
+    if (this.dir === 0) {
       if (this.x + this.width > canvas.width) {
         this.name = 'freeze';
 
@@ -34,7 +31,7 @@ class Point {
       }
     }
 
-    if (this.dir === "left") {
+    if (this.dir === 1) {
       if (this.x - this.width < 0) {
         this.name = 'freeze';
 
@@ -43,7 +40,7 @@ class Point {
       }
     }
 
-    if (this.dir === "up") {
+    if (this.dir === 2) {
       if (this.y - this.height < 0) {
         this.name = 'freeze';
 
@@ -52,7 +49,7 @@ class Point {
       }
     }
 
-    if (this.dir === "down") {
+    if (this.dir === 3) {
       if (this.y + this.height > canvas.height) {
         this.name = 'freeze';
 
@@ -65,6 +62,7 @@ class Point {
 }
 
 let points = [];
+let freezed = [];
 
 for ( let i = 0; i < 70; i++) {
   points[i] = new Point();
@@ -79,9 +77,14 @@ function draw() {
     points[i].draw();
     points[i].move();
 
-    if (points[i].name === 'freeze') {
-      points[i].color = 'red';
-    }
+
+    freezed[i] = points.filter(function(state) {
+      if (points[i].name === 'freeze') {
+        return state;
+      }
+    });
+
+    freezed[i].color = 'red';
 
     /* for ( let j = 0; j < 70; j++) {
       let x = Math.abs(points[i].x - points[j].x);
