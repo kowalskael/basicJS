@@ -13,23 +13,24 @@ document.getElementById("sumbit").onclick = function() {
 
 	for ( let i = 0; i < pointsNumber; i++) {
 		let point = {
-			state: 'isFrozen',
+			state: 'isMoving',
 			x: Math.floor(Math.random() * canvas.width),
 			y: Math.floor(Math.random() * canvas.height),
-			size: 1 };
+			size: 1,
+			color: 'white'};
 
-		if(point.state === 'isMoving') {
+		if (point.state === 'isMoving') {
 			movingPoints[i] = point;
 		} else {
 			frozenPoints[i] = point;
 		}
 	}
 
-	console.log(movingPoints);
 	console.log(frozenPoints);
+	console.log(movingPoints);
 
 	function drawPoint(point) {
-		ctx.fillStyle = 'white';
+		ctx.fillStyle = point.color;
 		ctx.fillRect(point.x, point.y, point.size, point.size);
 	}
 
@@ -38,40 +39,36 @@ document.getElementById("sumbit").onclick = function() {
 		ctx.clearRect(0, 0, canvas.width, canvas.height); // clearing ctx
 		ctx.save();
 
-		for ( let i = 0; i < movingPoints.length; i++) {
-			let direction = Math.floor(Math.random() * 4);
-			if (direction === 0) {
-				if (movingPoints[i].x + movingPoints[i].width > canvas.width) {
+		for ( let i = 0; i < pointsNumber; i++) {
 
-				} else {
-					movingPoints[i].x = movingPoints[i].x + 1;
-				}
+			let direction = Math.floor(Math.random() * 4);
+
+			// zasady przerzucania obiektów między tablicami && przerzucanie
+			if (movingPoints[i].x + movingPoints[i].width > canvas.width || movingPoints[i].x - movingPoints[i].width < 0
+				|| movingPoints[i].y - movingPoints[i].height < 0 || movingPoints[i].y + movingPoints[i].height > canvas.height) {
+				frozenPoints.push(movingPoints[i]);
+			} else {
+				// niech punkty wrócą do tablicy frozenPoints
+			}
+
+			// move zgodnie z wylosowanym kierunkiem ruchu
+			if (direction === 0) {
+				movingPoints[i].x = movingPoints[i].x + 1;
 			}
 			if (direction === 1) {
-				if (movingPoints[i].x - movingPoints[i].width < 0) {
-				} else {
-					movingPoints[i].x = movingPoints[i].x - 1;
-				}
+				movingPoints[i].x = movingPoints[i].x - 1;
 			}
-
 			if (direction === 2) {
-				if (movingPoints[i].y - movingPoints[i].height < 0) {
-				} else {
-					movingPoints[i].y = movingPoints[i].y - 1;
-				}
+				movingPoints[i].y = movingPoints[i].y - 1;
 			}
-
 			if (direction === 3) {
-				if (movingPoints[i].y + movingPoints[i].height > canvas.height) {
-				} else {
-					movingPoints[i].y = movingPoints[i].y + 1;
-				}
+				movingPoints[i].y = movingPoints[i].y + 1;
 			}
 			drawPoint(movingPoints[i]);
 		}
 
 		for ( let j = 0; j < frozenPoints.length; j++) {
-			drawPoint(frozenPoints[j]);
+
 		}
 
 
@@ -92,13 +89,13 @@ document.getElementById("sumbit").onclick = function() {
 				points[i].move();
 			}*/
 
-
-
 		ctx.restore();
 		window.requestAnimationFrame(draw);
 	}
 
 	draw();
+
+	console.log(frozenPoints);
 
 
 };
