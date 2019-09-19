@@ -1,112 +1,104 @@
 document.getElementById("sumbit").onclick = function() {
 
-  let isFrozen = 'true';
+	const canvas = document.getElementById('canvas');
 
-  const canvas = document.getElementById('canvas');
+	canvas.width = document.getElementById("freezer-width").value;
+	canvas.height = document.getElementById("freezer-height").value;
+	ctx = canvas.getContext('2d');
 
-  canvas.width = document.getElementById("freezer-width").value;
-  canvas.height = document.getElementById("freezer-height").value;
-  ctx = canvas.getContext('2d');
+	let frozenPoints = [];
+	let movingPoints = [];
 
-  class Point {
-    constructor() {
-      this.name = 'moving';
-      this.x = Math.random() * canvas.width;
-      this.y = Math.random() * canvas.height;
-      this.v = 1;
-      this.width = 2;
-      this.height = 2;
-      this.color = 'white';
-      this.dir = Math.floor(Math.random() * 4); // describe which type of movement point is taking
-    }
+	let pointsNumber = document.getElementById("freezer-count").value;
 
-    draw() {
-      ctx.fillStyle = this.color;
-      ctx.fillRect(this.x, this.y, this.width, this.height);
-    }
+	for ( let i = 0; i < pointsNumber; i++) {
+		let point = {
+			state: 'isFrozen',
+			x: Math.floor(Math.random() * canvas.width),
+			y: Math.floor(Math.random() * canvas.height),
+			size: 1 };
 
-    move() {
-      if (this.dir === 0) {
-        if (this.x + this.width > canvas.width) {
-          this.name = 'freeze';
-        } else {
-          this.x += this.v;
-        }
-      }
+		if(point.state === 'isMoving') {
+			movingPoints[i] = point;
+		} else {
+			frozenPoints[i] = point;
+		}
+	}
 
-      if (this.dir === 1) {
-        if (this.x - this.width < 0) {
-          this.name = 'freeze';
-        } else {
-          this.x -= this.v;
-        }
-      }
+	console.log(movingPoints);
+	console.log(frozenPoints);
 
-      if (this.dir === 2) {
-        if (this.y - this.height < 0) {
-          this.name = 'freeze';
-        } else {
-          this.y -= this.v;
-        }
-      }
+	function drawPoint(point) {
+		ctx.fillStyle = 'white';
+		ctx.fillRect(point.x, point.y, point.size, point.size);
+	}
 
-      if (this.dir === 3) {
-        if (this.y + this.height > canvas.height) {
-          this.name = 'freeze';
-        } else {
-          this.y += this.v;
-        }
-      }
-    }
+	function draw() {
 
-  }
+		ctx.clearRect(0, 0, canvas.width, canvas.height); // clearing ctx
+		ctx.save();
 
-  let points = [];
+		for ( let i = 0; i < movingPoints.length; i++) {
+			let direction = Math.floor(Math.random() * 4);
+			if (direction === 0) {
+				if (movingPoints[i].x + movingPoints[i].width > canvas.width) {
 
-  let pointsNumber = document.getElementById("freezer-count").value;
+				} else {
+					movingPoints[i].x = movingPoints[i].x + 1;
+				}
+			}
+			if (direction === 1) {
+				if (movingPoints[i].x - movingPoints[i].width < 0) {
+				} else {
+					movingPoints[i].x = movingPoints[i].x - 1;
+				}
+			}
 
-  for ( let i = 0; i < pointsNumber; i++) {
-    points[i] = new Point();
-  }
+			if (direction === 2) {
+				if (movingPoints[i].y - movingPoints[i].height < 0) {
+				} else {
+					movingPoints[i].y = movingPoints[i].y - 1;
+				}
+			}
 
-  function draw() {
+			if (direction === 3) {
+				if (movingPoints[i].y + movingPoints[i].height > canvas.height) {
+				} else {
+					movingPoints[i].y = movingPoints[i].y + 1;
+				}
+			}
+			drawPoint(movingPoints[i]);
+		}
 
-    ctx.clearRect(0, 0, canvas.width, canvas.height); // clearing ctx
-    ctx.save();
+		for ( let j = 0; j < frozenPoints.length; j++) {
+			drawPoint(frozenPoints[j]);
+		}
 
-    for ( let i = 0; i < pointsNumber; i++) {
-      points[i].draw();
-      points[i].move();
 
-      if (points[i].name === 'freeze') {
-        points[i].color = 'red';
-      }
+			/*
 
-      let freezed = points.map(function () {
-        return points[i].name === 'freeze'; // zwraca wartość true, a nie element !!
-      });
+			let freezed = points.map(function () {
+				return points[i].name === 'freeze';
+			});
 
-      /*let freezed = points.map(function () {
-        return points[i].name === 'freeze';
-      });
+			let x = Math.abs(points[i].x - freezed[i].x);
+			let y = Math.abs(points[i].y - freezed[i].y);
 
-      let x = Math.abs(points[i].x - freezed[i].x);
-      let y = Math.abs(points[i].y - freezed[i].y);
+			let distance = Math.sqrt(x * x + y * y);
 
-      let distance = Math.sqrt(x * x + y * y);
+			if (distance < points[i].width) {
 
-      if (distance < points[i].width) {
+			} else {
+				points[i].move();
+			}*/
 
-      } else {
-        points[i].move();
-      }*/
-    }
 
-    ctx.restore();
-    window.requestAnimationFrame(draw);
-  }
 
-  draw();
+		ctx.restore();
+		window.requestAnimationFrame(draw);
+	}
+
+	draw();
 
 
 };
