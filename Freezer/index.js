@@ -26,68 +26,65 @@ document.getElementById("sumbit").onclick = function() {
 		}
 	}
 
-	console.log(frozenPoints);
 	console.log(movingPoints);
-
-	function drawPoint(point) {
-		ctx.fillStyle = point.color;
-		ctx.fillRect(point.x, point.y, point.size, point.size);
-	}
+	console.log(frozenPoints);
 
 	function draw() {
 
 		ctx.clearRect(0, 0, canvas.width, canvas.height); // clearing ctx
 		ctx.save();
 
-		for ( let i = 0; i < pointsNumber; i++) {
+		function drawPoint(point) {
+			ctx.fillStyle = point.color;
+			ctx.fillRect(point.x, point.y, point.size, point.size);
+		}
+
+		//zasady przydzielania do tablicy
+		for ( let a = movingPoints.length - 1; a >= 0; a--) {
+			if (movingPoints[a].x - 1 === canvas.width || movingPoints[a].x + 1 === 0
+				|| movingPoints[a].y + 1 === 0 || movingPoints[a].y - 1 === canvas.height) {
+				movingPoints.splice(a, 1);
+				frozenPoints.splice(0, 0, a);
+			}
+
+			/*
+			let x = Math.abs(points[i].x - freezed[i].x);
+			let y = Math.abs(points[i].y - freezed[i].y);
+			let distance = Math.sqrt(x * x + y * y);
+			if (distance < points[i].width) {
+			}
+			*/
+		}
+
+		//move
+		for ( let i = movingPoints.length - 1; i >= 0 ; i--) {
 
 			let direction = Math.floor(Math.random() * 4);
 
-			// zasady przerzucania obiektów między tablicami && przerzucanie
-			if (movingPoints[i].x + movingPoints[i].width > canvas.width || movingPoints[i].x - movingPoints[i].width < 0
-				|| movingPoints[i].y - movingPoints[i].height < 0 || movingPoints[i].y + movingPoints[i].height > canvas.height) {
-				frozenPoints.push(movingPoints[i]);
-			} else {
-				// niech punkty wrócą do tablicy frozenPoints
-			}
-
-			// move zgodnie z wylosowanym kierunkiem ruchu
-			if (direction === 0) {
+			if (direction === 0 && movingPoints[i].state === 'isMoving') {
 				movingPoints[i].x = movingPoints[i].x + 1;
 			}
-			if (direction === 1) {
+			if (direction === 1 && movingPoints[i].state === 'isMoving') {
 				movingPoints[i].x = movingPoints[i].x - 1;
 			}
-			if (direction === 2) {
+			if (direction === 2 && movingPoints[i].state === 'isMoving') {
 				movingPoints[i].y = movingPoints[i].y - 1;
 			}
-			if (direction === 3) {
+			if (direction === 3 && movingPoints[i].state === 'isMoving') {
 				movingPoints[i].y = movingPoints[i].y + 1;
 			}
-			drawPoint(movingPoints[i]);
 		}
 
-		for ( let j = 0; j < frozenPoints.length; j++) {
-
+		//draw
+		for (let j = 0; j < movingPoints.length; j++ ) {
+			drawPoint(movingPoints[j]);
 		}
 
-
-			/*
-
-			let freezed = points.map(function () {
-				return points[i].name === 'freeze';
-			});
-
-			let x = Math.abs(points[i].x - freezed[i].x);
-			let y = Math.abs(points[i].y - freezed[i].y);
-
-			let distance = Math.sqrt(x * x + y * y);
-
-			if (distance < points[i].width) {
-
-			} else {
-				points[i].move();
-			}*/
+		//draw
+		for (let k = 0; k < frozenPoints.length; k++ ) {
+			frozenPoints[k].color = 'red';
+			drawPoint(frozenPoints[k]);
+		}
 
 		ctx.restore();
 		window.requestAnimationFrame(draw);
@@ -95,8 +92,7 @@ document.getElementById("sumbit").onclick = function() {
 
 	draw();
 
-	console.log(frozenPoints);
-
-
 };
+
+
 
