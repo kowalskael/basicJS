@@ -26,64 +26,62 @@ document.getElementById("sumbit").onclick = function() {
 		}
 	}
 
-	console.log(movingPoints);
-	console.log(frozenPoints);
-
 	function draw() {
 
 		ctx.clearRect(0, 0, canvas.width, canvas.height); // clearing ctx
 		ctx.save();
 
-		function drawPoint(point) {
+		function drawPoints(point) {
 			ctx.fillStyle = point.color;
 			ctx.fillRect(point.x, point.y, point.size, point.size);
 		}
 
-		//zasady przydzielania do tablicy
-		for ( let a = movingPoints.length - 1; a >= 0; a--) {
-			if (movingPoints[a].x - 1 === canvas.width || movingPoints[a].x + 1 === 0
-				|| movingPoints[a].y + 1 === 0 || movingPoints[a].y - 1 === canvas.height) {
-				movingPoints.splice(a, 1);
-				frozenPoints.splice(0, 0, a);
-			}
-
-			/*
-			let x = Math.abs(points[i].x - freezed[i].x);
-			let y = Math.abs(points[i].y - freezed[i].y);
-			let distance = Math.sqrt(x * x + y * y);
-			if (distance < points[i].width) {
-			}
-			*/
-		}
-
-		//move
-		for ( let i = movingPoints.length - 1; i >= 0 ; i--) {
-
+		function movePoints(point) {
 			let direction = Math.floor(Math.random() * 4);
 
-			if (direction === 0 && movingPoints[i].state === 'isMoving') {
-				movingPoints[i].x = movingPoints[i].x + 1;
+			if (direction === 0) {
+				point.x += 1;
 			}
-			if (direction === 1 && movingPoints[i].state === 'isMoving') {
-				movingPoints[i].x = movingPoints[i].x - 1;
+			if (direction === 1) {
+				point.x -= 1;
 			}
-			if (direction === 2 && movingPoints[i].state === 'isMoving') {
-				movingPoints[i].y = movingPoints[i].y - 1;
+			if (direction === 2) {
+				point.y -= 1;
 			}
-			if (direction === 3 && movingPoints[i].state === 'isMoving') {
-				movingPoints[i].y = movingPoints[i].y + 1;
+			if (direction === 3) {
+				point.y += 1;
 			}
 		}
 
-		//draw
-		for (let j = 0; j < movingPoints.length; j++ ) {
-			drawPoint(movingPoints[j]);
+		// rules for segregation
+		for ( let a = movingPoints.length - 1; a >= 0; a--) {
+			for (let b = frozenPoints.length - 1; b >= 0; b--) {
+				if (movingPoints[a].x > canvas.width || movingPoints[a].x < 0
+					|| movingPoints[a].y < 0 || movingPoints[a].y > canvas.height) {
+					movingPoints.splice(a, 1);
+					frozenPoints.splice(0, 0, b);
+				}
+				let x = Math.abs(movingPoints[a].x - frozenPoints[b].x);
+				let y = Math.abs(movingPoints[a].y - frozenPoints[b].y);
+				let distance = Math.sqrt(x * x + y * y);
+
+				if (distance < movingPoints[a].size) {
+					movingPoints.splice(a, 1);
+					frozenPoints.splice(0, 0, a);
+				}
+			}
 		}
 
-		//draw
-		for (let k = 0; k < frozenPoints.length; k++ ) {
-			frozenPoints[k].color = 'red';
-			drawPoint(frozenPoints[k]);
+		// move and draw Moving
+		for ( let i = 0; i < movingPoints.length; i++) {
+			movePoints(movingPoints[i]);
+			drawPoints(movingPoints[i]);
+		}
+
+		// draw Frozen
+		for (let j = 0; j < frozenPoints.length; j++ ) {
+			frozenPoints[j].color = 'pink';
+			drawPoints(frozenPoints[j]);
 		}
 
 		ctx.restore();
