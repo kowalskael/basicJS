@@ -8,12 +8,12 @@ document.getElementById("submit").onclick = function() {
 
 	let frozenPoints = [];
 	let movingPoints = [];
+	let point;
 
 	let pointsNumber = document.getElementById("freezer-count").value;
 
 	for ( let i = 0; i < pointsNumber; i++) {
-		let point = {
-			state: 'isMoving',
+		point = {
 			x: Math.floor(Math.random() * canvas.width),
 			y: Math.floor(Math.random() * canvas.height),
 			size: 1,
@@ -51,11 +51,12 @@ document.getElementById("submit").onclick = function() {
 
 		// rules for segregation
 		for ( let a = movingPoints.length - 1; a >= 0; a--) {
-				if (movingPoints[a].x + 1 > canvas.width || movingPoints[a].x - 1 < 0
-					|| movingPoints[a].y - 1 < 0 || movingPoints[a].y + 1 > canvas.height) {
-					movingPoints.splice(a, 1);
-					frozenPoints.splice(0, 0, a);
-				}
+			if (movingPoints[a].x + 1 > canvas.width || movingPoints[a].x - 1 < 0
+				|| movingPoints[a].y - 1 < 0 || movingPoints[a].y + 1 > canvas.height) {
+				frozenPoints.push(movingPoints[a]);
+				movingPoints.splice(a, 1);
+
+			}
 		}
 
 		for ( let a = movingPoints.length - 1; a >= 0; a--) {
@@ -65,8 +66,10 @@ document.getElementById("submit").onclick = function() {
 				let distance = Math.sqrt(x * x + y * y);
 
 				if (distance <= movingPoints[a].size) {
+					frozenPoints.push(movingPoints[a]);
 					movingPoints.splice(a, 1);
-					frozenPoints.splice(0, 0, a);
+
+					break;
 				}
 			}
 		}
