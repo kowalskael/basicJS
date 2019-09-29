@@ -19,11 +19,7 @@ document.getElementById("sumbit").onclick = function() {
 			size: 1,
 			color: 'white'};
 
-		if (point.state === 'isMoving') {
-			movingPoints[i] = point;
-		} else {
-			frozenPoints[i] = point;
-		}
+		movingPoints[i] = point;
 	}
 
 	function draw() {
@@ -39,16 +35,16 @@ document.getElementById("sumbit").onclick = function() {
 		function movePoints(point) {
 			let direction = Math.floor(Math.random() * 4);
 
-			if (direction === 0) {
+			if (direction === 0 && point.x < canvas.width) {
 				point.x += 1;
 			}
-			if (direction === 1) {
+			if (direction === 1 && point.x > 0) {
 				point.x -= 1;
 			}
-			if (direction === 2) {
+			if (direction === 2 && point.y > 0) {
 				point.y -= 1;
 			}
-			if (direction === 3) {
+			if (direction === 3 && point.y < canvas.height) {
 				point.y += 1;
 			}
 		}
@@ -91,6 +87,3 @@ document.getElementById("sumbit").onclick = function() {
 	draw();
 
 };
-
-
-
