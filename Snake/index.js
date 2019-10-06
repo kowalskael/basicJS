@@ -4,8 +4,27 @@ ctx = canvas.getContext('2d');
 let scale = 10;
 canvas.width = canvas.height = 21;
 
-// directions
-let left = { x: -1, y: 0 }; let right = { x: 1, y: 0 }; let up = { x: 0, y: -1 }; let down = { x: 0, y: 1 };
+let direction = { x: 0, y: -1 };
+
+function control(e) {
+	if (e.key === 'ArrowUp') {
+		direction = { x: 0, y: -1 };
+	}
+
+	if (e.key === 'ArrowRight') {
+		direction = { x: 1, y: 0 };
+	}
+
+	if (e.key === 'ArrowLeft') {
+		direction = { x: -1, y: 0 };
+	}
+
+	if (e.key === 'ArrowDown') {
+		direction = { x: 0, y: 1 };
+	}
+}
+
+addEventListener( "keydown", control);
 
 // snake draw
 let snake = [];
@@ -27,7 +46,7 @@ function move() {
 
 	snake.pop();
 
-	let new0 = { x: snake[0].x + up.x, y: snake[0].y + up.y }; // here is place to give variable with chosen keys
+	let new0 = { x: snake[0].x + direction.x, y: snake[0].y + direction.y }; // here is place to give variable with chosen key
 	snake.unshift(new0);
 
 	for (let j = 0; j < 3; j++) {
