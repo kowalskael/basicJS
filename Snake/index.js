@@ -57,21 +57,32 @@ draw();
 function move() {
 	ctx.clearRect(0, 0, 21 * (scale + 1), 21 * (scale + 1)); // clearing ctx
 
-	snake.pop();
+	let x = Math.abs(snake[0].x - fruit.x);
+	let y = Math.abs(snake[0].y - fruit.y);
+	let distance = Math.sqrt(x * x + y * y);
+
+	if (distance <= scale) {
+		for (let j = 0; j < 3; j++) {
+			do {
+				fruit.x = 1 + (Math.floor(Math.random() * 21)) * (scale + 1);
+			} while (fruit.x ===! snake[j].x);
+
+			do {
+				fruit.y = 1 + (Math.floor(Math.random() * 21)) * (scale + 1);
+			} while (fruit.y ===! snake[j].y);
+		}
+	} else {
+		snake.pop();
+	}
 
 	let new0 = {x: snake[0].x + (direction.x * (scale + 1)), y: snake[0].y + (direction.y * (scale + 1)), color: '#29d629'}; // here is place to give variable with chosen key
 	snake.unshift(new0);
 
+	ctx.fillStyle = '#ffbf0a';
+	ctx.fillRect(fruit.x, fruit.y, scale, scale);
+
 	// hit detection
 	for (let j = 0; j < 3; j++) {
-		let x = Math.abs(snake[j].x - fruit.x);
-		let y = Math.abs(snake[j].y - fruit.y);
-		let distance = Math.sqrt(x * x + y * y);
-
-		if (distance < scale) {
-			// losuj nowe położenie owocka
-		}
-
 		if (snake[j].x < 0) {
 			snake[j].x = 1 + 20 * (scale + 1);
 		}
@@ -89,8 +100,7 @@ function move() {
 		ctx.fillRect(snake[j].x, snake[j].y, scale, scale);
 	}
 
-	ctx.fillStyle = '#ffbf0a';
-	ctx.fillRect(fruit.x, fruit.y, scale, scale);
+
 
 }
 
