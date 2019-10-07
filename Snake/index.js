@@ -29,10 +29,10 @@ addEventListener( "keydown", control);
 let snake = [];
 
 for (let j = 0; j < 3; j++) {
-	let square = { x: 1 + (21 * scale)/2, y: (21 * scale)/2 + (j + (scale * j)), color: 'white'};
+	let square = { x: 1 + 11 * scale, y: 11 * scale + (j + (scale * j)), color: 'white'};
 	snake.push(square);
 
-	snake[0].color = 'aquamarine'; // head is different from body
+	snake[0].color = 'green'; // head is different from body
 	ctx.fillStyle = snake[j].color;
 	ctx.fillRect(snake[j].x, snake[j].y, scale, scale);
 }
@@ -41,6 +41,7 @@ for (let j = 0; j < 3; j++) {
 function move() {
 	ctx.clearRect(0, 0, 21 * (scale + 1), 21 * (scale + 1)); // clearing ctx
 	snake.pop();
+
 
 	let new0 = { x: snake[0].x + (direction.x * (scale + 1)), y: snake[0].y + (direction.y * (scale + 1))}; // here is place to give variable with chosen key
 	snake.unshift(new0);
@@ -58,7 +59,9 @@ function move() {
 		if (snake[j].y > canvas.height) {
 			snake[j].y = 0;
 		}
-		
+
+		snake[0].color = 'green';
+		ctx.fillStyle = 'white';
 		ctx.fillRect(snake[j].x, snake[j].y, scale, scale);
 	}
 }
