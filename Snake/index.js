@@ -2,25 +2,24 @@ const canvas = document.getElementById('canvas');
 ctx = canvas.getContext('2d');
 
 let scale = 10;
-canvas.width = canvas.height = 21;
+canvas.width = canvas.height = 21 * (scale + 1);
 
 let direction = { x: 0, y: -1 };
 
 function control(e) {
-	if (e.key === 'ArrowUp') {
-		direction = { x: 0, y: -1 };
-	}
-
-	if (e.key === 'ArrowRight') {
-		direction = { x: 1, y: 0 };
-	}
-
-	if (e.key === 'ArrowLeft') {
-		direction = { x: -1, y: 0 };
-	}
-
-	if (e.key === 'ArrowDown') {
-		direction = { x: 0, y: 1 };
+	switch(e.key) {
+		case 'ArrowUp':
+			direction = { x: 0, y: -1 };
+			break;
+		case 'ArrowRight':
+			direction = { x: 1, y: 0 };
+			break;
+		case 'ArrowLeft':
+			direction = { x: -1, y: 0 };
+			break;
+		case 'ArrowDown':
+			direction = { x: 0, y: 1 };
+			break;
 	}
 }
 
@@ -30,35 +29,37 @@ addEventListener( "keydown", control);
 let snake = [];
 
 for (let j = 0; j < 3; j++) {
-	let square = { x: canvas.width/2, y: canvas.width/2 + j};
+	let square = { x: 1 + (21 * scale)/2, y: (21 * scale)/2 + (j + (scale * j)), color: 'white'};
 	snake.push(square);
 
 	snake[0].color = 'aquamarine'; // head is different from body
-	ctx.fillStyle = 'white';
-	ctx.fillRect(snake[j].x, snake[j].y, 1, 1);
+	ctx.fillStyle = snake[j].color;
+	ctx.fillRect(snake[j].x, snake[j].y, scale, scale);
 }
-
-console.log(snake);
 
 // snake move
 function move() {
-	ctx.clearRect(0, 0, canvas.width, canvas.height); // clearing ctx
-
+	ctx.clearRect(0, 0, 21 * (scale + 1), 21 * (scale + 1)); // clearing ctx
 	snake.pop();
 
-	let new0 = { x: snake[0].x + direction.x, y: snake[0].y + direction.y }; // here is place to give variable with chosen key
+	let new0 = { x: snake[0].x + (direction.x * (scale + 1)), y: snake[0].y + (direction.y * (scale + 1))}; // here is place to give variable with chosen key
 	snake.unshift(new0);
 
 	for (let j = 0; j < 3; j++) {
-		if (snake[j].x - 1 < 0) {
-			snake[j].x = canvas.width;
+		if (snake[j].x < 0) {
+			snake[j].x = 20 * (scale + 1);
 		}
-
-		if (snake[j].y - 1 < 0) {
-			snake[j].y = canvas.height;
+		if (snake[j].x > canvas.width) {
+			snake[j].x = 0;
 		}
-
-		ctx.fillRect(snake[j].x, snake[j].y, 1, 1);
+		if (snake[j].y < 0) {
+			snake[j].y = 20 * (scale + 1);
+		}
+		if (snake[j].y > canvas.height) {
+			snake[j].y = 0;
+		}
+		
+		ctx.fillRect(snake[j].x, snake[j].y, scale, scale);
 	}
 }
 
