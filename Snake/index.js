@@ -39,6 +39,7 @@ function move() {
 	ctx.clearRect(0, 0, canvas.width, canvas.height ); // clearing ctx
 
 	let new0 = {x: snake[0].x + direction.x, y: snake[0].y + direction.y, color: '#0cf2b9'}; // here is place to give variable with chosen key
+
 	snake.unshift(new0);
 
 	// hit detection
@@ -53,7 +54,7 @@ function move() {
 		snake.pop();
 	}
 
-	for (let j = 1; j < snake.length; j++) {
+	for (let j = 0; j < snake.length; j++) {
 		if (snake[j].x < 0) {
 			snake[j].x = 20;
 		}
@@ -66,24 +67,30 @@ function move() {
 		if (snake[j].y > 20) {
 			snake[j].y = 0;
 		}
-		if (snake[0].x === snake[j].x && snake[0].y === snake[j].y) {
-			clearInterval(intervalID);
-		}
-
-		for (let j = 0; j < snake.length; j++) {
-			snake[0].color = 'black';
-			snake[1].color = 'black';
-			ctx.fillStyle = snake[j].color;
-			ctx.fillRect(snake[j].x * scale, snake[j].y * scale, scale, scale);
-		}
-
-		ctx.fillStyle = '#EA244A';
-		ctx.fillRect(fruit.x * scale, fruit.y * scale, scale, scale);
 	}
+
+	for (let j = 1; j < snake.length; j++) {
+		if (snake[0].x === snake[j].x && snake[0].y === snake[j].y) {
+			//clearInterval(intervalID);
+		}
+	}
+
+	snake[0].color = 'white';
+	ctx.fillStyle = snake[0].color;
+	ctx.fillRect(snake[0].x * scale, snake[0].y * scale, scale, scale);
+
+	for (let j = 1; j < snake.length; j++) {
+		snake[j].color = 'black';
+		ctx.fillStyle = snake[j].color;
+		ctx.fillRect(snake[j].x * scale, snake[j].y * scale, scale, scale);
+	}
+
+	ctx.fillStyle = '#EA244A';
+	ctx.fillRect(fruit.x * scale, fruit.y * scale, scale, scale);
 }
 
 function draw() {
-	intervalID = setInterval(move, 1000);
+	intervalID = setInterval(move, 500);
 }
 
 draw();
