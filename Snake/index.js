@@ -5,24 +5,23 @@ let scale = 10;
 canvas.width = canvas.height = 21 * scale;
 
 let fruit = { x: 1, y: 1 };
+
 let snake = [];
-let intervalID;
-
-let direction = { x: 0, y: -1 };
-
-// snake
 for (let j = 0; j < 3; j++) {
 	let square = { x: 11, y: 11 + j, color: 'black'};
 	snake.push(square);
 }
+
+let intervalMove;
+let direction = { x: 0, y: -1 };
 
 // snake move
 function move() {
 
 	ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-	let new0 = {x: snake[0].x + direction.x, y: snake[0].y + direction.y }; // here is place to give variable with chosen key
-	snake.unshift(new0);
+	let newHead = {x: snake[0].x + direction.x, y: snake[0].y + direction.y};
+	snake.unshift(newHead);
 
 	// hit detection
 	if (snake[0].x === fruit.x && snake[0].y === fruit.y) {
@@ -53,12 +52,15 @@ function move() {
 
 	for (let j = 1; j < snake.length; j++) {
 		if (snake[0].x === snake[j].x && snake[0].y === snake[j].y) {
-			clearInterval(intervalID);
+			clearInterval(intervalMove);
 		}
 	}
 
-	for (let j = 0; j < snake.length; j++) {
-		snake[0].color = 'white';
+	snake[0].color = 'white';
+	ctx.fillStyle = snake[0].color;
+	ctx.fillRect(snake[0].x * scale, snake[0].y * scale, scale, scale);
+
+	for (let j = 1; j < snake.length; j++) {
 		snake[1].color = 'black';
 		ctx.fillStyle = snake[j].color;
 		ctx.fillRect(snake[j].x * scale, snake[j].y * scale, scale, scale);
@@ -68,7 +70,7 @@ function move() {
 	ctx.fillRect(fruit.x * scale, fruit.y * scale, scale, scale);
 }
 
-intervalID = setInterval(move, 500);
+intervalMove = setInterval(move, 500);
 
 addEventListener( "keydown", function(e) {
 	switch(e.key) {
