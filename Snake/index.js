@@ -3,29 +3,12 @@ ctx = canvas.getContext('2d');
 
 let scale = 10;
 canvas.width = canvas.height = 21 * scale;
+
 let fruit = { x: 1, y: 1 };
 let snake = [];
 let intervalID;
+
 let direction = { x: 0, y: -1 };
-
-function control(e) {
-	switch(e.key) {
-		case 'ArrowUp':
-			direction = { x: 0, y: -1 };
-			break;
-		case 'ArrowRight':
-			direction = { x: 1, y: 0 };
-			break;
-		case 'ArrowLeft':
-			direction = { x: -1, y: 0 };
-			break;
-		case 'ArrowDown':
-			direction = { x: 0, y: 1 };
-			break;
-	}
-}
-
-addEventListener( "keydown", control);
 
 // snake
 for (let j = 0; j < 3; j++) {
@@ -36,10 +19,9 @@ for (let j = 0; j < 3; j++) {
 // snake move
 function move() {
 
-	ctx.clearRect(0, 0, canvas.width, canvas.height ); // clearing ctx
+	ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-	let new0 = {x: snake[0].x + direction.x, y: snake[0].y + direction.y, color: '#0cf2b9'}; // here is place to give variable with chosen key
-
+	let new0 = {x: snake[0].x + direction.x, y: snake[0].y + direction.y }; // here is place to give variable with chosen key
 	snake.unshift(new0);
 
 	// hit detection
@@ -48,7 +30,7 @@ function move() {
 			do {
 				fruit.x = (Math.floor(Math.random() * 21));
 				fruit.y = (Math.floor(Math.random() * 21));
-			} while (fruit.x ==! snake[j].x && fruit.y ==! snake[j].y);
+			} while (fruit.x === snake[j].x && fruit.y === snake[j].y);
 		}
 	} else {
 		snake.pop();
@@ -71,16 +53,13 @@ function move() {
 
 	for (let j = 1; j < snake.length; j++) {
 		if (snake[0].x === snake[j].x && snake[0].y === snake[j].y) {
-			//clearInterval(intervalID);
+			clearInterval(intervalID);
 		}
 	}
 
-	snake[0].color = 'white';
-	ctx.fillStyle = snake[0].color;
-	ctx.fillRect(snake[0].x * scale, snake[0].y * scale, scale, scale);
-
-	for (let j = 1; j < snake.length; j++) {
-		snake[j].color = 'black';
+	for (let j = 0; j < snake.length; j++) {
+		snake[0].color = 'white';
+		snake[1].color = 'black';
 		ctx.fillStyle = snake[j].color;
 		ctx.fillRect(snake[j].x * scale, snake[j].y * scale, scale, scale);
 	}
@@ -89,11 +68,35 @@ function move() {
 	ctx.fillRect(fruit.x * scale, fruit.y * scale, scale, scale);
 }
 
-function draw() {
-	intervalID = setInterval(move, 500);
-}
+intervalID = setInterval(move, 500);
 
-draw();
+addEventListener( "keydown", function(e) {
+	switch(e.key) {
+		case 'ArrowUp':
+			if( direction.y !== 1) {
+				direction = { x: 0, y: -1 };
+			}
+			break;
+		case 'ArrowRight':
+			if( direction.x !== -1) {
+				direction = {x: 1, y: 0};
+			}
+			break;
+		case 'ArrowLeft':
+			if( direction.x !== 1) {
+				direction = {x: -1, y: 0};
+			}
+			break;
+		case 'ArrowDown':
+			if(direction.y !== -1) {
+				direction = { x: 0, y: 1 };
+			}
+			break;
+	}
+});
+
+
+
 
 
 
