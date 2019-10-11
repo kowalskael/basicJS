@@ -25,12 +25,14 @@ function move() {
 
 	// hit detection
 	if (snake[0].x === fruit.x && snake[0].y === fruit.y) {
-		for (let j = 0; j < snake.length; j++) {
-			do {
-				fruit.x = (Math.floor(Math.random() * 21));
-				fruit.y = (Math.floor(Math.random() * 21));
-			} while (fruit.x === snake[j].x && fruit.y === snake[j].y);
-		}
+		do {
+			fruit.x = Math.floor(Math.random() * 21);
+			fruit.y = Math.floor(Math.random() * 21);
+		} while (snake.find(function(e) {
+			if (e === fruit.x && e === fruit.y) {
+				return true;
+			}
+		}));
 	} else {
 		snake.pop();
 	}
