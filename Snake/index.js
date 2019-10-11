@@ -4,7 +4,7 @@ ctx = canvas.getContext('2d');
 let scale = 10;
 canvas.width = canvas.height = 21 * scale;
 
-let fruit = { x: 1, y: 1 };
+let fruit = { x: 0, y: 1 };
 
 let snake = [];
 for (let j = 0; j < 3; j++) {
@@ -23,20 +23,7 @@ function move() {
 	let newHead = {x: snake[0].x + direction.x, y: snake[0].y + direction.y};
 	snake.unshift(newHead);
 
-	// hit detection
-	if (snake[0].x === fruit.x && snake[0].y === fruit.y) {
-		do {
-			fruit.x = Math.floor(Math.random() * 21);
-			fruit.y = Math.floor(Math.random() * 21);
-		} while (snake.find(function(e) {
-			if (e === fruit.x && e === fruit.y) {
-				return true;
-			}
-		}));
-	} else {
-		snake.pop();
-	}
-
+	// walls detection
 	for (let j = 0; j < snake.length; j++) {
 		if (snake[j].x < 0) {
 			snake[j].x = 20;
@@ -52,6 +39,17 @@ function move() {
 		}
 	}
 
+	// fruit detection && position randomization
+	if (snake[0].x === fruit.x && snake[0].y === fruit.y) {
+		do {
+			fruit.x = Math.floor(Math.random() * 21);
+			fruit.y = Math.floor(Math.random() * 21);
+		} while (snake.find(obj => obj.x === fruit.x && obj.y === fruit.y ));
+	} else {
+		snake.pop();
+	}
+
+	// snake body hit detection
 	for (let j = 1; j < snake.length; j++) {
 		if (snake[0].x === snake[j].x && snake[0].y === snake[j].y) {
 			clearInterval(intervalMove);
@@ -74,6 +72,8 @@ function move() {
 
 intervalMove = setInterval(move, 500);
 
+
+// keyboard events && direction detection
 addEventListener( "keydown", function(e) {
 	switch(e.key) {
 		case 'ArrowUp':
