@@ -13,13 +13,15 @@ for (let j = 0; j < 3; j++) {
 
 let intervalMove;
 let direction = { x: 0, y: -1 };
+let justChanged = true;
 
 // snake move
-function move() {
+function move(value) {
 
 	ctx.clearRect(0, 0, canvas.width, canvas.height);
 
 	snake.unshift({x: snake[0].x + direction.x, y: snake[0].y + direction.y});
+	justChanged = value;
 
 	// walls detection
 	for (let j = 0; j < snake.length; j++) {
@@ -55,26 +57,24 @@ function move() {
 	ctx.fillRect(fruit.x * scale, fruit.y * scale, scale, scale);
 }
 
-intervalMove = setInterval(move, 500);
+intervalMove = setInterval(move, 500, false);
 
 
 // keyboard events && direction detection
-addEventListener( "keydown", function(e) {
-	switch(e.key) {
-		case 'ArrowUp':
-			if( direction.y !== 1) { direction = { x: 0, y: -1 }; }
-			break;
-		case 'ArrowRight':
-			if( direction.x !== -1) { direction = {x: 1, y: 0 }; }
-			break;
-		case 'ArrowLeft':
-			if( direction.x !== 1) { direction = {x: -1, y: 0 }; }
-			break;
-		case 'ArrowDown':
-			if(direction.y !== -1) { direction = { x: 0, y: 1 }; }
-			break;
-	}
-});
+addEventListener( "keydown", e => { switch(e.key) {
+	case 'ArrowUp':
+		if ( direction.y !== 1 && justChanged === false ) direction = {x: 0, y: -1};
+		break;
+	case 'ArrowRight':
+		if ( direction.x !== -1 && justChanged === false ) direction = {x: 1, y: 0};
+		break;
+	case 'ArrowLeft':
+		if ( direction.x !== 1 && justChanged === false ) direction = {x: -1, y: 0};
+		break;
+	case 'ArrowDown':
+		if ( direction.y !== -1 && justChanged === false ) direction = {x: 0, y: 1};
+		break;
+}});
 
 
 
