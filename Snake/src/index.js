@@ -2,14 +2,19 @@ import * as THREE from 'three';
 
 const canvas = document.getElementById('canvas');
 
-const camera = new THREE.PerspectiveCamera(10, 2, 0.1, 1000);
-camera.position.set(0, 0, 5);
+const camera = new THREE.PerspectiveCamera(180, 2, 0.1, 30);
+camera.position.set(0, 0, 1);
 
 let scale = 10;
 const renderer = new THREE.WebGLRenderer({ canvas, antialias: true }); // canvas
+renderer.setSize(21 * scale, 21 * scale);
 
 const scene = new THREE.Scene();
-scene.background = new THREE.Color(0x333333);
+scene.background = new THREE.Color(0xD4D4D4);
+
+const light = new THREE.DirectionalLight(0xFFFFFF, 1);
+light.position.set(-1, 1, 1);
+scene.add(light);
 
 let fruit = { x: 1, y: 1 };
 
@@ -55,17 +60,27 @@ function move() {
 }
 
 function draw() {
-	// ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+	function drawRect(color, x, y) {
+		const material = new THREE.MeshBasicMaterial ( { color } );
+		const geometry = new THREE.BoxGeometry(scale, scale, scale);
+		const cube = new THREE.Mesh(geometry, material);
+		scene.add(cube);
+
+		cube.position.x = x;
+		cube.position.y = y;
+
+		return cube;
+	}
 
 	// snake draw
 	for (let j = 0; j < snake.length; j++) {
-		// ctx.fillStyle = j === 0 ? 'white' : 'black';
-		// ctx.fillRect(snake[j].x * scale, snake[j].y * scale, scale, scale);
+		drawRect(0xFFFFFF, snake[j].x * scale, snake[j].y * scale);
 	}
 
 	// fruit draw
-	// ctx.fillStyle = '#EA244A';
-	// ctx.fillRect(fruit.x * scale, fruit.y * scale, scale, scale);
+	drawRect(0x333333, fruit.x * scale, fruit.y * scale);
+	renderer.render(scene, camera);
 }
 
 intervalMove = setInterval(move, 1000);
