@@ -1,8 +1,15 @@
+import * as THREE from 'three';
+
 const canvas = document.getElementById('canvas');
-ctx = canvas.getContext('2d');
+
+const camera = new THREE.PerspectiveCamera(10, 2, 0.1, 1000);
+camera.position.set(0, 0, 5);
 
 let scale = 10;
-canvas.width = canvas.height = 21 * scale;
+const renderer = new THREE.WebGLRenderer({ canvas, antialias: true }); // canvas
+
+const scene = new THREE.Scene();
+scene.background = new THREE.Color(0x333333);
 
 let fruit = { x: 1, y: 1 };
 
@@ -48,17 +55,17 @@ function move() {
 }
 
 function draw() {
-	ctx.clearRect(0, 0, canvas.width, canvas.height);
+	// ctx.clearRect(0, 0, canvas.width, canvas.height);
 
 	// snake draw
 	for (let j = 0; j < snake.length; j++) {
-		ctx.fillStyle = j === 0 ? 'white' : 'black';
-		ctx.fillRect(snake[j].x * scale, snake[j].y * scale, scale, scale);
+		// ctx.fillStyle = j === 0 ? 'white' : 'black';
+		// ctx.fillRect(snake[j].x * scale, snake[j].y * scale, scale, scale);
 	}
 
 	// fruit draw
-	ctx.fillStyle = '#EA244A';
-	ctx.fillRect(fruit.x * scale, fruit.y * scale, scale, scale);
+	// ctx.fillStyle = '#EA244A';
+	// ctx.fillRect(fruit.x * scale, fruit.y * scale, scale, scale);
 }
 
 intervalMove = setInterval(move, 1000);
