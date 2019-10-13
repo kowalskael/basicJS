@@ -37,14 +37,18 @@ function move() {
 		snake.pop();
 	}
 
-	ctx.clearRect(0, 0, canvas.width, canvas.height);
-
 	// snake body hit detection
 	for (let j = 1; j < snake.length; j++) {
 		if (snake[0].x === snake[j].x && snake[0].y === snake[j].y) {
 			clearInterval(intervalMove);
 		}
 	}
+
+	draw();
+}
+
+function draw() {
+	ctx.clearRect(0, 0, canvas.width, canvas.height);
 
 	// snake draw
 	for (let j = 0; j < snake.length; j++) {
