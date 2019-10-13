@@ -1,11 +1,12 @@
 import * as THREE from 'three';
 
 const canvas = document.getElementById('canvas');
-
-const camera = new THREE.PerspectiveCamera(180, 2, 0.1, 30);
-camera.position.set(0, 0, 1);
-
 let scale = 10;
+
+const camera = new THREE.PerspectiveCamera(75, 1, 1, 1500);
+camera.position.set( 110, 110, 150);
+camera.rotation.set(0, 0, 0);
+
 const renderer = new THREE.WebGLRenderer({ canvas, antialias: true }); // canvas
 renderer.setSize(21 * scale, 21 * scale);
 
@@ -13,7 +14,7 @@ const scene = new THREE.Scene();
 scene.background = new THREE.Color(0xD4D4D4);
 
 const light = new THREE.DirectionalLight(0xFFFFFF, 1);
-light.position.set(-1, 1, 1);
+light.position.set(-5, 1, 1);
 scene.add(light);
 
 let fruit = { x: 1, y: 1 };
@@ -69,6 +70,7 @@ function draw() {
 
 		cube.position.x = x;
 		cube.position.y = y;
+		cube.position.z = 0;
 
 		return cube;
 	}
@@ -79,8 +81,10 @@ function draw() {
 	}
 
 	// fruit draw
-	drawRect(0x333333, fruit.x * scale, fruit.y * scale);
+	drawRect(0x00FFFF, fruit.x * scale, fruit.y * scale);
+
 	renderer.render(scene, camera);
+
 }
 
 intervalMove = setInterval(move, 1000);
@@ -88,9 +92,9 @@ intervalMove = setInterval(move, 1000);
 // keyboard events && direction detection
 addEventListener( "keydown", e => { switch(e.key) {
 	case 'ArrowUp':
-		if ( direction.y !== 1 && justChanged === false ) {
+		if ( direction.y !== -1 && justChanged === false ) {
 			justChanged = true;
-			direction = {x: 0, y: -1};
+			direction = {x: 0, y: 1};
 		}
 		break;
 	case 'ArrowRight':
@@ -106,9 +110,9 @@ addEventListener( "keydown", e => { switch(e.key) {
 		}
 		break;
 	case 'ArrowDown':
-		if ( direction.y !== -1 && justChanged === false ) {
+		if ( direction.y !== 1 && justChanged === false ) {
 			justChanged = true;
-			direction = {x: 0, y: 1};
+			direction = {x: 0, y: -1};
 		}
 		break;
 }});
