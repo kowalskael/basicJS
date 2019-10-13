@@ -16,12 +16,10 @@ let direction = { x: 0, y: -1 };
 let justChanged = true;
 
 // snake move
-function move(value) {
+function move() {
 
-	ctx.clearRect(0, 0, canvas.width, canvas.height);
-
+	justChanged = false;
 	snake.unshift({x: snake[0].x + direction.x, y: snake[0].y + direction.y});
-	justChanged = value;
 
 	// walls detection
 	for (let j = 0; j < snake.length; j++) {
@@ -38,6 +36,8 @@ function move(value) {
 	} else {
 		snake.pop();
 	}
+
+	ctx.clearRect(0, 0, canvas.width, canvas.height);
 
 	// snake body hit detection
 	for (let j = 1; j < snake.length; j++) {
@@ -57,22 +57,33 @@ function move(value) {
 	ctx.fillRect(fruit.x * scale, fruit.y * scale, scale, scale);
 }
 
-intervalMove = setInterval(move, 500, false);
-
+intervalMove = setInterval(move, 1000);
 
 // keyboard events && direction detection
 addEventListener( "keydown", e => { switch(e.key) {
 	case 'ArrowUp':
-		if ( direction.y !== 1 && justChanged === false ) direction = {x: 0, y: -1};
+		if ( direction.y !== 1 && justChanged === false ) {
+			justChanged = true;
+			direction = {x: 0, y: -1};
+		}
 		break;
 	case 'ArrowRight':
-		if ( direction.x !== -1 && justChanged === false ) direction = {x: 1, y: 0};
+		if ( direction.x !== -1 && justChanged === false ) {
+			justChanged = true;
+			direction = {x: 1, y: 0};
+		}
 		break;
 	case 'ArrowLeft':
-		if ( direction.x !== 1 && justChanged === false ) direction = {x: -1, y: 0};
+		if ( direction.x !== 1 && justChanged === false ) {
+			justChanged = true;
+			direction = {x: -1, y: 0};
+		}
 		break;
 	case 'ArrowDown':
-		if ( direction.y !== -1 && justChanged === false ) direction = {x: 0, y: 1};
+		if ( direction.y !== -1 && justChanged === false ) {
+			justChanged = true;
+			direction = {x: 0, y: 1};
+		}
 		break;
 }});
 
