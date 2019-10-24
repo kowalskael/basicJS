@@ -1,18 +1,23 @@
 import * as THREE from 'three';
 
+// canvas
 const canvas = document.getElementById('canvas');
 let scale = 10;
 
+// camera
 const camera = new THREE.PerspectiveCamera(75, 1, 1, 1500);
 camera.position.set( 110, 110, 150);
 camera.rotation.set(0, 0, 0);
 
+// renderer
 const renderer = new THREE.WebGLRenderer({ canvas, antialias: true }); // canvas
 renderer.setSize(21 * scale, 21 * scale);
 
+// scene
 const scene = new THREE.Scene();
 scene.background = new THREE.Color(0xD4D4D4);
 
+// lights
 const light = new THREE.DirectionalLight(0xFFFFFF, 1);
 light.position.set(-5, 1, 1);
 scene.add(light);
@@ -61,7 +66,6 @@ function move() {
 }
 
 function draw() {
-
 	function drawRect(color, x, y) {
 		const material = new THREE.MeshBasicMaterial ( { color } );
 		const geometry = new THREE.BoxGeometry(scale, scale, scale);
@@ -73,6 +77,11 @@ function draw() {
 		cube.position.z = 0;
 
 		return cube;
+	}
+
+	//clear scene
+	while (scene.children.length > 0) {
+		scene.remove(scene.children[0]);
 	}
 
 	// snake draw
