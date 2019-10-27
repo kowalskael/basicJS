@@ -22,6 +22,14 @@ const light = new THREE.DirectionalLight(0xFFFFFF, 1);
 light.position.set(-5, 1, 1);
 scene.add(light);
 
+const material = new THREE.MeshBasicMaterial(0xFFFFFF);
+const geometry = new THREE.BoxGeometry(scale, scale, scale);
+const mesh = new THREE.Mesh(geometry, material);
+scene.add(mesh);
+
+const fruitMesh = new THREE.Mesh(geometry, material);
+scene.add(fruitMesh);
+
 let fruit = { x: 1, y: 1 };
 
 let snake = [];
@@ -67,33 +75,24 @@ function move() {
 
 function draw() {
 
-	function drawRect(color, x, y) {
-		const material = new THREE.MeshBasicMaterial ( { color } );
-		const geometry = new THREE.BoxGeometry(scale, scale, scale);
-		const cube = new THREE.Mesh(geometry, material);
-		scene.add(cube);
-
-		cube.position.x = x ;
-		cube.position.y = y;
-		cube.position.z = 0;
-
-		return cube;
-	}
-
 	let snakeMesh = [];
 
 	// draw
 	if (snakeMesh.length <= snake.length) {
-		do { snakeMesh.push(drawRect(0xFFFFFF, 110, 110)); }
+		do { snakeMesh.push(mesh);
+		}
 		while ( snakeMesh.length !== snake.length);
 	}
 
 	// animate
-
- console.log(snakeMesh.length);
+	for (let i = 0; i < snakeMesh.length; i++) {
+		snakeMesh[i].position.x = snake[i].x * scale;
+		snakeMesh[i].position.y = snake[i].y * scale;
+	}
 
 	// fruit draw
-	drawRect(0x00FFFF, fruit.x * scale, fruit.y * scale);
+	fruitMesh.position.x = fruit.x * scale;
+	fruitMesh.position.y = fruit.y * scale;
 
 	renderer.render(scene, camera);
 
