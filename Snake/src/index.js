@@ -66,28 +66,31 @@ function move() {
 }
 
 function draw() {
+
 	function drawRect(color, x, y) {
 		const material = new THREE.MeshBasicMaterial ( { color } );
 		const geometry = new THREE.BoxGeometry(scale, scale, scale);
 		const cube = new THREE.Mesh(geometry, material);
 		scene.add(cube);
 
-		cube.position.x = x;
+		cube.position.x = x ;
 		cube.position.y = y;
 		cube.position.z = 0;
 
 		return cube;
 	}
 
-	//clear scene
-	while (scene.children.length > 0) {
-		scene.remove(scene.children[0]);
+	let snakeMesh = [];
+
+	// draw
+	if (snakeMesh.length <= snake.length) {
+		do { snakeMesh.push(drawRect(0xFFFFFF, 110, 110)); }
+		while ( snakeMesh.length !== snake.length);
 	}
 
-	// snake draw
-	for (let j = 0; j < snake.length; j++) {
-		drawRect(0xFFFFFF, snake[j].x * scale, snake[j].y * scale);
-	}
+	// animate
+
+ console.log(snakeMesh.length);
 
 	// fruit draw
 	drawRect(0x00FFFF, fruit.x * scale, fruit.y * scale);
