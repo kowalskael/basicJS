@@ -24,8 +24,7 @@ scene.add(light);
 
 const material = new THREE.MeshBasicMaterial(0xFFFFFF);
 const geometry = new THREE.BoxGeometry(scale, scale, scale);
-const mesh = new THREE.Mesh(geometry, material);
-scene.add(mesh);
+
 
 const fruitMesh = new THREE.Mesh(geometry, material);
 scene.add(fruitMesh);
@@ -79,7 +78,10 @@ function draw() {
 
 	// draw
 	if (snakeMesh.length <= snake.length) {
-		do { snakeMesh.push(mesh);
+		do {
+			const mesh = new THREE.Mesh(geometry, material);
+			scene.add(mesh);
+			snakeMesh.push(mesh);
 		}
 		while ( snakeMesh.length !== snake.length);
 	}
@@ -90,12 +92,14 @@ function draw() {
 		snakeMesh[i].position.y = snake[i].y * scale;
 	}
 
+	console.log(snakeMesh.length);
+	console.log(snakeMesh[1].position.x);
+
 	// fruit draw
 	fruitMesh.position.x = fruit.x * scale;
 	fruitMesh.position.y = fruit.y * scale;
 
 	renderer.render(scene, camera);
-
 }
 
 intervalMove = setInterval(move, 1000);
