@@ -17,18 +17,14 @@ renderer.setSize(21 * scale, 21 * scale);
 const scene = new THREE.Scene();
 scene.background = new THREE.Color(0xD4D4D4);
 
-// lights
-const light = new THREE.DirectionalLight(0xFFFFFF, 1);
-light.position.set(-5, 1, 1);
-scene.add(light);
-
-const material = new THREE.MeshBasicMaterial(0xFFFFFF);
+const material = new THREE.MeshBasicMaterial( { color: 0xFF00FF });
 const geometry = new THREE.BoxGeometry(scale, scale, scale);
 const mesh = new THREE.Mesh(geometry, material);
 scene.add(mesh);
 
-const fruitMaterial = new THREE.MeshLambertMaterial(0x00FFFF);
-const fruitMesh = new THREE.Mesh(geometry, fruitMaterial);
+const fruitMaterial = new THREE.MeshBasicMaterial( { color: 0x00FFFF });
+const fruitGeometry = new THREE.BoxBufferGeometry(scale, scale, scale);
+const fruitMesh = new THREE.Mesh(fruitGeometry, fruitMaterial);
 scene.add(fruitMesh);
 
 let fruit = { x: 1, y: 1 };
@@ -81,7 +77,7 @@ function draw() {
 	// draw
 	if (snakeMesh.length <= snake.length) {
 		do {
-			snakeMesh.push(mesh);
+			snakeMesh.push(mesh); // wrzucam mesh do tablicy snakeMesh, mesh który nie ma zróznicowanej pozycji. wchodzą 3 kubiki w tym samym miejscu
 		}
 		while ( snakeMesh.length !== snake.length);
 	}
