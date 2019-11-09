@@ -24,9 +24,11 @@ scene.add(light);
 
 const material = new THREE.MeshBasicMaterial(0xFFFFFF);
 const geometry = new THREE.BoxGeometry(scale, scale, scale);
+const mesh = new THREE.Mesh(geometry, material);
+scene.add(mesh);
 
-
-const fruitMesh = new THREE.Mesh(geometry, material);
+const fruitMaterial = new THREE.MeshLambertMaterial(0x00FFFF);
+const fruitMesh = new THREE.Mesh(geometry, fruitMaterial);
 scene.add(fruitMesh);
 
 let fruit = { x: 1, y: 1 };
@@ -79,21 +81,18 @@ function draw() {
 	// draw
 	if (snakeMesh.length <= snake.length) {
 		do {
-			const mesh = new THREE.Mesh(geometry, material);
-			scene.add(mesh);
 			snakeMesh.push(mesh);
 		}
 		while ( snakeMesh.length !== snake.length);
 	}
 
 	// animate
-	for (let i = 0; i < snakeMesh.length; i++) {
+	for (let i = 0; i < snakeMesh.length; i++) { // zmienia położenie całej tablicy SnakeMesh, a ma zmieniać położenie poszczególnych elementów snake'a
 		snakeMesh[i].position.x = snake[i].x * scale;
 		snakeMesh[i].position.y = snake[i].y * scale;
 	}
 
 	console.log(snakeMesh.length);
-	console.log(snakeMesh[1].position.x);
 
 	// fruit draw
 	fruitMesh.position.x = fruit.x * scale;
