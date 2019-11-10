@@ -1,4 +1,5 @@
 import * as THREE from 'three';
+import {Object3D} from 'three';
 
 // canvas
 const canvas = document.getElementById('canvas');
@@ -16,11 +17,6 @@ renderer.setSize(21 * scale, 21 * scale);
 // scene
 const scene = new THREE.Scene();
 scene.background = new THREE.Color(0xD4D4D4);
-
-const material = new THREE.MeshBasicMaterial( { color: 0xFF00FF });
-const geometry = new THREE.BoxGeometry(scale, scale, scale);
-const mesh = new THREE.Mesh(geometry, material);
-scene.add(mesh);
 
 const fruitMaterial = new THREE.MeshBasicMaterial( { color: 0x00FFFF });
 const fruitGeometry = new THREE.BoxBufferGeometry(scale, scale, scale);
@@ -72,23 +68,31 @@ function move() {
 
 function draw() {
 
-	let snakeMesh = [];
+	let snakeMesh = new THREE.Object3D();
+
 
 	// draw
-	if (snakeMesh.length <= snake.length) {
-		do {
-			snakeMesh.push(mesh); // wrzucam mesh do tablicy snakeMesh, mesh który nie ma zróznicowanej pozycji. wchodzą 3 kubiki w tym samym miejscu
+
+		while (snakeMesh.children.length < snake.length) {
+			const material = new THREE.MeshBasicMaterial( { color: 0xFF00FF });
+			const geometry = new THREE.BoxGeometry(scale, scale, scale);
+			const mesh = new THREE.Mesh(geometry, material);
+			mesh.position.x = 1;
+			mesh.position.y = 1;
+			snakeMesh.add(mesh);
 		}
-		while ( snakeMesh.length !== snake.length);
-	}
+
+
+	scene.add(snakeMesh);
 
 	// animate
-	for (let i = 0; i < snakeMesh.length; i++) { // zmienia położenie całej tablicy SnakeMesh, a ma zmieniać położenie poszczególnych elementów snake'a
-		snakeMesh[i].position.x = snake[i].x * scale;
-		snakeMesh[i].position.y = snake[i].y * scale;
+	for (let i = 0; i < snakeMesh.children.length; i++) {
+		snakeMesh.children[i].position.x = snake[i].x * scale;
+		snakeMesh.children[i].position.y = snake[i].y * scale;
 	}
 
-	console.log(snakeMesh.length);
+	console.log(snakeMesh.children.length);
+	console.log(scene.children);
 
 	// fruit draw
 	fruitMesh.position.x = fruit.x * scale;
