@@ -1,5 +1,4 @@
 import * as THREE from 'three';
-import {Object3D} from 'three';
 
 // canvas
 const canvas = document.getElementById('canvas');
@@ -68,30 +67,26 @@ function move() {
 
 function draw() {
 
-	let snakeMesh = new THREE.Object3D();
-
+	let snakeMesh = [];
 
 	// draw
-
-		while (snakeMesh.children.length < snake.length) {
+	if (snakeMesh.length <= snake.length) {
+		do {
 			const material = new THREE.MeshBasicMaterial( { color: 0xFF00FF });
 			const geometry = new THREE.BoxGeometry(scale, scale, scale);
 			const mesh = new THREE.Mesh(geometry, material);
-			mesh.position.x = 1;
-			mesh.position.y = 1;
-			snakeMesh.add(mesh);
+			snakeMesh.push(mesh);
 		}
-
-
-	scene.add(snakeMesh);
-
-	// animate
-	for (let i = 0; i < snakeMesh.children.length; i++) {
-		snakeMesh.children[i].position.x = snake[i].x * scale;
-		snakeMesh.children[i].position.y = snake[i].y * scale;
+		while ( snakeMesh.length !== snake.length);
 	}
 
-	console.log(snakeMesh.children.length);
+	// animate
+	for (let i = 0; i < snakeMesh.length; i++) {
+		snakeMesh[i].position.x = snake[i].x * scale;
+		snakeMesh[i].position.y = snake[i].y * scale;
+	}
+
+	console.log(snakeMesh);
 	console.log(scene.children);
 
 	// fruit draw
