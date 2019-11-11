@@ -22,9 +22,11 @@ const fruitGeometry = new THREE.BoxBufferGeometry(scale, scale, scale);
 const fruitMesh = new THREE.Mesh(fruitGeometry, fruitMaterial);
 scene.add(fruitMesh);
 
-let fruit = { x: 1, y: 1 };
+const snakeMesh = [];
 
-let snake = [];
+const fruit = { x: 1, y: 1 };
+
+const snake = [];
 for (let j = 0; j < 3; j++) {
 	snake.push( { x: 11, y: 11 + j } );
 }
@@ -35,20 +37,20 @@ let justChanged = true;
 
 // snake move
 function move() {
-
+	
 	justChanged = false;
 	snake.unshift({x: snake[0].x + direction.x, y: snake[0].y + direction.y});
 
+	let head = snake[0];
+
 	// walls detection
-	for (let j = 0; j < snake.length; j++) {
-		if (snake[j].x < 0) snake[j].x = 20;
-		if (snake[j].x > 20) snake[j].x = 0;
-		if (snake[j].y < 0) snake[j].y = 20;
-		if (snake[j].y > 20) snake[j].y = 0;
-	}
+	if (head.x < 0) head.x = 20;
+	if (head.x > 20) head.x = 0;
+	if (head.y < 0) head.y = 20;
+	if (head.y > 20) head.y = 0;
 
 	// fruit detection && position randomization
-	if (snake[0].x === fruit.x && snake[0].y === fruit.y) {
+	if (head.x === fruit.x && head.y === fruit.y) {
 		do { fruit.x = fruit.y = Math.floor(Math.random() * 21);
 		} while (snake.find(obj => obj.x === fruit.x && obj.y === fruit.y ));
 	} else {
@@ -57,7 +59,7 @@ function move() {
 
 	// snake body hit detection
 	for (let j = 1; j < snake.length; j++) {
-		if (snake[0].x === snake[j].x && snake[0].y === snake[j].y) {
+		if (head.x === snake[j].x && head.y === snake[j].y) {
 			clearInterval(intervalMove);
 		}
 	}
@@ -67,17 +69,13 @@ function move() {
 
 function draw() {
 
-	let snakeMesh = [];
-
 	// draw
-	if (snakeMesh.length <= snake.length) {
-		do {
+	while (snakeMesh.length !== snake.length) {
 			const material = new THREE.MeshBasicMaterial( { color: 0xFF00FF });
 			const geometry = new THREE.BoxGeometry(scale, scale, scale);
 			const mesh = new THREE.Mesh(geometry, material);
 			snakeMesh.push(mesh);
-		}
-		while ( snakeMesh.length !== snake.length);
+			scene.add(mesh);
 	}
 
 	// animate
@@ -85,9 +83,6 @@ function draw() {
 		snakeMesh[i].position.x = snake[i].x * scale;
 		snakeMesh[i].position.y = snake[i].y * scale;
 	}
-
-	console.log(snakeMesh);
-	console.log(scene.children);
 
 	// fruit draw
 	fruitMesh.position.x = fruit.x * scale;
