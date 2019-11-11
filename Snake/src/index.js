@@ -1,5 +1,4 @@
 import * as THREE from 'three';
-import {Object3D} from 'three';
 
 // canvas
 const canvas = document.getElementById('canvas');
@@ -71,11 +70,14 @@ function draw() {
 	let snakeMesh = [];
 
 	// draw
-	while (snakeMesh.length !== snake.length) { // jest OK, wychodzi tablica z odpowiednią pozycją i ilością mesh-y
+	if (snakeMesh.length <= snake.length) {
+		do {
 			const material = new THREE.MeshBasicMaterial( { color: 0xFF00FF });
 			const geometry = new THREE.BoxGeometry(scale, scale, scale);
 			const mesh = new THREE.Mesh(geometry, material);
-			snakeMesh.push(mesh); // jak je dodać do sceny?
+			snakeMesh.push(mesh);
+		}
+		while ( snakeMesh.length !== snake.length);
 	}
 
 	// animate
@@ -83,7 +85,7 @@ function draw() {
 		snakeMesh[i].position.x = snake[i].x * scale;
 		snakeMesh[i].position.y = snake[i].y * scale;
 	}
-	
+
 	console.log(snakeMesh);
 	console.log(scene.children);
 
