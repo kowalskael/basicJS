@@ -37,7 +37,7 @@ let justChanged = true;
 
 // snake move
 function move() {
-	
+
 	justChanged = false;
 	snake.unshift({x: snake[0].x + direction.x, y: snake[0].y + direction.y});
 
