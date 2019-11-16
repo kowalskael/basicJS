@@ -4,11 +4,30 @@ ctx = canvas.getContext('2d');
 let scale = 10;
 canvas.width = canvas.height = 21 * scale;
 
+// SVG
+let snakeHeadUP = new Image();
+snakeHeadUP.src = 'img/snake-head-up.svg';
+
+let snakeHeadLEFT = new Image();
+snakeHeadLEFT.src = 'img/snake-head-left.svg';
+
+let snakeHeadDOWN = new Image();
+snakeHeadDOWN.src = 'img/snake-head-down.svg';
+
+let snakeHeadRIGHT = new Image();
+snakeHeadRIGHT.src = 'img/snake-head-right.svg';
+
+let snakeHead = snakeHeadUP;
+
+let snakeBG = new Image();
+snakeBG.src = 'img/bg.svg';
+
+// objects
 let fruit = { x: 1, y: 1 };
 
 let snake = [];
 for (let j = 0; j < 3; j++) {
-	snake.push( { x: 11, y: 11 + j } );
+	snake.push( { x: 11 , y: 11 + j } );
 }
 
 let intervalMove;
@@ -50,40 +69,54 @@ function move() {
 function draw() {
 	ctx.clearRect(0, 0, canvas.width, canvas.height);
 
+	for (let i = 0; i < canvas.width/scale; i++) {
+		for (let j = 0; j < canvas.height/scale; j++) {
+			ctx.drawImage(snakeBG, scale * i, j * scale, scale, scale);
+		}
+	}
+
 	// snake draw
 	for (let j = 0; j < snake.length; j++) {
-		ctx.fillStyle = j === 0 ? 'white' : 'black';
-		ctx.fillRect(snake[j].x * scale, snake[j].y * scale, scale, scale);
+		ctx.fillStyle = '#4CAD00';
+		j === 0 ?
+			ctx.drawImage(snakeHead, snake[j].x * scale, snake[j].y * scale, scale, scale)
+			: ctx.fillRect(snake[j].x * scale, snake[j].y * scale, scale, scale);
 	}
 
 	// fruit draw
-	ctx.fillStyle = '#EA244A';
+	ctx.fillStyle = '#FF0000';
 	ctx.fillRect(fruit.x * scale, fruit.y * scale, scale, scale);
+
+
 }
 
-intervalMove = setInterval(move, 1000);
+intervalMove = setInterval(move, 600);
 
 // keyboard events && direction detection
 addEventListener( "keydown", e => { switch(e.key) {
 	case 'ArrowUp':
 		if ( direction.y !== 1 && justChanged === false ) {
+			snakeHead = snakeHeadUP;
 			justChanged = true;
 			direction = {x: 0, y: -1};
 		}
 		break;
 	case 'ArrowRight':
 		if ( direction.x !== -1 && justChanged === false ) {
+			snakeHead = snakeHeadRIGHT;
 			justChanged = true;
 			direction = {x: 1, y: 0};
 		}
 		break;
 	case 'ArrowLeft':
 		if ( direction.x !== 1 && justChanged === false ) {
+			snakeHead = snakeHeadLEFT;
 			justChanged = true;
 			direction = {x: -1, y: 0};
 		}
 		break;
 	case 'ArrowDown':
+		snakeHead = snakeHeadDOWN;
 		if ( direction.y !== -1 && justChanged === false ) {
 			justChanged = true;
 			direction = {x: 0, y: 1};
