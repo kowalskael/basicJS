@@ -5,7 +5,7 @@ document.getElementById("submit").onclick = function() {
 	document.getElementById("start").style.display = "none"; // saper menu hidden
 	document.getElementById("play").style.display = "block"; // show play area
 
-	//timer
+	// TIMER
 	let time = document.getElementById("timer"); // refer to timer element
 
 	let seconds = 0; let minutes = 0;
@@ -29,11 +29,12 @@ document.getElementById("submit").onclick = function() {
 
 	timer();
 
-	// play area
+	// PLAY
 	let rows = document.getElementById("width").value;
 	let columns = document.getElementById("height").value;
 	let bombNums = document.getElementById("bombNums").value;
 
+	// create Array with objects
 	let objArr = []; // two-dimensional array
 	const square = { fill: 0, state: 'hidden' }; // object with parameters about Saper squares
 
@@ -44,7 +45,7 @@ document.getElementById("submit").onclick = function() {
 		}
 	}
 
-	//create Array with div's
+	// create Array with div's
 	let divContainer = document.getElementById("board"); // variable returning html element
 	let divArr = [];
 
@@ -55,12 +56,12 @@ document.getElementById("submit").onclick = function() {
 		for (let j = 0; j < columns; j++) {
 			let column = document.createElement('div');
 			row.appendChild(column);
-			column.setAttribute("class", 'row' + i + 'column' + j);
-			divArr[i][j] = document.getElementsByClassName('row' + i + 'column' + j);
+			column.setAttribute("class", 'hidden'); // every element with class hidden for start
+			divArr[i][j] = document.getElementsByClassName('hidden');
 		}
 	}
-
-	console.log(board.childNodes);
+	
+	console.log(divContainer.childNodes);
 	console.log(objArr);
 	console.log(divArr);
 };
