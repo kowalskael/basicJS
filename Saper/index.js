@@ -39,7 +39,7 @@ document.getElementById("submit").onclick = function() {
 
 	// create Array with objects
 	let objArr = []; // two-dimensional array
-	const square = { fill: 0, state: 'hidden', x: 1, y: 1 }; // object with parameters about Saper squares
+	const square = { fill: 0, state: 'hidden', element: 'div' }; // object with parameters about Saper squares
 
 	let divContainer = document.getElementById("board"); // variable returning html element
 
@@ -82,7 +82,8 @@ document.getElementById("submit").onclick = function() {
 
 	// revealing objects
 	function revealObject() {
-		
+		// if object.state: 'hidden' onclick change state: 'revealed'
+		//
 	}
 
 	// select all div's in board
