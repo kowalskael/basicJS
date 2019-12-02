@@ -85,3 +85,29 @@ body {
     border-width: 1px;
     box-sizing: border-box;
 }
+
+.revealed {
+    background: darkgray;
+    border-style: solid;
+    border-width: 1px;
+    box-sizing: border-box;
+}
+
+.flagged {
+    background: red;
+    border-style: solid;
+    border-width: 1px;
+    box-sizing: border-box;
+}
+
+.empty {
+
+}
+
+.number {
+
+}
+
+.bomb {
+
+}
