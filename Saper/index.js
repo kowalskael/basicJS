@@ -55,11 +55,20 @@ document.getElementById("submit").onclick = function() {
 		}
 	}
 
+	let squares = document.querySelectorAll('div.square');
+
+	//  bind object.element to board children
+	for (let i = 0; i < objArr.length; i++) {
+		for (let j = 0; j < objArr[i].length; j++) {
+			objArr[i][j].element = squares[i];
+		}
+	}
+
+	console.log(objArr);
+
 	// drawing bombs, after 1st click
 	function drawBombs() {
-		// losowanie i z dwu-wymiarowej tablicy objArr
-		// losowanie j z dwu-wymiarowej tablicy objArr
-		// bombs[i][j] to wylosowane [i] + [j] z objArr
+
 		// wylosowanym obiektom zmień fill: 'bomb'
 	}
 
@@ -86,11 +95,7 @@ document.getElementById("submit").onclick = function() {
 		//
 	}
 
-	// select all div's in board
-	let squareDivs = document.querySelectorAll('div.square');
-	console.log(squareDivs);
 
-	//  bind object square fill & state to individual div
 
 
 	/*// change class on the every div that is clicked
