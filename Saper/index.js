@@ -54,21 +54,26 @@ document.getElementById("submit").onclick = function() {
 		}
 	}
 
-	console.log(objArr);
-
 	// drawing bombs, after 1st click
 	function drawBombs() {
 		let clickCount = 0;
 		return function() { // do drawing for first click, then increase clickCount and 'block' function
 			if (clickCount === 0) {
-				// losowanie
+				let loopCount = 0;
+				do {
+					let i = Math.floor(Math.random() * objArr.length);
+					let j = Math.floor(Math.random() * objArr.length);
+					objArr[i][j].fill = 9;
+					loopCount++;
+				} while ( loopCount < bombNums );
 			}
 			clickCount++;
 		}
-		// wylosowanym obiektom zmień fill: 'bomb'
 	}
 
 	divContainer.onclick = drawBombs();
+
+	console.log(objArr);
 
 	// objects with numbers
 	function flagNumbers() {
