@@ -39,29 +39,18 @@ document.getElementById("submit").onclick = function() {
 
 	// create Array with objects
 	let objArr = []; // two-dimensional array
-	const square = { fill: 0, state: 'hidden', element: 'div' }; // object with parameters about Saper squares
-
 	let divContainer = document.getElementById("board"); // variable returning html element
-	let divArr = [];
 
 	for (let i = 0; i < rows; i++) { // create array with objects
 		objArr[i] = [];
 		let row = document.createElement('div');
 		divContainer.appendChild(row);
-		divArr[i] = row;
 		for (let j = 0; j < columns; j++) {
-			objArr[i][j] = square;
 			let column = document.createElement('div');
 			row.appendChild(column);
-			column.setAttribute("class", 'hidden square'); // every element with class hidden for start
-			divArr[i][j] = column;
-		}
-	}
-
-	//  bind object.element to board children
-	for (let i = 0; i < objArr.length; i++) {
-		for (let j = 0; j < objArr[i].length; j++) {
-				objArr[i][j].element = divArr[i][j];
+			column.classList.add('hidden'); // every element with class hidden for start
+			column.classList.add('square');
+			objArr[i][j] = { fill: 0, state: 'hidden', element: column };
 		}
 	}
 
@@ -69,9 +58,17 @@ document.getElementById("submit").onclick = function() {
 
 	// drawing bombs, after 1st click
 	function drawBombs() {
-
+		let clickCount = 0;
+		return function() { // do drawing for first click, then increase clickCount and 'block' function
+			if (clickCount === 0) {
+				// losowanie
+			}
+			clickCount++;
+		}
 		// wylosowanym obiektom zmień fill: 'bomb'
 	}
+
+	divContainer.onclick = drawBombs();
 
 	// objects with numbers
 	function flagNumbers() {
