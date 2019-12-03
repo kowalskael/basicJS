@@ -57,8 +57,16 @@ document.getElementById("submit").onclick = function() {
 	// drawing bombs, after 1st click
 	function drawBombs() {
 		let clickCount = 0;
-		return function() { // do drawing for first click, then increase clickCount and 'block' function
+		return function(e) { // do drawing for first click, then increase clickCount and 'block' function
 			if (clickCount === 0) {
+				for ( let i = 0; i < objArr.length; i++) {
+					for ( let j = 0; j < objArr[i].length; j++) {
+						if ( objArr[i][j].element === e.target) {
+							objArr[i][j].state = 'revealed';
+						}
+					}
+				}
+
 				let loopCount = 0;
 				do {
 					let i = Math.floor(Math.random() * objArr.length);
