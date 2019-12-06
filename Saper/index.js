@@ -55,12 +55,12 @@ document.getElementById("submit").onclick = function() {
 	}
 
 	// drawing bombs, after 1st click
-	function drawBombs() {
+	function drawBombs() { // do drawing for first click, then increase clickCount and 'block' function
 		let clickCount = 0;
-		return function(e) { // do drawing for first click, then increase clickCount and 'block' function
+		return function(e) {
 			if (clickCount === 0) {
-				for ( let i = 0; i < objArr.length; i++) {
-					for ( let j = 0; j < objArr[i].length; j++) {
+				for ( let i of objArr) {
+					for ( let j of objArr[i]) {
 						if ( objArr[i][j].element === e.target) {
 							objArr[i][j].state = 'revealed';
 						}
@@ -81,15 +81,26 @@ document.getElementById("submit").onclick = function() {
 
 	divContainer.onclick = drawBombs();
 
-	console.log(objArr);
-
 	// objects with numbers
 	function flagNumbers() {
-		// check objects adjacent to bombs
-		// foundNum = sum of all found bombs around
-		// if (adjacentObjects[i][j]) have fill: 9, foundNum + foundBomb
-		// if(foundNum > 0 && foundNum < 9) object fill: foundNum
+		let bombCount = 0;
+		let adjacentSquares = [
+			{i: -1, j: -1}, {i: -1, j: 0}, {i: -1, j: +1},
+			{i: 0, j: -1}, {i: 0, j: +1},
+			{i: +1, j: -1}, {i: -1, j: 0}, {i: +1, j: +1}];
+
+		let loopCount = 0;
+
+		// for every element of objArr with fill: 0
+		// check if adjacent squares have bombs
+		// and increase result in bombCount
+
+		
 	}
+
+	flagNumbers();
+
+	console.log(objArr);
 
 	// flagging squares
 	function flagObject() {
@@ -105,9 +116,6 @@ document.getElementById("submit").onclick = function() {
 		// if object.state: 'hidden' onclick change state: 'revealed'
 		//
 	}
-
-
-
 
 	/*// change class on the every div that is clicked
 	for(let i = 0; i < squareDivs.length; i++) {
