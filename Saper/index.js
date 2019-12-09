@@ -59,8 +59,8 @@ document.getElementById("submit").onclick = function() {
 		let clickCount = 0;
 		return function(e) {
 			if (clickCount === 0) {
-				for ( let i of objArr) {
-					for ( let j of objArr[i]) {
+				for (let i = 1; i < objArr.length - 1; i++) {
+					for (let j = 1; j < objArr[i].length - 1; j++) {
 						if ( objArr[i][j].element === e.target) {
 							objArr[i][j].state = 'revealed';
 						}
@@ -68,6 +68,7 @@ document.getElementById("submit").onclick = function() {
 				}
 
 				let loopCount = 0;
+
 				do {
 					let i = Math.floor(Math.random() * objArr.length);
 					let j = Math.floor(Math.random() * objArr.length);
@@ -75,6 +76,7 @@ document.getElementById("submit").onclick = function() {
 					loopCount++;
 				} while ( loopCount < bombNums );
 			}
+
 			clickCount++;
 		}
 	}
@@ -82,24 +84,26 @@ document.getElementById("submit").onclick = function() {
 	divContainer.onclick = drawBombs();
 
 	// objects with numbers
-	function flagNumbers() {
+	function flagNumbers(x, y) {
+
 		let bombCount = 0;
-		let adjacentSquares = [
+
+		let checkId = [
 			{i: -1, j: -1}, {i: -1, j: 0}, {i: -1, j: +1},
 			{i: 0, j: -1}, {i: 0, j: +1},
-			{i: +1, j: -1}, {i: -1, j: 0}, {i: +1, j: +1}];
+			{i: +1, j: -1}, {i: +1, j: 0}, {i: +1, j: +1}];
 
-		let loopCount = 0;
+		for (let a = 0; a < checkId.length; a++) {
+			if(x + checkId[a].i >= 0 && y + checkId[a].j >= 0) {
 
-		// for every element of objArr with fill: 0
-		// check if adjacent squares have bombs
-		// and increase result in bombCount
+				bombCount += 1;
+			}
+		}
 
-		
+		return console.log(bombCount);
 	}
 
-	flagNumbers();
-
+	flagNumbers(0, 0);
 	console.log(objArr);
 
 	// flagging squares
