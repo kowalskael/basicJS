@@ -87,22 +87,26 @@ document.getElementById("submit").onclick = function() {
 	function flagNumbers() {
 
 		let checkId = [ // array for checking id
-			{i: -1, j: -1}, {i: -1, j: 0}, {i: -1, j: +1},
-			{i: 0, j: -1}, {i: 0, j: +1},
-			{i: +1, j: -1}, {i: +1, j: 0}, {i: +1, j: +1}];
+			{x: -1, y: -1}, {x: -1, y: 0}, {x: -1, y: +1},
+			{x: 0, y: -1}, {x: 0, y: +1},
+			{x: +1, y: -1}, {x: +1, y: 0}, {x: +1, y: +1}];
 
 		for (let i = 0; i < objArr.length; i++) { // for every element in objArr
 			for (let j = 0; j < objArr[i].length; j++) {
 
+				let bombCount = 0;
+
 				for (let a = 0; a < checkId.length; a++) {
-					if(i + checkId[a].i >= 0 && j + checkId[a].j >= 0) {
-						if(objArr[i + checkId[a].i][j + checkId[a].j].fill === 9) {
-							let bombCount = 0;
+					let nextIdx = i + checkId[a].x;
+					let nextIdy = j + checkId[a].y;
+
+					if(nextIdx >= 0 && nextIdy >= 0) { // if id value >= 0
+						if(objArr[nextIdx][nextIdy].fill === 9) { // check if adjacent square.fill === 9
 							bombCount += 1;
-							return objArr[i][j].fill = bombCount;
 						}
 					}
 				}
+				objArr[i][j].fill = bombCount; // assign value to square.fill
 			}
 		}
 
