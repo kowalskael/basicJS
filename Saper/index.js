@@ -59,8 +59,8 @@ document.getElementById("submit").onclick = function() {
 		let clickCount = 0;
 		return function(e) {
 			if (clickCount === 0) {
-				for (let i = 1; i < objArr.length - 1; i++) {
-					for (let j = 1; j < objArr[i].length - 1; j++) {
+				for (let i = 0; i < objArr.length; i++) {
+					for (let j = 0; j < objArr[i].length; j++) {
 						if ( objArr[i][j].element === e.target) {
 							objArr[i][j].state = 'revealed';
 						}
@@ -84,26 +84,35 @@ document.getElementById("submit").onclick = function() {
 	divContainer.onclick = drawBombs();
 
 	// objects with numbers
-	function flagNumbers(x, y) {
+	function flagNumbers() {
 
-		let bombCount = 0;
-
-		let checkId = [
+		let checkId = [ // array for checking id
 			{i: -1, j: -1}, {i: -1, j: 0}, {i: -1, j: +1},
 			{i: 0, j: -1}, {i: 0, j: +1},
 			{i: +1, j: -1}, {i: +1, j: 0}, {i: +1, j: +1}];
 
-		for (let a = 0; a < checkId.length; a++) {
-			if(x + checkId[a].i >= 0 && y + checkId[a].j >= 0) {
+		for (let i = 0; i < objArr.length; i++) { // for every element in objArr
+			for (let j = 0; j < objArr[i].length; j++) {
 
-				bombCount += 1;
+				for (let a = 0; a < checkId.length; a++) {
+					if(i + checkId[a].i >= 0 && j + checkId[a].j >= 0) {
+						if(objArr[i + checkId[a].i][j + checkId[a].j].fill === 9) {
+							let bombCount = 0;
+							bombCount += 1;
+							return objArr[i][j].fill = bombCount;
+						}
+					}
+				}
 			}
 		}
 
-		return console.log(bombCount);
+		// tablica z indexami do porównania
+		// działam tylko jesli wartości indexów tablicy >= 0
+		// dla każdego elementu tablicy sprawdzam fill elementu obok
+
 	}
 
-	flagNumbers(0, 0);
+	flagNumbers();
 	console.log(objArr);
 
 	// flagging squares
