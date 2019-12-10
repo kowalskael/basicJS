@@ -55,24 +55,21 @@ document.getElementById("submit").onclick = function() {
 	}
 
 	// drawing bombs, after 1st click
-	function drawBombs() { // do drawing for first click, then increase clickCount and 'block' function
+	function drawBombs(array, i, j) { // do drawing for first click, then increase clickCount and 'block' function
 		let clickCount = 0;
 		return function(e) {
 			if (clickCount === 0) {
-				for (let i = 0; i < objArr.length; i++) {
-					for (let j = 0; j < objArr[i].length; j++) {
-						if ( objArr[i][j].element === e.target) {
-							objArr[i][j].state = 'revealed';
-						}
-					}
+
+				if ( array[i][j].element === e.target) {
+					array[i][j].state = 'revealed';
 				}
 
 				let loopCount = 0;
 
 				do {
-					let i = Math.floor(Math.random() * objArr.length);
-					let j = Math.floor(Math.random() * objArr.length);
-					objArr[i][j].fill = 9;
+					let i = Math.floor(Math.random() * array.length);
+					let j = Math.floor(Math.random() * array.length);
+					array[i][j].fill = 9;
 					loopCount++;
 				} while ( loopCount < bombNums );
 			}
@@ -81,39 +78,38 @@ document.getElementById("submit").onclick = function() {
 		}
 	}
 
-	divContainer.onclick = drawBombs();
 
 	// objects with numbers
-	function flagNumbers() {
+	function flagNumbers(array, i, j) {
 
 		let checkId = [ // array for checking id
 			{x: -1, y: -1}, {x: -1, y: 0}, {x: -1, y: +1},
 			{x: 0, y: -1}, {x: 0, y: +1},
 			{x: +1, y: -1}, {x: +1, y: 0}, {x: +1, y: +1}];
 
-		for (let i = 0; i < objArr.length; i++) { // for every element in objArr
-			for (let j = 0; j < objArr[i].length; j++) {
+		for (let a = 0; a < checkId.length; a++) { // dla każdego elementu z checkId
 
-				for (let a = 0; a < checkId.length; a++) {
+			let nextIdx = i + checkId[a].x; // zmienna określająca index do sprawdzenia
+			let nextIdy = j + checkId[a].y; // zmienna określająca index do sprawdzenia
 
-					let nextIdx = i + checkId[a].x;
-					let nextIdy = j + checkId[a].y;
+			if (nextIdx >= 0 && nextIdx < array.length && nextIdy >= 0 && nextIdy < array[i].length) { // pola do sprawdzenia, występujące w tabicy
 
-					if (nextIdx >= 0 && nextIdx < objArr.length && nextIdy >= 0 && nextIdy < objArr[i].length) { // stany graniczne
-
-						let filteredArr = [];
-						filteredArr.push(objArr[nextIdx][nextIdy].fill === 9);
-						objArr[i][j].fill = filteredArr.length - 1;
-
-					}
-
-				}
+				let filteredArr = [];
+				filteredArr.push(array[nextIdx][nextIdy].fill === 9);
+				array[i][j].fill = filteredArr.length;
 
 			}
+
 		}
 	}
 
-	flagNumbers();
+	for (let i = 0; i < objArr.length; i++) {
+		for (let j = 0; j < objArr[i].length; j++) {
+			divContainer.onclick = drawBombs(objArr, i, j);
+			flagNumbers(objArr, i, j);
+		}
+	}
+
 	console.log(objArr);
 
 	// flagging squares
