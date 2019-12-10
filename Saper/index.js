@@ -41,35 +41,38 @@ document.getElementById("submit").onclick = function() {
 	 // two-dimensional array
 	let divContainer = document.getElementById("board"); // variable returning html element
 
-	for (let i = 0; i < rows; i++) { // create array with objects
-		objArr[i] = [];
-		let row = document.createElement('div');
-		divContainer.appendChild(row);
-		for (let j = 0; j < columns; j++) {
-			let column = document.createElement('div');
-			row.appendChild(column);
-			column.classList.add('hidden'); // every element with class hidden for start
-			column.classList.add('square');
-			objArr[i][j] = { fill: 0, state: 'hidden', element: column };
+	for (let row = 0; row < rows; row++) { // create array with objects
+		objArr[row] = [];
+		let rowDiv = document.createElement('div');
+		divContainer.appendChild(rowDiv);
+		for (let col = 0; col < columns; col++) {
+			let columnDiv = document.createElement('div');
+			rowDiv.appendChild(columnDiv);
+			columnDiv.classList.add('hidden'); // every element with class hidden for start
+			columnDiv.classList.add('square');
+			objArr[row][col] = { fill: 0, state: 'hidden', element: columnDiv };
 		}
 	}
 
 	// drawing bombs, after 1st click
-	function drawBombs(array, i, j) { // do drawing for first click, then increase clickCount and 'block' function
+	function drawBombs() { // do drawing for first click, then increase clickCount and 'block' function
 		let clickCount = 0;
 		return function(e) {
 			if (clickCount === 0) {
-
-				if ( array[i][j].element === e.target) {
-					array[i][j].state = 'revealed';
+				for (let row = 0; row < objArr.length; row++) {
+					for (let col = 0; col < objArr[row].length; col++) {
+						if ( objArr[row][col].element === e.target) {
+							objArr[row][col].state = 'revealed';
+						}
+					}
 				}
 
 				let loopCount = 0;
 
 				do {
-					let i = Math.floor(Math.random() * array.length);
-					let j = Math.floor(Math.random() * array.length);
-					array[i][j].fill = 9;
+					let row = Math.floor(Math.random() * objArr.length);
+					let col = Math.floor(Math.random() * objArr[row].length);
+					objArr[row][col].fill = 9;
 					loopCount++;
 				} while ( loopCount < bombNums );
 			}
@@ -78,47 +81,42 @@ document.getElementById("submit").onclick = function() {
 		}
 	}
 
+	divContainer.onclick = drawBombs();
+
 	// objects with numbers
-	function flagNumbers(array, i, j) {
+	function flagNumbers() {
 
 		let checkId = [ // array for checking id
 			{x: -1, y: -1}, {x: -1, y: 0}, {x: -1, y: +1},
 			{x: 0, y: -1}, {x: 0, y: +1},
 			{x: +1, y: -1}, {x: +1, y: 0}, {x: +1, y: +1}];
 
-		for (let a = 0; a < checkId.length; a++) { // dla każdego elementu z checkId
-
-			let nextIdx = i + checkId[a].x; // zmienna określająca index do sprawdzenia
-			let nextIdy = j + checkId[a].y; // zmienna określająca index do sprawdzenia
-
-			if (nextIdx >= 0 && nextIdx < array.length && nextIdy >= 0 && nextIdy < array[i].length) { // pola do sprawdzenia, występujące w tabicy
+		for (let row = 0; row < objArr.length; row++) {
+			for (let col = 0; col < objArr[row].length; col++) {
 
 				let bombCount = 0;
-				// sprawdzam ile elementów sąsiadujących spełnia warunek array.fill === 9
-				// ilość tych elementów przypisuję do sprawdzanego elementu array[i][j].fill
+				if ( objArr[row][col].fill === 9) continue;
 
-				do {
-					if (array[nextIdx][nextIdy].fill === 9) {
-						return bombCount++;
+				for (let check = 0; check < checkId.length; check++) { // dla każdego elementu z checkId
+
+					const dir = checkId[check];
+
+					if ( objArr[row][col] === 0) {
+
+						if (row + dir.x >= 0 && row + dir.x < objArr.length && col + dir.y >= 0 && col + dir.y < objArr[row].length) { // pola do sprawdzenia, występujące w tabicy
+
+								if ( objArr[row + dir.x][col + dir.y] === 9) {
+									bombCount += 1;
+								}
+						}
 					}
-					checkId.pop();
-				} while (checkId.length > 0);
 
-				array[i][j].fill = bombCount;
-
+				} objArr[row][col].fill = bombCount;
 			}
-
-		}
-
-
-	}
-
-	for (let i = 0; i < objArr.length; i++) {
-		for (let j = 0; j < objArr[i].length; j++) {
-			divContainer.onclick = drawBombs(objArr, i, j);
-			flagNumbers(objArr, i, j);
 		}
 	}
+
+	flagNumbers();
 
 	console.log(objArr);
 
