@@ -86,7 +86,6 @@ document.getElementById("submit").onclick = function() {
 	// objects with numbers
 	function flagNumbers() {
 
-
 		let checkId = [ // array for checking id
 			{x: -1, y: -1}, {x: -1, y: 0}, {x: -1, y: +1},
 			{x: 0, y: -1}, {x: 0, y: +1},
@@ -97,6 +96,7 @@ document.getElementById("submit").onclick = function() {
 
 				let bombCount = 0;
 
+
 				for (let a = 0; a < checkId.length; a++) {
 
 					let nextIdx = i + checkId[a].x;
@@ -104,7 +104,15 @@ document.getElementById("submit").onclick = function() {
 
 					if (nextIdx >= 0 && nextIdx < objArr.length && nextIdy >= 0 && nextIdy < objArr[i].length) { // stany graniczne
 
+						let filteredArr = [];
 
+						if (objArr[nextIdx][nextIdy].fill === 9) {
+							return filteredArr.push(objArr[nextIdx][nextIdy]);
+						}
+
+						do {
+							bombCount++;
+						} while (bombCount < filteredArr.length);
 
 					} objArr[i][j].fill = bombCount;
 
