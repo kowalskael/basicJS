@@ -94,9 +94,6 @@ document.getElementById("submit").onclick = function() {
 		for (let i = 0; i < objArr.length; i++) { // for every element in objArr
 			for (let j = 0; j < objArr[i].length; j++) {
 
-				let bombCount = 0;
-
-
 				for (let a = 0; a < checkId.length; a++) {
 
 					let nextIdx = i + checkId[a].x;
@@ -105,16 +102,10 @@ document.getElementById("submit").onclick = function() {
 					if (nextIdx >= 0 && nextIdx < objArr.length && nextIdy >= 0 && nextIdy < objArr[i].length) { // stany graniczne
 
 						let filteredArr = [];
+						filteredArr.push(objArr[nextIdx][nextIdy].fill === 9);
+						objArr[i][j].fill = filteredArr.length - 1;
 
-						if (objArr[nextIdx][nextIdy].fill === 9) {
-							return filteredArr.push(objArr[nextIdx][nextIdy]);
-						}
-
-						do {
-							bombCount++;
-						} while (bombCount < filteredArr.length);
-
-					} objArr[i][j].fill = bombCount;
+					}
 
 				}
 
