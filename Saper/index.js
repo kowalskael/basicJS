@@ -1,5 +1,5 @@
 document.getElementById("play").style.display = "none";
-
+let objArr = [];
 document.getElementById("submit").onclick = function() {
 
 	document.getElementById("start").style.display = "none"; // saper menu hidden
@@ -38,7 +38,7 @@ document.getElementById("submit").onclick = function() {
 	let bombNums = document.getElementById("bombNums").value;
 
 	// create Array with objects
-	let objArr = []; // two-dimensional array
+	 // two-dimensional array
 	let divContainer = document.getElementById("board"); // variable returning html element
 
 	for (let i = 0; i < rows; i++) { // create array with objects
@@ -78,7 +78,6 @@ document.getElementById("submit").onclick = function() {
 		}
 	}
 
-
 	// objects with numbers
 	function flagNumbers(array, i, j) {
 
@@ -94,12 +93,24 @@ document.getElementById("submit").onclick = function() {
 
 			if (nextIdx >= 0 && nextIdx < array.length && nextIdy >= 0 && nextIdy < array[i].length) { // pola do sprawdzenia, występujące w tabicy
 
-				// sprawdzam ile elementów spełnia warunek array.fill === 9
+				let bombCount = 0;
+				// sprawdzam ile elementów sąsiadujących spełnia warunek array.fill === 9
 				// ilość tych elementów przypisuję do sprawdzanego elementu array[i][j].fill
+
+				do {
+					if (array[nextIdx][nextIdy].fill === 9) {
+						return bombCount++;
+					}
+					checkId.pop();
+				} while (checkId.length > 0);
+
+				array[i][j].fill = bombCount;
 
 			}
 
 		}
+
+
 	}
 
 	for (let i = 0; i < objArr.length; i++) {
