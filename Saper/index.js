@@ -1,5 +1,5 @@
 document.getElementById("play").style.display = "none";
-let objArr = [];
+
 document.getElementById("submit").onclick = function() {
 
 	document.getElementById("start").style.display = "none"; // saper menu hidden
@@ -38,7 +38,7 @@ document.getElementById("submit").onclick = function() {
 	let bombNums = document.getElementById("bombNums").value;
 
 	// create Array with objects
-	 // two-dimensional array
+	let objArr = []; // two-dimensional array
 	let divContainer = document.getElementById("board"); // variable returning html element
 
 	for (let i = 0; i < rows; i++) { // create array with objects
@@ -86,6 +86,7 @@ document.getElementById("submit").onclick = function() {
 	// objects with numbers
 	function flagNumbers() {
 
+
 		let checkId = [ // array for checking id
 			{x: -1, y: -1}, {x: -1, y: 0}, {x: -1, y: +1},
 			{x: 0, y: -1}, {x: 0, y: +1},
@@ -97,21 +98,20 @@ document.getElementById("submit").onclick = function() {
 				let bombCount = 0;
 
 				for (let a = 0; a < checkId.length; a++) {
+
 					let nextIdx = i + checkId[a].x;
 					let nextIdy = j + checkId[a].y;
 
-					if(nextIdx >= 0 && nextIdx <= objArr.length-1 && nextIdy >= 0 && nextIdy <= objArr.length-1) { // if id value >= 0
-						if(objArr[nextIdx][nextIdy].fill === 9) { // check if adjacent square.fill === 9
-							bombCount += 1;
-							objArr[i][j].fill = bombCount;
-						}
-					}
+					if (nextIdx >= 0 && nextIdx < objArr.length && nextIdy >= 0 && nextIdy < objArr[i].length) { // stany graniczne
+
+
+
+					} objArr[i][j].fill = bombCount;
+
 				}
 
 			}
 		}
-
-
 	}
 
 	flagNumbers();
