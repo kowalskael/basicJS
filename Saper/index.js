@@ -97,23 +97,17 @@ document.getElementById("submit").onclick = function() {
 				let bombCount = 0;
 				if ( objArr[row][col].fill === 9) continue;
 
-				for (let check = 0; check < checkId.length; check++) { // dla każdego elementu z checkId
+					for (let check = 0; check < checkId.length; check++) { // dla każdego elementu z checkId
 
-					const dir = checkId[check];
-
-					if ( objArr[row][col] === 0) {
-
-						if (row + dir.x >= 0 && row + dir.x < objArr.length && col + dir.y >= 0 && col + dir.y < objArr[row].length) { // pola do sprawdzenia, występujące w tabicy
-
-								if ( objArr[row + dir.x][col + dir.y] === 9) {
-									bombCount += 1;
-								}
-						}
+						const dir = checkId[check];
+						if (row + dir.x >= 0 && row + dir.x < objArr.length && col + dir.y >= 0 && col + dir.y < objArr[row].length)  // pola do sprawdzenia, występujące w tabicy
+							if ( objArr[row + dir.x][col + dir.y] === 9)
+								bombCount += 1;
 					}
 
-				} objArr[row][col].fill = bombCount;
+					objArr[row][col].fill = bombCount;
+				}
 			}
-		}
 	}
 
 	flagNumbers();
