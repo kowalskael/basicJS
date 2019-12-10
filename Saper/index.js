@@ -1,5 +1,5 @@
 document.getElementById("play").style.display = "none";
-let objArr = [];
+
 document.getElementById("submit").onclick = function() {
 
 	document.getElementById("start").style.display = "none"; // saper menu hidden
@@ -38,7 +38,7 @@ document.getElementById("submit").onclick = function() {
 	let bombNums = document.getElementById("bombNums").value;
 
 	// create Array with objects
-	 // two-dimensional array
+	let objArr = []; // two-dimensional array
 	let divContainer = document.getElementById("board"); // variable returning html element
 
 	for (let row = 0; row < rows; row++) { // create array with objects
@@ -94,7 +94,7 @@ document.getElementById("submit").onclick = function() {
 		for (let row = 0; row < objArr.length; row++) {
 			for (let col = 0; col < objArr[row].length; col++) {
 
-				let bombCount = 0;
+				let numberOfNeighbourBombs = 0;
 				if ( objArr[row][col].fill === 9) continue;
 
 					for (let check = 0; check < checkId.length; check++) { // dla każdego elementu z checkId
@@ -102,12 +102,12 @@ document.getElementById("submit").onclick = function() {
 						const dir = checkId[check];
 						if (row + dir.x >= 0 && row + dir.x < objArr.length && col + dir.y >= 0 && col + dir.y < objArr[row].length)  // pola do sprawdzenia, występujące w tabicy
 							if ( objArr[row + dir.x][col + dir.y] === 9)
-								bombCount += 1;
+								numberOfNeighbourBombs += 1;
 					}
 
-					objArr[row][col].fill = bombCount;
-				}
+					objArr[row][col].fill = numberOfNeighbourBombs;
 			}
+		}
 	}
 
 	flagNumbers();
