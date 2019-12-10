@@ -94,9 +94,8 @@ document.getElementById("submit").onclick = function() {
 
 			if (nextIdx >= 0 && nextIdx < array.length && nextIdy >= 0 && nextIdy < array[i].length) { // pola do sprawdzenia, występujące w tabicy
 
-				let filteredArr = [];
-				filteredArr.push(array[nextIdx][nextIdy].fill === 9);
-				array[i][j].fill = filteredArr.length;
+				// sprawdzam ile elementów spełnia warunek array.fill === 9
+				// ilość tych elementów przypisuję do sprawdzanego elementu array[i][j].fill
 
 			}
 
