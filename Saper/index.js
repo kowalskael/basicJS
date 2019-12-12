@@ -73,7 +73,7 @@ document.getElementById("submit").onclick = function() {
 	//play
 	function userPlay(board, row, col) {
 
-		if (board[row][col].fill === 0) {
+		if (board[row][col].fill === 0 && board[row][col].state === 'hidden' ) {
 
 			board[row][col].state = 'revealed';
 
@@ -83,28 +83,20 @@ document.getElementById("submit").onclick = function() {
 
 				if (row + dir.row >= 0 && row + dir.row < board.length && col + dir.col >= 0 && col + dir.col < board.length) {
 
-						if (0 < board[row + dir.row][col + dir.col].fill && board[row + dir.row][col + dir.col].fill <= 8)
-							board[row + dir.row][col + dir.col].state = 'revealed';
-
-					if (board[row + dir.row][col + dir.col].fill === 0)
+					if (0 < board[row + dir.row][col + dir.col].fill && board[row + dir.row][col + dir.col].fill <= 8 && board[row][col].state === 'hidden')
 						board[row + dir.row][col + dir.col].state = 'revealed';
 
-				}
+					if (board[row + dir.row][col + dir.col].fill === 0 && board[row][col].state === 'hidden')
+						board[row + dir.row][col + dir.col].state = 'revealed';
+					 userPlay(board, row + dir.row, col + dir.col)
+
+				} 
 			}
 
-				// jeśli obiekt sąsiadujący ma fill: 1-8, return obiekt.state: 'revealed';
-				// jeśli obiekt sąsiadujący ma fill: 0, zmień jego state: 'revealed', wywołaj na nim funkcję clickEmptyOrDoubleClick()
-				// warunek stopujący rekurencję to brak obiektów fill: 0 && state hidden w sąsiedztwie
-
 		}
 
-		if (board[row][col].fill > 0 && board[row][col].fill <= 8) {
+		if (board[row][col].fill > 0 && board[row][col].fill <= 8 && board[row][col].state === 'hidden') {
 			board[row][col].state = 'revealed';
-		}
-
-		if (board[row][col].fill === 9) {
-			board[row][col].state = 'revealed';
-			// end of game
 		}
 
 		return board;
@@ -112,7 +104,7 @@ document.getElementById("submit").onclick = function() {
 
 	let boardTest = [[{"fill":2,"state":"hidden"},{"fill":2,"state":"hidden"},{"fill":1,"state":"hidden"},{"fill":0,"state":"hidden"},{"fill":0,"state":"hidden"},{"fill":0,"state":"hidden"},{"fill":0,"state":"hidden"},{"fill":0,"state":"hidden"}],[{"fill":9,"state":"hidden"},{"fill":9,"state":"hidden"},{"fill":1,"state":"hidden"},{"fill":0,"state":"hidden"},{"fill":0,"state":"hidden"},{"fill":1,"state":"hidden"},{"fill":1,"state":"hidden"},{"fill":1,"state":"hidden"}],[{"fill":2,"state":"hidden"},{"fill":3,"state":"hidden"},{"fill":2,"state":"hidden"},{"fill":1,"state":"hidden"},{"fill":0,"state":"hidden"},{"fill":1,"state":"hidden"},{"fill":9,"state":"hidden"},{"fill":1,"state":"hidden"}],[{"fill":0,"state":"hidden"},{"fill":1,"state":"hidden"},{"fill":9,"state":"hidden"},{"fill":1,"state":"hidden"},{"fill":1,"state":"hidden"},{"fill":2,"state":"hidden"},{"fill":2,"state":"hidden"},{"fill":1,"state":"hidden"}],[{"fill":0,"state":"hidden"},{"fill":1,"state":"hidden"},{"fill":1,"state":"hidden"},{"fill":1,"state":"hidden"},{"fill":1,"state":"hidden"},{"fill":9,"state":"hidden"},{"fill":1,"state":"hidden"},{"fill":0,"state":"hidden"}],[{"fill":0,"state":"hidden"},{"fill":0,"state":"hidden"},{"fill":1,"state":"hidden"},{"fill":1,"state":"hidden"},{"fill":3,"state":"hidden"},{"fill":2,"state":"hidden"},{"fill":3,"state":"hidden"},{"fill":1,"state":"hidden"}],[{"fill":1,"state":"hidden"},{"fill":1,"state":"hidden"},{"fill":3,"state":"hidden"},{"fill":9,"state":"hidden"},{"fill":3,"state":"hidden"},{"fill":9,"state":"hidden"},{"fill":3,"state":"hidden"},{"fill":9,"state":"hidden"}],[{"fill":1,"state":"hidden"},{"fill":9,"state":"hidden"},{"fill":3,"state":"hidden"},{"fill":9,"state":"hidden"},{"fill":3,"state":"hidden"},{"fill":2,"state":"hidden"},{"fill":9,"state":"hidden"},{"fill":2,"state":"hidden"}]];
 
-	let userClickedOnBoard = userPlay(boardTest, 5, 1);
+	let userClickedOnBoard = userPlay(boardTest, 2, 4);
 	console.table(userClickedOnBoard);
 
 	let boardContainer = document.getElementById('board');
