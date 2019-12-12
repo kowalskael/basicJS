@@ -71,48 +71,48 @@ document.getElementById("submit").onclick = function() {
 	//console.log(JSON.stringify(board));
 
 	//play
-	function userPlay(board, row, col) {
+	function userClicks(board, row, col) {
 
+		// click on empty
 		if (board[row][col].fill === 0 && board[row][col].state === 'hidden' ) {
 
-			board[row][col].state = 'revealed';
+			board[row][col].state = 'revealed'; // change state on clicked element
 
-			for (let check = 0; check < checkId.length; check += 1) {
+			for (let check = 0; check < checkId.length; check += 1) { // check neighbours
 
 				let dir = checkId[check];
 
-				if (row + dir.row >= 0 && row + dir.row < board.length && col + dir.col >= 0 && col + dir.col < board.length) {
+				if (row + dir.row >= 0 && row + dir.row < board.length && col + dir.col >= 0 && col + dir.col < board.length) { // pass valid index
 
-					if (0 < board[row + dir.row][col + dir.col].fill && board[row + dir.row][col + dir.col].fill <= 8 && board[row][col].state === 'hidden')
+					if (0 < board[row + dir.row][col + dir.col].fill && board[row + dir.row][col + dir.col].fill <= 8 && board[row][col].state === 'hidden') // if neighbours are numbers, reveal them
 						board[row + dir.row][col + dir.col].state = 'revealed';
 
-					if (board[row + dir.row][col + dir.col].fill === 0 && board[row][col].state === 'hidden')
+					if (board[row + dir.row][col + dir.col].fill === 0 && board[row][col].state === 'hidden') // if neighbour is 0, reveal it and start userClicks() on it
 						board[row + dir.row][col + dir.col].state = 'revealed';
-					 userPlay(board, row + dir.row, col + dir.col)
+						userClicks(board, row + dir.row, col + dir.col)
 
 				}
 			}
-
 		}
 
+		// click on numbers
 		if (board[row][col].fill > 0 && board[row][col].fill <= 8 && board[row][col].state === 'hidden') {
 			board[row][col].state = 'revealed';
 		}
 
-
+		// click on bomb
 		if (board[row][col].fill === 9) {
 			for (let rows = 0; rows < board.length; rows++) {
 				for (let cols = 0; cols < board[rows].length; cols++) {
-					board[rows][cols].state = 'revealed';
+					board[rows][cols].state = 'revealed'; // reveal all elements of board
 					if (board[rows][cols].fill === 9) {
-						board[rows][cols].state = 'bomb';
+						board[rows][cols].state = 'bomb'; // change color
 					}
 					if (board[rows][cols].fill > 0 && board[rows][cols].fill <= 8) {
-						board[rows][cols].state = 'number';
+						board[rows][cols].state = 'number'; // change color
 					}
 				}
 			}
-
 
 		}
 
@@ -121,7 +121,7 @@ document.getElementById("submit").onclick = function() {
 
 	let boardTest = [[{"fill":2,"state":"hidden"},{"fill":2,"state":"hidden"},{"fill":1,"state":"hidden"},{"fill":0,"state":"hidden"},{"fill":0,"state":"hidden"},{"fill":0,"state":"hidden"},{"fill":0,"state":"hidden"},{"fill":0,"state":"hidden"}],[{"fill":9,"state":"hidden"},{"fill":9,"state":"hidden"},{"fill":1,"state":"hidden"},{"fill":0,"state":"hidden"},{"fill":0,"state":"hidden"},{"fill":1,"state":"hidden"},{"fill":1,"state":"hidden"},{"fill":1,"state":"hidden"}],[{"fill":2,"state":"hidden"},{"fill":3,"state":"hidden"},{"fill":2,"state":"hidden"},{"fill":1,"state":"hidden"},{"fill":0,"state":"hidden"},{"fill":1,"state":"hidden"},{"fill":9,"state":"hidden"},{"fill":1,"state":"hidden"}],[{"fill":0,"state":"hidden"},{"fill":1,"state":"hidden"},{"fill":9,"state":"hidden"},{"fill":1,"state":"hidden"},{"fill":1,"state":"hidden"},{"fill":2,"state":"hidden"},{"fill":2,"state":"hidden"},{"fill":1,"state":"hidden"}],[{"fill":0,"state":"hidden"},{"fill":1,"state":"hidden"},{"fill":1,"state":"hidden"},{"fill":1,"state":"hidden"},{"fill":1,"state":"hidden"},{"fill":9,"state":"hidden"},{"fill":1,"state":"hidden"},{"fill":0,"state":"hidden"}],[{"fill":0,"state":"hidden"},{"fill":0,"state":"hidden"},{"fill":1,"state":"hidden"},{"fill":1,"state":"hidden"},{"fill":3,"state":"hidden"},{"fill":2,"state":"hidden"},{"fill":3,"state":"hidden"},{"fill":1,"state":"hidden"}],[{"fill":1,"state":"hidden"},{"fill":1,"state":"hidden"},{"fill":3,"state":"hidden"},{"fill":9,"state":"hidden"},{"fill":3,"state":"hidden"},{"fill":9,"state":"hidden"},{"fill":3,"state":"hidden"},{"fill":9,"state":"hidden"}],[{"fill":1,"state":"hidden"},{"fill":9,"state":"hidden"},{"fill":3,"state":"hidden"},{"fill":9,"state":"hidden"},{"fill":3,"state":"hidden"},{"fill":2,"state":"hidden"},{"fill":9,"state":"hidden"},{"fill":2,"state":"hidden"}]];
 
-	let userClickedOnBoard = userPlay(boardTest, 2, 6);
+	let userClickedOnBoard = userClicks(boardTest, 5, 1);
 	console.table(userClickedOnBoard);
 
 	let boardContainer = document.getElementById('board');

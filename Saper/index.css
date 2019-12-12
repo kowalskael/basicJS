@@ -67,7 +67,7 @@ body {
 }
 
 .hidden {
-    background: #edeae1;
+    background: chartreuse;
     border-style: solid;
     border-width: 1px;
     box-sizing: border-box;
@@ -85,10 +85,6 @@ body {
     border-style: solid;
     border-width: 1px;
     box-sizing: border-box;
-}
-
-.empty {
-
 }
 
 .number {
