@@ -90,7 +90,7 @@ document.getElementById("submit").onclick = function() {
 						board[row + dir.row][col + dir.col].state = 'revealed';
 					 userPlay(board, row + dir.row, col + dir.col)
 
-				} 
+				}
 			}
 
 		}
@@ -99,12 +99,29 @@ document.getElementById("submit").onclick = function() {
 			board[row][col].state = 'revealed';
 		}
 
+
+		if (board[row][col].fill === 9) {
+			for (let rows = 0; rows < board.length; rows++) {
+				for (let cols = 0; cols < board[rows].length; cols++) {
+					board[rows][cols].state = 'revealed';
+					if (board[rows][cols].fill === 9) {
+						board[rows][cols].state = 'bomb';
+					}
+					if (board[rows][cols].fill > 0 && board[rows][cols].fill <= 8) {
+						board[rows][cols].state = 'number';
+					}
+				}
+			}
+
+
+		}
+
 		return board;
 	}
 
 	let boardTest = [[{"fill":2,"state":"hidden"},{"fill":2,"state":"hidden"},{"fill":1,"state":"hidden"},{"fill":0,"state":"hidden"},{"fill":0,"state":"hidden"},{"fill":0,"state":"hidden"},{"fill":0,"state":"hidden"},{"fill":0,"state":"hidden"}],[{"fill":9,"state":"hidden"},{"fill":9,"state":"hidden"},{"fill":1,"state":"hidden"},{"fill":0,"state":"hidden"},{"fill":0,"state":"hidden"},{"fill":1,"state":"hidden"},{"fill":1,"state":"hidden"},{"fill":1,"state":"hidden"}],[{"fill":2,"state":"hidden"},{"fill":3,"state":"hidden"},{"fill":2,"state":"hidden"},{"fill":1,"state":"hidden"},{"fill":0,"state":"hidden"},{"fill":1,"state":"hidden"},{"fill":9,"state":"hidden"},{"fill":1,"state":"hidden"}],[{"fill":0,"state":"hidden"},{"fill":1,"state":"hidden"},{"fill":9,"state":"hidden"},{"fill":1,"state":"hidden"},{"fill":1,"state":"hidden"},{"fill":2,"state":"hidden"},{"fill":2,"state":"hidden"},{"fill":1,"state":"hidden"}],[{"fill":0,"state":"hidden"},{"fill":1,"state":"hidden"},{"fill":1,"state":"hidden"},{"fill":1,"state":"hidden"},{"fill":1,"state":"hidden"},{"fill":9,"state":"hidden"},{"fill":1,"state":"hidden"},{"fill":0,"state":"hidden"}],[{"fill":0,"state":"hidden"},{"fill":0,"state":"hidden"},{"fill":1,"state":"hidden"},{"fill":1,"state":"hidden"},{"fill":3,"state":"hidden"},{"fill":2,"state":"hidden"},{"fill":3,"state":"hidden"},{"fill":1,"state":"hidden"}],[{"fill":1,"state":"hidden"},{"fill":1,"state":"hidden"},{"fill":3,"state":"hidden"},{"fill":9,"state":"hidden"},{"fill":3,"state":"hidden"},{"fill":9,"state":"hidden"},{"fill":3,"state":"hidden"},{"fill":9,"state":"hidden"}],[{"fill":1,"state":"hidden"},{"fill":9,"state":"hidden"},{"fill":3,"state":"hidden"},{"fill":9,"state":"hidden"},{"fill":3,"state":"hidden"},{"fill":2,"state":"hidden"},{"fill":9,"state":"hidden"},{"fill":2,"state":"hidden"}]];
 
-	let userClickedOnBoard = userPlay(boardTest, 2, 4);
+	let userClickedOnBoard = userPlay(boardTest, 2, 6);
 	console.table(userClickedOnBoard);
 
 	let boardContainer = document.getElementById('board');

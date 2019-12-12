@@ -74,7 +74,7 @@ body {
 }
 
 .revealed {
-    background: darkgray;
+    background: lightgray;
     border-style: solid;
     border-width: 1px;
     box-sizing: border-box;
@@ -92,9 +92,12 @@ body {
 }
 
 .number {
-
+    background: darkgray;
+    border-style: solid;
+    border-width: 1px;
+    box-sizing: border-box;
 }
 
 .bomb {
-
+    background: black;
 }
