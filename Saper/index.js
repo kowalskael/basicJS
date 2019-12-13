@@ -136,13 +136,25 @@ document.getElementById("submit").onclick = function() {
 		function doubleBtn() {
 
 			// click on element with number
+			if (board[row][col].fill > 0 && board[row][col].fill <= 8 && board[row][col].state === 'revealed') {
 
-			// if its all neighbours with bombs are be flagged
-			// reveal the rest of neighbours
+				for (let check = 0; check < checkId.length; check += 1) { // check neighbours
 
-			// if its all neighbours with bombs are not flagged = game over
-			
+					let dir = checkId[check];
 
+					if (row + dir.row >= 0 && row + dir.row < board.length && col + dir.col >= 0 && col + dir.col < board.length) { // pass valid index
+
+						// if its all neighbours with bombs are be flagged
+						// reveal the rest of neighbours (recursion)
+
+						// if its all neighbours with bombs are not flagged = game over
+
+					}
+
+				}
+				
+
+			}
 		}
 
 		leftBtn();
