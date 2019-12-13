@@ -124,24 +124,30 @@ document.getElementById("submit").onclick = function() {
 	let userClickedOnBoard = userClicks(boardTest, 1, 4);
 	console.table(userClickedOnBoard);
 
-	let boardContainer = document.getElementById('board');
+	function draw(board) {
 
-	for (let i = 0; i < boardTest.length; i++) {
-		let rows = document.createElement("div");
-		boardContainer.append(rows);
-		for (let j = 0; j < boardTest[i].length; j++) {
-			let cols = document.createElement("div");
-			rows.append(cols);
-			cols.classList.add(boardTest[i][j].state);
-			if (boardTest[i][j].fill > 0 && boardTest[i][j].fill < 9 && boardTest[i][j].state === 'revealed') {
-				cols.innerHTML = boardTest[i][j].fill;
+		let boardContainer = document.getElementById('board');
+
+		for (let i = 0; i < board.length; i++) {
+			let rows = document.createElement("div");
+			boardContainer.append(rows);
+			for (let j = 0; j < board[i].length; j++) {
+				let cols = document.createElement("div");
+				rows.append(cols);
+				cols.classList.add(board[i][j].state);
+				if (board[i][j].fill > 0 && board[i][j].fill < 9 && board[i][j].state === 'revealed') {
+					cols.innerHTML = board[i][j].fill;
+				}
+				if (board[i][j].fill === 9 && board[i][j].state === 'revealed') {
+					cols.innerHTML = 'B';
+				}
+				board[i][j].element = cols;
 			}
-			if (boardTest[i][j].fill === 9 && boardTest[i][j].state === 'revealed') {
-				cols.innerHTML = 'B';
-			}
-			boardTest[i][j].element = cols;
 		}
 	}
+
+	draw(boardTest);
+
 
 };
 
