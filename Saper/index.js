@@ -144,16 +144,16 @@ document.getElementById("submit").onclick = function() {
 
 					if (row + dir.row >= 0 && row + dir.row < board.length && col + dir.col >= 0 && col + dir.col < board.length) { // pass valid index
 
-						// if its all neighbours with bombs are be flagged
-						// reveal the rest of neighbours (recursion)
+						if (board[row + dir.row][col + dir.col].fill === 9 && board[row + dir.row][col + dir.col].state === 'flagged') {
+							// reveal the rest of neighbours, recursion
+						}
 
-						// if its all neighbours with bombs are not flagged = game over
-
+						if (board[row + dir.row][col + dir.col].fill === 9 && board[row + dir.row][col + dir.col].state === 'hidden') {
+							// game over
+						}
 					}
 
 				}
-				
-
 			}
 		}
 
