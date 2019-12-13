@@ -71,9 +71,7 @@ document.getElementById("submit").onclick = function() {
 	//console.log(JSON.stringify(board));
 
 	//play
-	function userClicks(board, row, col) {
-
-		function leftBtn() {
+	function boardCheck(board, row, col) {
 
 			// click on empty
 			if (board[row][col].fill === 0 && board[row][col].state === 'hidden' ) {
@@ -91,7 +89,7 @@ document.getElementById("submit").onclick = function() {
 
 						if (board[row + dir.row][col + dir.col].fill === 0 && board[row][col].state === 'hidden') // if neighbour is 0, reveal it and start userClicks() on it
 							board[row + dir.row][col + dir.col].state = 'revealed';
-						userClicks(board, row + dir.row, col + dir.col)
+						boardCheck(board, row + dir.row, col + dir.col)
 
 					}
 				}
@@ -118,53 +116,12 @@ document.getElementById("submit").onclick = function() {
 
 			}
 
-		}
-
-		function rightBtn() {
-
-			// click on every element that is hidden
-			if(board[row][col].state === 'hidden') {
-				board[row][col].state = 'flagged';
-			}
-
-			if(board[row][col].state === 'flagged') {
-				board[row][col].state = 'hidden';
-			}
-
-		}
-
-		function doubleBtn() {
-
-			// click on element with number
-			if (board[row][col].fill > 0 && board[row][col].fill <= 8 && board[row][col].state === 'revealed') {
-
-				for (let check = 0; check < checkId.length; check += 1) { // check neighbours
-
-					let dir = checkId[check];
-
-					if (row + dir.row >= 0 && row + dir.row < board.length && col + dir.col >= 0 && col + dir.col < board.length) { // pass valid index
-
-						if (board[row + dir.row][col + dir.col].fill === 9 && board[row + dir.row][col + dir.col].state === 'flagged') {
-							// reveal the rest of neighbours, recursion
-						}
-
-						if (board[row + dir.row][col + dir.col].fill === 9 && board[row + dir.row][col + dir.col].state === 'hidden') {
-							// game over
-						}
-					}
-
-				}
-			}
-		}
-
-		leftBtn();
-
 		return board;
 	}
 
 	let boardTest = [[{"fill":2,"state":"hidden"},{"fill":2,"state":"hidden"},{"fill":1,"state":"hidden"},{"fill":0,"state":"hidden"},{"fill":0,"state":"hidden"},{"fill":0,"state":"hidden"},{"fill":0,"state":"hidden"},{"fill":0,"state":"hidden"}],[{"fill":9,"state":"hidden"},{"fill":9,"state":"hidden"},{"fill":1,"state":"hidden"},{"fill":0,"state":"hidden"},{"fill":0,"state":"hidden"},{"fill":1,"state":"hidden"},{"fill":1,"state":"hidden"},{"fill":1,"state":"hidden"}],[{"fill":2,"state":"hidden"},{"fill":3,"state":"hidden"},{"fill":2,"state":"hidden"},{"fill":1,"state":"hidden"},{"fill":0,"state":"hidden"},{"fill":1,"state":"hidden"},{"fill":9,"state":"hidden"},{"fill":1,"state":"hidden"}],[{"fill":0,"state":"hidden"},{"fill":1,"state":"hidden"},{"fill":9,"state":"hidden"},{"fill":1,"state":"hidden"},{"fill":1,"state":"hidden"},{"fill":2,"state":"hidden"},{"fill":2,"state":"hidden"},{"fill":1,"state":"hidden"}],[{"fill":0,"state":"hidden"},{"fill":1,"state":"hidden"},{"fill":1,"state":"hidden"},{"fill":1,"state":"hidden"},{"fill":1,"state":"hidden"},{"fill":9,"state":"hidden"},{"fill":1,"state":"hidden"},{"fill":0,"state":"hidden"}],[{"fill":0,"state":"hidden"},{"fill":0,"state":"hidden"},{"fill":1,"state":"hidden"},{"fill":1,"state":"hidden"},{"fill":3,"state":"hidden"},{"fill":2,"state":"hidden"},{"fill":3,"state":"hidden"},{"fill":1,"state":"hidden"}],[{"fill":1,"state":"hidden"},{"fill":1,"state":"hidden"},{"fill":3,"state":"hidden"},{"fill":9,"state":"hidden"},{"fill":3,"state":"hidden"},{"fill":9,"state":"hidden"},{"fill":3,"state":"hidden"},{"fill":9,"state":"hidden"}],[{"fill":1,"state":"hidden"},{"fill":9,"state":"hidden"},{"fill":3,"state":"hidden"},{"fill":9,"state":"hidden"},{"fill":3,"state":"hidden"},{"fill":2,"state":"hidden"},{"fill":9,"state":"hidden"},{"fill":2,"state":"hidden"}]];
 
-	let userClickedOnBoard = userClicks(boardTest, 1, 4);
+	let userClickedOnBoard = boardCheck(boardTest, 4, 5);
 	console.table(userClickedOnBoard);
 
 	function draw(board) {
@@ -178,19 +135,61 @@ document.getElementById("submit").onclick = function() {
 				let cols = document.createElement("div");
 				rows.append(cols);
 				cols.classList.add(board[i][j].state);
-				if (board[i][j].fill > 0 && board[i][j].fill < 9 && board[i][j].state === 'revealed') {
-					cols.innerHTML = board[i][j].fill;
+				if (board[i][j].fill > 0 && board[i][j].fill < 9 ) {
+					if (board[i][j].state === 'revealed' || board[i][j].state === 'number') {
+						cols.innerHTML = board[i][j].fill;
+					}
 				}
-				if (board[i][j].fill === 9 && board[i][j].state === 'revealed') {
-					cols.innerHTML = 'B';
+				if (board[i][j].fill === 9) {
+					if (board[i][j].state === 'bomb') {
+						cols.innerHTML = 'B';
+					}
+
 				}
-				board[i][j].element = cols;
 			}
 		}
 	}
 
 	draw(boardTest);
 
+
+	// szkic kolejnych funkcji
+	function flagBoard(board, row, col) {
+
+		// click on every element that is hidden
+		if(board[row][col].state === 'hidden') {
+			board[row][col].state = 'flagged';
+		}
+
+		if(board[row][col].state === 'flagged') {
+			board[row][col].state = 'hidden';
+		}
+
+	}
+
+	function revealWithFlags(board, row, col) {
+
+		// click on element with number
+		if (board[row][col].fill > 0 && board[row][col].fill <= 8 && board[row][col].state === 'revealed') {
+
+			for (let check = 0; check < checkId.length; check += 1) { // check neighbours
+
+				let dir = checkId[check];
+
+				if (row + dir.row >= 0 && row + dir.row < board.length && col + dir.col >= 0 && col + dir.col < board.length) { // pass valid index
+
+					if (board[row + dir.row][col + dir.col].fill === 9 && board[row + dir.row][col + dir.col].state === 'flagged') {
+						// reveal the rest of neighbours, recursion
+					}
+
+					if (board[row + dir.row][col + dir.col].fill === 9 && board[row + dir.row][col + dir.col].state === 'hidden') {
+						// game over
+					}
+				}
+
+			}
+		}
+	}
 
 };
 

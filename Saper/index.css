@@ -99,5 +99,8 @@ body {
 }
 
 .bomb {
-    background: black;
+    background: red;
+    border-style: solid;
+    border-width: 1px;
+    box-sizing: border-box;
 }
