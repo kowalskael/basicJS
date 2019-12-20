@@ -1,13 +1,13 @@
-//play'
+// check index bounds
 export const isInBounds = (array, row, col) => row >= 0 && row >= 0 && col < array.length && col < array[row].length;
 
+// play
 export function boardCheck(board, row, col) {
 
 	// click on empty
 	if (board[row][col].fill === 0 && board[row][col].state === 'hidden' ) {
 
 		board[row][col].state = 'revealed'; // change state on clicked element
-
 
 		for (let check = 0; check < checkId.length; check += 1) { // check neighbours
 
