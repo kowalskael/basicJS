@@ -1,5 +1,60 @@
+// array for checking neighbours
+const checkId = [
+	{row: -1, col: -1}, {row: -1, col: 0}, {row: -1, col: +1},
+	{row: 0, col: -1}, {row: 0, col: +1},
+	{row: +1, col: -1}, {row: +1, col: 0}, {row: +1, col: +1}];
+
 // check index bounds
-export const isInBounds = (array, row, col) => row >= 0 && row >= 0 && col < array.length && col < array[row].length;
+const isInBounds = (array, row, col) => row >= 0 && row >= 0 && col < array.length && col < array[row].length;
+
+// start
+export function createBoard(width, height, numBombs) {
+
+	//create array
+	const board = [];
+
+	// create array with objects
+	for (let row = 0; row < width; row++) {
+		board[row] = [];
+		for (let col = 0; col < height; col++) {
+			board[row][col] = { fill: 0, state: 'hidden' };
+		}
+	}
+
+	// drawing bombs
+	for (let bomb = 0; bomb <= numBombs; bomb +=1 ) {
+		do {
+			const row = Math.floor(Math.random() * board.length);
+			const col = Math.floor(Math.random() * board[row].length);
+			board[row][col].fill = 9;
+		} while (board.find(index => index.fill === 9));
+	}
+
+	// assign numbers
+	for (let row = 0; row < board.length; row++) {
+		for (let col = 0; col < board[row].length; col++) {
+
+			let numberOfNeighbourBombs = 0;
+			if ( board[row][col].fill === 9) continue; // ignore elements with bombs
+
+			for (let check = 0; check < checkId.length; check += 1) {
+
+				let dir = checkId[check];
+
+				if (isInBounds(board, row + dir.row, col + dir.col)) {
+					if ( board[row + dir.row][col + dir.col].fill === 9) {
+						numberOfNeighbourBombs += 1;
+					}
+				}
+
+				board[row][col].fill = numberOfNeighbourBombs;
+
+			}
+		}
+	}
+
+	return board;
+}
 
 // play
 export function boardCheck(board, row, col) {
@@ -10,12 +65,6 @@ export function boardCheck(board, row, col) {
 		board[row][col].state = 'revealed'; // change state on clicked element
 
 		for (let check = 0; check < checkId.length; check += 1) { // check neighbours
-
-			// array for checking neighbours
-			const checkId = [
-				{row: -1, col: -1}, {row: -1, col: 0}, {row: -1, col: +1},
-				{row: 0, col: -1}, {row: 0, col: +1},
-				{row: +1, col: -1}, {row: +1, col: 0}, {row: +1, col: +1}];
 
 			let dir = checkId[check];
 
