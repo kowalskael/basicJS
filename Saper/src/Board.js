@@ -5,14 +5,16 @@ const checkId = [
   { row: +1, col: -1 }, { row: +1, col: 0 }, { row: +1, col: +1 }];
 
 export class Board {
+
   constructor(width, height) {
+
     //create array
     const board = [];
 
     // create array with objects
-    for (let row = 0; row < width; row++) {
+    for (let row = 0; row < height; row++) {
       board[row] = [];
-      for (let col = 0; col < height; col++) {
+      for (let col = 0; col < width; col++) {
         board[row][col] = { fill: 0, state: 'hidden' };
       }
     }
@@ -21,6 +23,7 @@ export class Board {
   }
 
   drawBombs(numBombs) {
+
     // drawing bombs
     for (let bomb = 0; bomb <= numBombs; bomb += 1) {
       do {
@@ -40,7 +43,7 @@ export class Board {
 
         for (let check = 0; check < checkId.length; check += 1) {
 
-          let dir = checkId[check];
+          const dir = checkId[check];
 
           if (this.isInBounds(row + dir.row, col + dir.col)) {
             console.log(row + dir.row, col + dir.col);
@@ -59,8 +62,9 @@ export class Board {
     return row >= 0 && col >= 0 && row < this.board.length && col < this.board[row].length;
   }
 
-// play
+  // play
   boardCheck(row, col) {
+
     // click on empty
     if (this.board[row][col].fill === 0 && this.board[row][col].state === 'hidden') {
 
@@ -68,7 +72,7 @@ export class Board {
 
       for (let check = 0; check < checkId.length; check += 1) { // check neighbours
 
-        let dir = checkId[check];
+        const dir = checkId[check];
 
         if (this.isInBounds(row + dir.row, col + dir.col)) { // pass valid index
 
@@ -89,7 +93,7 @@ export class Board {
     }
 
     // click on bomb
-    if (this.board[row][col].fill === 9) {
+    if (this.board[row][col].fill === 9 && this.board[row][col].state === 'hidden') {
       for (let rows = 0; rows < this.board.length; rows++) {
         for (let cols = 0; cols < this.board[rows].length; cols++) {
           this.board[rows][cols].state = 'revealed'; // reveal all elements of board
@@ -104,33 +108,8 @@ export class Board {
     }
   }
 
-  draw(boardContainer) {
-    // const boardContainer = document.getElementById('board');
 
-    for (let i = 0; i < this.board.length; i++) {
-      let rows = document.createElement("div");
-      boardContainer.append(rows);
-      for (let j = 0; j < this.board[i].length; j++) {
-        let cols = document.createElement("div");
-        rows.append(cols);
-        cols.classList.add(this.board[i][j].state);
-        if (this.board[i][j].fill > 0 && this.board[i][j].fill < 9) {
-          if (this.board[i][j].state === 'revealed' || this.board[i][j].state === 'number') {
-            cols.innerHTML = this.board[i][j].fill;
-          }
-        }
-        if (this.board[i][j].fill === 9) {
-          if (this.board[i][j].state === 'bomb') {
-            cols.innerHTML = 'B';
-          }
-
-        }
-      }
-    }
-  }
-
-
-// szkic kolejnych funkcji
+  // szkic kolejnych funkcji
   flagBoard(row, col) {
 
     // click on every element that is hidden
@@ -151,7 +130,7 @@ export class Board {
 
       for (let check = 0; check < checkId.length; check += 1) { // check neighbours
 
-        let dir = checkId[check];
+        const dir = checkId[check];
 
         if (row + dir.row >= 0 && row + dir.row < this.board.length && col + dir.col >= 0 && col + dir.col < this.board.length) { // pass valid index
 
