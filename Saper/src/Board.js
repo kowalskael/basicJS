@@ -109,13 +109,11 @@ export class Board {
 
   draw(boardContainer) {
 
-    // const boardContainer = document.getElementById('board');
-
     for (let i = 0; i < this.board.length; i++) {
-      let rows = document.createElement("div");
+      const rows = document.createElement("div");
       boardContainer.append(rows);
       for (let j = 0; j < this.board[i].length; j++) {
-        let cols = document.createElement("div");
+        const cols = document.createElement("div");
         rows.append(cols);
         cols.classList.add(this.board[i][j].state);
         if (this.board[i][j].fill > 0 && this.board[i][j].fill < 9) {
