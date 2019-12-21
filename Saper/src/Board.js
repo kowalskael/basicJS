@@ -6,7 +6,6 @@ const checkId = [
 
 export class Board {
   constructor(width, height) {
-
     //create array
     const board = [];
 
@@ -17,45 +16,48 @@ export class Board {
         board[row][col] = { fill: 0, state: 'hidden' };
       }
     }
+
+    this.board = board;
   }
 
   drawBombs(numBombs) {
     // drawing bombs
     for (let bomb = 0; bomb <= numBombs; bomb += 1) {
       do {
-        const row = Math.floor(Math.random() * board.length);
-        const col = Math.floor(Math.random() * board[row].length);
-        board[row][col].fill = 9;
+        const row = Math.floor(Math.random() * this.board.length);
+        const col = Math.floor(Math.random() * this.board[row].length);
+        this.board[row][col].fill = 9;
       }
-      while (board.find(index => index.fill === 9));
+      while (this.board.find(index => index.fill === 9));
     }
 
     // assign numbers
-    for (let row = 0; row < board.length; row++) {
-      for (let col = 0; col < board[row].length; col++) {
+    for (let row = 0; row < this.board.length; row++) {
+      for (let col = 0; col < this.board[row].length; col++) {
 
         let numberOfNeighbourBombs = 0;
-        if (board[row][col].fill === 9) continue; // ignore elements with bombs
+        if (this.board[row][col].fill === 9) continue; // ignore elements with bombs
 
         for (let check = 0; check < checkId.length; check += 1) {
 
           let dir = checkId[check];
 
-          if (this.isInBounds(board, row + dir.row, col + dir.col)) {
-            if (board[row + dir.row][col + dir.col].fill === 9) {
+          if (this.isInBounds(row + dir.row, col + dir.col)) {
+            console.log(row + dir.row, col + dir.col);
+            if (this.board[row + dir.row][col + dir.col].fill === 9) {
               numberOfNeighbourBombs += 1;
             }
           }
 
-          board[row][col].fill = numberOfNeighbourBombs;
+          this.board[row][col].fill = numberOfNeighbourBombs;
         }
       }
     }
-
-    this.board = board;
   }
 
-  isInBounds = (row, col) => row >= 0 && row >= 0 && col < this.board.length && col < this.board[row].length;
+  isInBounds(row, col) {
+    return row >= 0 && col >= 0 && row < this.board.length && col < this.board[row].length;
+  }
 
 // play
   boardCheck(row, col) {
