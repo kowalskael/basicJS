@@ -20,6 +20,12 @@ document.getElementById("submit").onclick = function() {
 	boardTest.boardCheck(2, 2);
 	draw(document.getElementById('board'), boardTest);
 
+	if (boardTest.isLose()) {
+		// gameover
+	} else if (boardTest.isWin()) {
+		// winner
+	}
+
 };
 
 

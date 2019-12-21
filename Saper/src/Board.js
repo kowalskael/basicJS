@@ -108,6 +108,24 @@ export class Board {
     }
   }
 
+  isLose() {
+    for (let row = 0; row < this.board.length; row += 1) {
+      for (let col = 0; col < this.board[row].length; col += 1) {
+
+        // true if any board element with bomb is revealed
+        if (this.board[row][col].fill === 9 && this.board[row][col].state === 'revealed') {
+          return true;
+        }
+      }
+    }
+    return false;
+  }
+
+  isWin() {
+
+    // true if all elements without bombs are revealed
+    
+  }
 
   // szkic kolejnych funkcji
   flagBoard(row, col) {
