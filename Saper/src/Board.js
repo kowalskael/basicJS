@@ -5,14 +5,16 @@ const checkId = [
   { row: +1, col: -1 }, { row: +1, col: 0 }, { row: +1, col: +1 }];
 
 export class Board {
-  constructor(width, height) {
+
+  constructor(height, width) {
+
     //create array
     const board = [];
 
     // create array with objects
-    for (let row = 0; row < width; row++) {
+    for (let row = 0; row < height; row++) {
       board[row] = [];
-      for (let col = 0; col < height; col++) {
+      for (let col = 0; col < width; col++) {
         board[row][col] = { fill: 0, state: 'hidden' };
       }
     }
@@ -21,6 +23,7 @@ export class Board {
   }
 
   drawBombs(numBombs) {
+
     // drawing bombs
     for (let bomb = 0; bomb <= numBombs; bomb += 1) {
       do {
@@ -40,7 +43,7 @@ export class Board {
 
         for (let check = 0; check < checkId.length; check += 1) {
 
-          let dir = checkId[check];
+          const dir = checkId[check];
 
           if (this.isInBounds(row + dir.row, col + dir.col)) {
             console.log(row + dir.row, col + dir.col);
@@ -59,7 +62,7 @@ export class Board {
     return row >= 0 && col >= 0 && row < this.board.length && col < this.board[row].length;
   }
 
-// play
+  // play
   boardCheck(row, col) {
     // click on empty
     if (this.board[row][col].fill === 0 && this.board[row][col].state === 'hidden') {
@@ -68,7 +71,7 @@ export class Board {
 
       for (let check = 0; check < checkId.length; check += 1) { // check neighbours
 
-        let dir = checkId[check];
+        const dir = checkId[check];
 
         if (this.isInBounds(row + dir.row, col + dir.col)) { // pass valid index
 
@@ -105,6 +108,7 @@ export class Board {
   }
 
   draw(boardContainer) {
+
     // const boardContainer = document.getElementById('board');
 
     for (let i = 0; i < this.board.length; i++) {
