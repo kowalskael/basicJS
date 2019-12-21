@@ -5,7 +5,7 @@ const checkId = [
   { row: +1, col: -1 }, { row: +1, col: 0 }, { row: +1, col: +1 }];
 
 export class Board {
-  constructor(width, height, numBombs) {
+  constructor(width, height) {
 
     //create array
     const board = [];
@@ -19,7 +19,7 @@ export class Board {
     }
   }
 
-  drawBombs() {
+  drawBombs(numBombs) {
     // drawing bombs
     for (let bomb = 0; bomb <= numBombs; bomb += 1) {
       do {
