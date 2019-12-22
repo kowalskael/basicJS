@@ -96,12 +96,6 @@ export class Board {
       for (let rows = 0; rows < this.board.length; rows++) {
         for (let cols = 0; cols < this.board[rows].length; cols++) {
           this.board[rows][cols].state = 'revealed'; // reveal all elements of board
-          if (this.board[rows][cols].fill === 9) {
-            this.board[rows][cols].state = 'revealed' && 'bomb'; // change color
-          }
-          if (this.board[rows][cols].fill > 0 && this.board[rows][cols].fill <= 8) {
-            this.board[rows][cols].state = 'revealed' && 'number'; // change color
-          }
         }
       }
     }

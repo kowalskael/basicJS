@@ -20,6 +20,7 @@ document.getElementById("submit").onclick = function() {
 	boardTest.boardCheck(2, 2);
 
 	let boardDraw = new DOM(boardTest, document.getElementById('board'));
+	console.log(boardDraw);
 	boardDraw.update();
 
 	if (boardTest.isLose()) {

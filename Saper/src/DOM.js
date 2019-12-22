@@ -1,36 +1,48 @@
 // create DOM representation of board
 export class DOM {
 
-    constructor(board, boardContainer, rows, cols) {
-        for (let i = 0; i < board.board.length; i++) {
-            rows = document.createElement("div");
-            boardContainer.append(rows);
-            for (let j = 0; j < board.board[i].length; j++) {
-                cols = document.createElement("div");
-                rows.append(cols);
-                cols.classList.add(board.board[i][j].state);
-            }
-        }
+    constructor(board, boardContainer) {
 
         this.board = board;
-        this.cols = cols;
+
+        for (let row = 0; row < this.board.board.length; row += 1) {
+            const rows = document.createElement("div");
+            boardContainer.append(rows);
+            for (let col = 0; col < this.board.board[row].length; col += 1) {
+                const cols = document.createElement("div");
+                rows.append(cols);
+                cols.classList.add(this.board.board[row][col].state);
+            }
+        }
     }
 
     update() {
-        for (let i = 0; i < this.board.board.length; i++) {
-            for (let j = 0; j < this.board.board[i].length; j++) {
 
-                if (this.board.board[i][j].fill > 0 && this.board.board[i][j].fill < 9) {
-                    if (this.board.board[i][j].state === 'revealed' || this.board.board[i][j].state === 'number') {
-                        this.cols.innerHTML = this.board.board[i][j].fill;
+        for (let row = 0; row < this.board.board.length; row += 1) {
+            for (let col = 0; col < this.board.board[row].length; col += 1) {
+
+                // update changes made on board
+                // color, state, numbers and strings
+
+                // if user expose empty square, change state to revealed
+                if (this.board.board[row][col].fill === 0) {
+                    this.board.board[row][col].state = 'revealed';
+                }
+
+                // if user expose empty square, change state to revealed and assign number
+                if (this.board.board[row][col].fill > 0 && this.board.board[row][col].fill < 9) {
+                    if (this.board.board[row][col].state === 'revealed' && this.board.board[row][col].state === 'number') {
+                        this.board.board.cols.innerHTML = this.board.board[row][col].fill;
                     }
                 }
-                if (this.board.board[i][j].fill === 9) {
-                    if (this.board.board[i][j].state === 'bomb') {
-                        this.cols.innerHTML = 'B';
-                    }
 
+                // if user expose empty square, change state to revealed and assign string
+                if (this.board.board[row][col].fill === 9) {
+                    this.board.board[row][col].state = 'revealed' && 'bomb'; // change color
+                    this.board.board.cols.innerHTML = 'B';
                 }
+
+
             }
         }
 
