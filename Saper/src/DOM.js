@@ -34,12 +34,14 @@ export class DOM {
                 if (this.board.board[row][col].fill > 0 && this.board.board[row][col].fill < 9) {
                     if (this.board.board[row][col].state === 'revealed') {
                         this.board.board[row][col].element.innerHTML = this.board.board[row][col].fill;
+                        this.board.board[row][col].element.style.background = 'darkgray';
                     }
                 }
 
                 // if user expose empty square, change state to revealed and assign string
                 if (this.board.board[row][col].fill === 9 && this.board.board[row][col].state === 'revealed') {
                     this.board.board[row][col].element.innerHTML = 'B';
+                    this.board.board[row][col].element.style.background = 'red';
                 }
 
 

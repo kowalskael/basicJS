@@ -118,7 +118,6 @@ export class Board {
   isWin() {
 
     // true if all elements without bombs are revealed
-
     let numberOfNoBombs = 0;
     let numberOfNoBombsRevealed = 0;
 
