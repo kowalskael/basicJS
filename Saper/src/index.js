@@ -16,11 +16,18 @@ document.getElementById("submit").onclick = function() {
 	const numBombs = document.getElementById("bombNums").value;
 
 	let boardTest = new Board(columns, rows);
-	boardTest.drawBombs(numBombs);
-	boardTest.boardCheck(2, 2);
-
 	let boardDraw = new DOM(boardTest, document.getElementById('board'));
-	console.log(boardDraw);
+
+	// draw bombs after first click
+	let clickCount = 0;
+	document.getElementById("board").addEventListener('click', () => {
+		if (clickCount === 0) {
+			boardTest.drawBombs(numBombs);
+			console.log(boardTest);
+		}
+		clickCount++;
+	});
+
 	boardDraw.update();
 
 	if (boardTest.isLose()) {
