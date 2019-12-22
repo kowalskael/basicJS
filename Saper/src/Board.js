@@ -142,12 +142,7 @@ export class Board {
       }
     }
 
-    if (numberOfNoBombs === numberOfNoBombsRevealed) {
-      return true;
-    } else if (numberOfNoBombs !== numberOfNoBombsRevealed) {
-      return false;
-    }
-
+    return numberOfNoBombs === numberOfNoBombsRevealed;
   }
 
   // szkic kolejnych funkcji

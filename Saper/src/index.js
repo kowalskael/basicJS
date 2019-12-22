@@ -1,5 +1,5 @@
 import { Board } from './Board';
-import { draw } from './draw';
+import { createDOM } from './DOM';
 
 document.getElementById("play").style.display = "none";
 
@@ -18,7 +18,7 @@ document.getElementById("submit").onclick = function() {
 	let boardTest = new Board(columns, rows);
 	boardTest.drawBombs(numBombs);
 	boardTest.boardCheck(2, 2);
-	draw(document.getElementById('board'), boardTest);
+	createDOM(document.getElementById('board'), boardTest);
 
 	if (boardTest.isLose()) {
 		// gameover
