@@ -46,7 +46,6 @@ export class Board {
           const dir = checkId[check];
 
           if (this.isInBounds(row + dir.row, col + dir.col)) {
-            console.log(row + dir.row, col + dir.col);
             if (this.board[row + dir.row][col + dir.col].fill === 9) {
               numberOfNeighbourBombs += 1;
             }
