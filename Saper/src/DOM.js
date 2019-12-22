@@ -12,6 +12,7 @@ export class DOM {
                 const cols = document.createElement("div");
                 rows.append(cols);
                 cols.classList.add(this.board.board[row][col].state);
+                this.board.board[row][col].element = cols;
             }
         }
     }
@@ -31,15 +32,14 @@ export class DOM {
 
                 // if user expose empty square, change state to revealed and assign number
                 if (this.board.board[row][col].fill > 0 && this.board.board[row][col].fill < 9) {
-                    if (this.board.board[row][col].state === 'revealed' && this.board.board[row][col].state === 'number') {
-                        this.board.board.cols.innerHTML = this.board.board[row][col].fill;
+                    if (this.board.board[row][col].state === 'revealed') {
+                        this.board.board[row][col].element.innerHTML = this.board.board[row][col].fill;
                     }
                 }
 
                 // if user expose empty square, change state to revealed and assign string
-                if (this.board.board[row][col].fill === 9) {
-                    this.board.board[row][col].state = 'revealed' && 'bomb'; // change color
-                    this.board.board.cols.innerHTML = 'B';
+                if (this.board.board[row][col].fill === 9 && this.board.board[row][col].state === 'revealed') {
+                    this.board.board[row][col].element.innerHTML = 'B';
                 }
 
 
