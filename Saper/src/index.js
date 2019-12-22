@@ -1,6 +1,10 @@
 import { Board } from './Board';
 import { DOM } from './DOM';
 
+window.oncontextmenu = (e) => {
+	e.preventDefault();
+}
+
 document.getElementById("play").style.display = "none";
 
 document.getElementById("submit").onclick = function() {
@@ -27,6 +31,8 @@ document.getElementById("submit").onclick = function() {
 		}
 		clickCount++;
 	});
+
+	console.log(boardDraw);
 
 	boardDraw.update();
 

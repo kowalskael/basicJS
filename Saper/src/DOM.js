@@ -13,8 +13,23 @@ export class DOM {
                 rows.append(cols);
                 cols.classList.add(this.board.board[row][col].state);
                 this.board.board[row][col].element = cols;
+
+                // fire boardCheck on element click
+                this.board.board[row][col].element.addEventListener('click', function (e) {
+                    switch (e.button) {
+                        case 0:
+                            this.board.board[row][col].boardCheck(row, col);
+                            break;
+                        case 1:
+                            console.log('right click');
+                            break;
+                        default:
+                            console.log('click');
+                    }
+                })
             }
         }
+
     }
 
     update() {
