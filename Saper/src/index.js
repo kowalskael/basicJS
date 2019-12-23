@@ -1,10 +1,6 @@
 import { Board } from './Board';
 import { DOM } from './DOM';
 
-window.oncontextmenu = (e) => {
-	e.preventDefault();
-}
-
 document.getElementById("play").style.display = "none";
 
 document.getElementById("submit").onclick = function() {
@@ -20,19 +16,11 @@ document.getElementById("submit").onclick = function() {
 	const numBombs = document.getElementById("bombNums").value;
 
 	let boardTest = new Board(columns, rows);
+	boardTest.drawBombs(numBombs);
+
 	let boardDraw = new DOM(boardTest, document.getElementById('board'));
 
-	// draw bombs after first click
-	let clickCount = 0;
-	document.getElementById("board").addEventListener('click', () => {
-		if (clickCount === 0) {
-			boardTest.drawBombs(numBombs);
-			console.log(boardTest);
-		}
-		clickCount++;
-	});
-
-	console.log(boardDraw);
+	console.log(boardTest);
 
 	boardDraw.update();
 

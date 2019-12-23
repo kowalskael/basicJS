@@ -15,20 +15,13 @@ export class DOM {
                 this.board.board[row][col].element = cols;
 
                 // fire boardCheck on element click
-                this.board.board[row][col].element.addEventListener('click', function (e) {
-                    switch (e.button) {
-                        case 0:
-                            this.board.board[row][col].boardCheck(row, col);
-                            break;
-                        case 1:
-                            console.log('right click');
-                            break;
-                        default:
-                            console.log('click');
-                    }
+                this.board.board[row][col].element.addEventListener('click', () => {
+                    this.board.boardCheck(row, col);
+                    console.log(this.board);
                 })
             }
         }
+
 
     }
 
@@ -40,25 +33,21 @@ export class DOM {
                 // update changes made on board
                 // color, state, numbers and strings
 
-                // if user expose empty square, change state to revealed
-                if (this.board.board[row][col].fill === 0) {
-                    this.board.board[row][col].state = 'revealed';
-                }
-
-                // if user expose empty square, change state to revealed and assign number
-                if (this.board.board[row][col].fill > 0 && this.board.board[row][col].fill < 9) {
-                    if (this.board.board[row][col].state === 'revealed') {
+                // if user expose empty square, change class to revealed
+                if (this.board.board[row][col].state === 'revealed') {
+                    if (this.board.board[row][col].fill === 0) {
+                        this.board.board[row][col].state = 'revealed';
+                    }
+                    if (this.board.board[row][col].fill > 0 && this.board.board[row][col].fill < 9) {
                         this.board.board[row][col].element.innerHTML = this.board.board[row][col].fill;
                         this.board.board[row][col].element.style.background = 'darkgray';
                     }
-                }
+                    if (this.board.board[row][col].fill === 9) {
+                        this.board.board[row][col].element.innerHTML = 'B';
+                        this.board.board[row][col].element.style.background = 'red';
+                    }
 
-                // if user expose empty square, change state to revealed and assign string
-                if (this.board.board[row][col].fill === 9 && this.board.board[row][col].state === 'revealed') {
-                    this.board.board[row][col].element.innerHTML = 'B';
-                    this.board.board[row][col].element.style.background = 'red';
                 }
-
 
             }
         }

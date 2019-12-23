@@ -151,27 +151,4 @@ export class Board {
 
   }
 
-  revealWithFlags(row, col) {
-
-    // click on element with number
-    if (this.board[row][col].fill > 0 && this.board[row][col].fill <= 8 && this.board[row][col].state === 'revealed') {
-
-      for (let check = 0; check < checkId.length; check += 1) { // check neighbours
-
-        const dir = checkId[check];
-
-        if (row + dir.row >= 0 && row + dir.row < this.board.length && col + dir.col >= 0 && col + dir.col < this.board.length) { // pass valid index
-
-          if (this.board[row + dir.row][col + dir.col].fill === 9 && this.board[row + dir.row][col + dir.col].state === 'flagged') {
-            // reveal the rest of neighbours, recursion
-          }
-
-          if (this.board[row + dir.row][col + dir.col].fill === 9 && this.board[row + dir.row][col + dir.col].state === 'hidden') {
-            // game over
-          }
-        }
-
-      }
-    }
-  }
 }
