@@ -1,7 +1,7 @@
 // create DOM representation of board
 export class DOM {
 
-    constructor(board, boardContainer, firstClick) {
+    constructor(board, boardContainer, firstClick, numBombs) {
 
         this.board = board;
 
@@ -16,7 +16,18 @@ export class DOM {
                 // fire boardCheck on element click
                 this.board.board[row][col].element.addEventListener('click', () => {
 
-                    // if firstClick is bomb, drawBombs again
+                    firstClick = true;
+
+                    // if this was first click and board.isLose()
+                    if ( firstClick === true && this.board.isLose()) { // if firstClick is bomb, drawBombs again
+                        do {
+                            this.board.drawBombs(numBombs); // draw bombs
+                            this.board.boardCheck(row, col);
+                        } while (this.board.isLose()); // until false
+
+                        firstClick = false;
+                    }
+
                     this.board.boardCheck(row, col);
                     this.update();
                     console.log(this.board);

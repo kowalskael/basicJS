@@ -110,6 +110,7 @@ export class Board {
         if (this.board[row][col].fill === 9 && this.board[row][col].state === 'revealed') {
           return true;
         }
+
       }
     }
     return false;
