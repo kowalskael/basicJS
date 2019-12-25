@@ -19,18 +19,20 @@ export class DOM {
                     firstClick = true;
 
                     // if this was first click and board.isLose()
-                    if ( firstClick === true && this.board.isLose()) { // if firstClick is bomb, drawBombs again
+                    if (firstClick && this.board.isLose()) { // if firstClick is bomb, drawBombs again
                         do {
                             this.board.drawBombs(numBombs); // draw bombs
                             this.board.boardCheck(row, col);
+                            this.update();
+                            console.log('first');
                         } while (this.board.isLose()); // until false
 
                         firstClick = false;
+                    } else {
+                        this.board.boardCheck(row, col);
+                        this.update();
                     }
 
-                    this.board.boardCheck(row, col);
-                    this.update();
-                    console.log(this.board);
                 })
             }
         }

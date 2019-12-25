@@ -19,14 +19,12 @@ document.getElementById("submit").onclick = function() {
 	boardTest.drawBombs(numBombs);
 
 	let boardDraw = new DOM(boardTest, document.getElementById('board'), true, numBombs);
-	console.log(boardDraw.board);
-
 	boardDraw.update();
 
 	if (boardTest.isLose()) {
-		// gameover
+		console.log('lose');
 	} else if (boardTest.isWin()) {
-		// winner
+		console.log('win');
 	}
 
 };
