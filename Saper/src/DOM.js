@@ -16,7 +16,6 @@ export class DOM {
                 // Left click - fires boardCheck on element click
                 board.board[row][col].element.addEventListener('click', () => {
 
-
                     // if this was first click and board.isLose()
                     if (firstClick && board.board[row][col].fill === 9) {
                         firstClick = true;
@@ -40,14 +39,12 @@ export class DOM {
 
                     board.boardCheck(row, col);
                     this.update();
-
-                })
+                });
 
                 // Right click - flag elements
                 board.board[row][col].element.addEventListener('contextmenu', e => {
                     e.preventDefault();
                     board.flagBoard(row, col);
-                    console.log(board.board[row][col].state);
                     this.update();
                 });
             }
@@ -84,6 +81,14 @@ export class DOM {
                 if (this.board.board[row][col].fill === 9 && this.board.board[row][col].state === 'revealed') {
                     this.board.board[row][col].element.innerHTML = 'B';
                     this.board.board[row][col].element.style.background = '#ff0055';
+                }
+
+                if (this.board.board[row][col].state === 'flagged') {
+                    this.board.board[row][col].element.style.background = 'red';
+                }
+
+                if (this.board.board[row][col].state === 'hidden') {
+                    this.board.board[row][col].element.style.background = '#00cca7';
                 }
 
             }
