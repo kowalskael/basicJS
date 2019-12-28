@@ -44,6 +44,7 @@ export class DOM {
                 // Right click - flag elements
                 board.board[row][col].element.addEventListener('contextmenu', e => {
                     e.preventDefault();
+                    firstClick = false;
                     board.flagBoard(row, col);
                     this.update();
                 });
@@ -62,6 +63,11 @@ export class DOM {
 
                 // update changes made on board
                 // color, state, numbers and strings
+
+                // if square is hidden
+                if (this.board.board[row][col].state === 'hidden') {
+                    this.board.board[row][col].element.style.background = '#00cca7';
+                }
 
                 // if user expose empty square, change state to revealed
                 if (this.board.board[row][col].fill === 0 && this.board.board[row][col].state === 'revealed') {
@@ -85,10 +91,6 @@ export class DOM {
 
                 if (this.board.board[row][col].state === 'flagged') {
                     this.board.board[row][col].element.style.background = 'red';
-                }
-
-                if (this.board.board[row][col].state === 'hidden') {
-                    this.board.board[row][col].element.style.background = '#00cca7';
                 }
 
             }
