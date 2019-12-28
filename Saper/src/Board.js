@@ -146,10 +146,6 @@ export class Board {
       this.board[row][col].state = 'flagged';
     }
 
-    if (this.board[row][col].state === 'flagged') {
-      this.board[row][col].state = 'hidden';
-    }
-
   }
 
 }

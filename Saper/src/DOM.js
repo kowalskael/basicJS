@@ -13,8 +13,9 @@ export class DOM {
                 rows.append(cols);
                 board.board[row][col].element = cols;
 
-                // fire boardCheck on element click
+                // Left click - fires boardCheck on element click
                 board.board[row][col].element.addEventListener('click', () => {
+
 
                     // if this was first click and board.isLose()
                     if (firstClick && board.board[row][col].fill === 9) {
@@ -39,12 +40,20 @@ export class DOM {
 
                     board.boardCheck(row, col);
                     this.update();
+
                 })
+
+                // Right click - flag elements
+                board.board[row][col].element.addEventListener('contextmenu', e => {
+                    e.preventDefault();
+                    board.flagBoard(row, col);
+                    console.log(board.board[row][col].state);
+                    this.update();
+                });
             }
         }
 
         this.board = board;
-
     }
 
     update() {
