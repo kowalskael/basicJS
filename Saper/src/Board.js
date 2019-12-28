@@ -140,16 +140,12 @@ export class Board {
 
   flagBoard(row, col) {
 
-    // if click is even, change state to 'flagged'
     if (this.board[row][col].state === 'hidden') {
       this.board[row][col].state = 'flagged';
     } else if (this.board[row][col].state === 'flagged') {
       this.board[row][col].state = 'hidden';
       console.log(this.board[row][col].state);
     }
-
-    // if click is odd, change state to 'hidden'
-
   }
 
 }
