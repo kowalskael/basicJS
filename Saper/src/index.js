@@ -17,6 +17,7 @@ document.getElementById("submit").onclick = function() {
 
 	let boardTest = new Board(columns, rows);
 	boardTest.drawBombs(numBombs);
+	console.log(boardTest);
 
 	let boardDraw = new DOM(boardTest, document.getElementById('board'), true, numBombs);
 	boardDraw.update();

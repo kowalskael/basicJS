@@ -1,13 +1,15 @@
 // create DOM representation of board
 export class DOM {
 
-    constructor(board, boardContainer, firstClick, numBombs) {
+    constructor(board, boardContainer, firstClick, bombs) {
 
         this.board = board;
 
         for (let row = 0; row < this.board.board.length; row += 1) {
+
             const rows = document.createElement("div");
             boardContainer.append(rows);
+
             for (let col = 0; col < this.board.board[row].length; col += 1) {
                 const cols = document.createElement("div");
                 rows.append(cols);
@@ -16,22 +18,26 @@ export class DOM {
                 // fire boardCheck on element click
                 this.board.board[row][col].element.addEventListener('click', () => {
 
-                    firstClick = true;
-
                     // if this was first click and board.isLose()
-                    if (firstClick && this.board.isLose()) { // if firstClick is bomb, drawBombs again
+                    if (firstClick && this.board.board[row][col].fill === 9) {
+
+                        firstClick = true;
+
+                        // if firstClick is bomb, drawBombs again
                         do {
-                            this.board.drawBombs(numBombs); // draw bombs
+                            this.board.drawBombs(bombs);
                             this.board.boardCheck(row, col);
                             this.update();
-                            console.log('first');
-                        } while (this.board.isLose()); // until false
+                        } while (this.board.isLose());
 
-                        firstClick = false;
+                        console.log('first');
+                        return firstClick = false;
+
                     } else {
                         this.board.boardCheck(row, col);
                         this.update();
                     }
+
 
                 })
             }
