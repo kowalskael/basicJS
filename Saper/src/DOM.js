@@ -3,46 +3,47 @@ export class DOM {
 
     constructor(board, boardContainer, firstClick, bombs) {
 
-        this.board = board;
-
-        for (let row = 0; row < this.board.board.length; row += 1) {
+        for (let row = 0; row < board.board.length; row += 1) {
 
             const rows = document.createElement("div");
             boardContainer.append(rows);
 
-            for (let col = 0; col < this.board.board[row].length; col += 1) {
+            for (let col = 0; col < board.board[row].length; col += 1) {
                 const cols = document.createElement("div");
                 rows.append(cols);
-                this.board.board[row][col].element = cols;
+                board.board[row][col].element = cols;
 
                 // fire boardCheck on element click
-                this.board.board[row][col].element.addEventListener('click', () => {
+                board.board[row][col].element.addEventListener('click', () => {
 
                     // if this was first click and board.isLose()
-                    if (firstClick && this.board.board[row][col].fill === 9) {
-
+                    if (firstClick && board.board[row][col].fill === 9) {
                         firstClick = true;
 
-                        // if firstClick is bomb, drawBombs again
-                        do {
-                            this.board.drawBombs(bombs);
-                            this.board.boardCheck(row, col);
-                            this.update();
+                        do { // if firstClick is bomb, drawBombs again
+                            // clear previous board fill & state
+                            for (let prevRow = 0; prevRow < board.board.length; prevRow += 1) {
+                                for (let prevCol = 0; prevCol < board.board[prevRow].length; prevCol += 1) {
+                                    board.board[prevRow][prevCol].fill = 0;
+                                    board.board[prevRow][prevCol].state = 'hidden';
+                                }
+                            }
+
+                            board.drawBombs(bombs);
+                            board.boardCheck(row, col);
                         } while (this.board.isLose());
 
-                        console.log('first');
-                        return firstClick = false;
-
-                    } else {
-                        this.board.boardCheck(row, col);
                         this.update();
+                        return firstClick = false;
                     }
 
-
+                    board.boardCheck(row, col);
+                    this.update();
                 })
             }
         }
 
+        this.board = board;
 
     }
 
