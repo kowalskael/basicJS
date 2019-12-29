@@ -6,12 +6,16 @@
   "scripts": {
     "start": "parcel src/index.html",
     "build": "parcel build src/index.html",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "lint": "eslint src/*",
+    "lint-fix": "eslint src/* --fix"
   },
   "author": "Elżbieta Kowalska <kowalska.el@gmail.com>",
   "license": "ISC",
   "devDependencies": {
     "@babel/core": "^7.7.7",
+    "eslint": "^6.8.0",
+    "eslint-config-airbnb-base": "^14.0.0",
+    "eslint-plugin-import": "^2.19.1",
     "parcel": "^1.12.4"
   }
 }
