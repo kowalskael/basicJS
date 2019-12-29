@@ -5,16 +5,14 @@ const checkId = [
   { row: +1, col: -1 }, { row: +1, col: 0 }, { row: +1, col: +1 }];
 
 export class Board {
-
   constructor(width, height) {
-
-    //create array
+    // create array
     const board = [];
 
     // create array with objects
-    for (let row = 0; row < height; row++) {
+    for (let row = 0; row < height; row += 1) {
       board[row] = [];
-      for (let col = 0; col < width; col++) {
+      for (let col = 0; col < width; col += 1) {
         board[row][col] = { fill: 0, state: 'hidden' };
       }
     }
@@ -23,7 +21,6 @@ export class Board {
   }
 
   drawBombs(numBombs) {
-
     // drawing bombs
     for (let bomb = 0; bomb <= numBombs; bomb += 1) {
       do {
@@ -31,18 +28,16 @@ export class Board {
         const col = Math.floor(Math.random() * this.board[row].length);
         this.board[row][col].fill = 9;
       }
-      while (this.board.find(index => index.fill === 9));
+      while (this.board.find((index) => index.fill === 9));
     }
 
     // assign numbers
-    for (let row = 0; row < this.board.length; row++) {
-      for (let col = 0; col < this.board[row].length; col++) {
-
+    for (let row = 0; row < this.board.length; row += 1) {
+      for (let col = 0; col < this.board[row].length; col += 1) {
         let numberOfNeighbourBombs = 0;
         if (this.board[row][col].fill === 9) continue; // ignore elements with bombs
 
         for (let check = 0; check < checkId.length; check += 1) {
-
           const dir = checkId[check];
 
           if (this.isInBounds(row + dir.row, col + dir.col)) {
@@ -63,25 +58,20 @@ export class Board {
 
   // play
   boardCheck(row, col) {
-
     // click on empty
     if (this.board[row][col].fill === 0 && this.board[row][col].state === 'hidden') {
-
       this.board[row][col].state = 'revealed'; // change state on clicked element
 
       for (let check = 0; check < checkId.length; check += 1) { // check neighbours
-
         const dir = checkId[check];
 
         if (this.isInBounds(row + dir.row, col + dir.col)) { // pass valid index
-
-          if (0 < this.board[row + dir.row][col + dir.col].fill && this.board[row + dir.row][col + dir.col].fill <= 8 && this.board[row][col].state === 'hidden') // if neighbours are numbers, reveal them
-            this.board[row + dir.row][col + dir.col].state = 'revealed';
+          if (this.board[row + dir.row][col + dir.col].fill > 0 && this.board[row + dir.row][col + dir.col].fill <= 8 && this.board[row][col].state === 'hidden') // if neighbours are numbers, reveal them
+          { this.board[row + dir.row][col + dir.col].state = 'revealed'; }
 
           if (this.board[row + dir.row][col + dir.col].fill === 0 && this.board[row][col].state === 'hidden') // if neighbour is 0, reveal it and start userClicks() on it
-            this.board[row + dir.row][col + dir.col].state = 'revealed';
-          this.boardCheck(row + dir.row, col + dir.col)
-
+          { this.board[row + dir.row][col + dir.col].state = 'revealed'; }
+          this.boardCheck(row + dir.row, col + dir.col);
         }
       }
     }
@@ -93,8 +83,8 @@ export class Board {
 
     // click on bomb
     if (this.board[row][col].fill === 9 && this.board[row][col].state === 'hidden') {
-      for (let rows = 0; rows < this.board.length; rows++) {
-        for (let cols = 0; cols < this.board[rows].length; cols++) {
+      for (let rows = 0; rows < this.board.length; rows += 1) {
+        for (let cols = 0; cols < this.board[rows].length; cols += 1) {
           this.board[rows][cols].state = 'revealed'; // reveal all elements of board
         }
       }
@@ -102,31 +92,26 @@ export class Board {
   }
 
   isLose() {
-
     // true if any board element with bomb is revealed
     for (let row = 0; row < this.board.length; row += 1) {
       for (let col = 0; col < this.board[row].length; col += 1) {
-
         if (this.board[row][col].fill === 9 && this.board[row][col].state === 'revealed') {
           return true;
         }
-
       }
     }
     return false;
   }
 
   isWin() {
-
     // true if all elements without bombs are revealed
     let numberOfNoBombs = 0;
     let numberOfNoBombsRevealed = 0;
 
     for (let row = 0; row < this.board.length; row += 1) {
       for (let col = 0; col < this.board[row].length; col += 1) {
-
         if (this.board[row][col].fill !== 9) {
-          numberOfNoBombs+= 1;
+          numberOfNoBombs += 1;
         }
 
         if (this.board[row][col].fill !== 9 && this.board[row][col].state === 'revealed') {
@@ -139,13 +124,10 @@ export class Board {
   }
 
   flagBoard(row, col) {
-
     if (this.board[row][col].state === 'hidden') {
       this.board[row][col].state = 'flagged';
     } else if (this.board[row][col].state === 'flagged') {
       this.board[row][col].state = 'hidden';
-      console.log(this.board[row][col].state);
     }
   }
-
 }
