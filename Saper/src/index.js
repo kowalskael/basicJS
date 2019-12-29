@@ -22,7 +22,6 @@ document.getElementById("submit").onclick = function() {
 	let boardDraw = new DOM(boardTest, document.getElementById('board'), true, numBombs);
 	boardDraw.update();
 
-
 	if (boardTest.isLose()) {
 		console.log('lose');
 	} else if (boardTest.isWin()) {

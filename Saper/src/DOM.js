@@ -39,6 +39,7 @@ export class DOM {
 
                     board.boardCheck(row, col);
                     this.update();
+                    console.log(board);
                 });
 
                 // Right click - flag elements
@@ -48,6 +49,14 @@ export class DOM {
                     board.flagBoard(row, col);
                     this.update();
                 });
+
+                // Dblclick fast revealing
+                board.board[row][col].element.addEventListener('dblclick', () => {
+                    firstClick = false;
+                    // if all bombs in the neighbourhood of the number are flagged
+                    // reveal with checkBoard(row, col)
+                    // else reveal bombs which are not flagged
+                })
             }
         }
 
@@ -64,34 +73,38 @@ export class DOM {
                 // update changes made on board
                 // color, state, numbers and strings
 
-                // if square is hidden
                 if (this.board.board[row][col].state === 'hidden') {
-                    this.board.board[row][col].element.style.background = '#00cca7';
+                    this.board.board[row][col].element.classList.add('hidden');
+                    this.board.board[row][col].element.classList.remove('flagged');
                 }
 
                 // if user expose empty square, change state to revealed
                 if (this.board.board[row][col].fill === 0 && this.board.board[row][col].state === 'revealed') {
-                    this.board.board[row][col].state = 'revealed';
-                    this.board.board[row][col].element.style.background = '#ffcc00';
+                    this.board.board[row][col].element.classList.add('revealed-empty');
+                    this.board.board[row][col].element.classList.remove('hidden');
                 }
 
                 // if user expose empty square, change state to revealed and assign number
                 if (this.board.board[row][col].fill > 0 && this.board.board[row][col].fill < 9) {
                     if (this.board.board[row][col].state === 'revealed') {
+                        this.board.board[row][col].element.classList.remove('hidden');
+                        this.board.board[row][col].element.classList.add('revealed-number');
                         this.board.board[row][col].element.innerHTML = this.board.board[row][col].fill;
-                        this.board.board[row][col].element.style.background = '#c300ff';
                     }
                 }
 
                 // if user expose empty square, change state to revealed and assign string
                 if (this.board.board[row][col].fill === 9 && this.board.board[row][col].state === 'revealed') {
+                    this.board.board[row][col].element.classList.remove('hidden');
+                    this.board.board[row][col].element.classList.add('revealed-bomb');
                     this.board.board[row][col].element.innerHTML = 'B';
-                    this.board.board[row][col].element.style.background = '#ff0055';
                 }
 
                 if (this.board.board[row][col].state === 'flagged') {
-                    this.board.board[row][col].element.style.background = 'red';
+                    this.board.board[row][col].element.classList.add('flagged');
+                    this.board.board[row][col].element.classList.remove('hidden');
                 }
+
 
             }
         }
