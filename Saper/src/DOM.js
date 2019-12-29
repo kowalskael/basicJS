@@ -11,9 +11,9 @@ export default class DOM {
 
       for (let col = 0; col < this.board.board[row].length; col += 1) {
         const cols = document.createElement('div');
+        rows.append(cols);
         cols.setAttribute('data-row', `${row}`);
         cols.setAttribute('data-col', `${col}`);
-        rows.append(cols);
         const field = this.board.board[row][col];
         field.element = cols;
 

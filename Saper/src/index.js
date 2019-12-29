@@ -10,8 +10,8 @@ document.getElementById('submit').onclick = function () {
   // TIMER
   const time = document.getElementById('timer');
 
-  const rows = document.getElementById('width').value;
-  const columns = document.getElementById('height').value;
+  const rows = document.getElementById('height').value;
+  const columns = document.getElementById('width').value;
   const numBombs = document.getElementById('bombNums').value;
 
   const boardTest = new Board(columns, rows);
