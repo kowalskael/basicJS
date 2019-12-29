@@ -67,17 +67,17 @@ body {
 }
 
 #board > div > div {
-    justify-content: center;
-    width: 20px;
-    height: 20px;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
   border-style: solid;
-  border-color: white;
+  border-color: #ffd445;
   border-width: 1px;
   box-sizing: border-box;
 }
 
 .hidden {
-  background: #00cca7;
+  background: #8c8c8c;
 }
 
 .revealed {
@@ -91,54 +91,52 @@ body {
   content: attr(data-value);
 }
 
-[data-value="0"]:before {
+.revealed[data-value="0"]:before {
   content: '';
 }
 
 .revealed[data-value="0"] {
-  background: #ffcc00;
+  background: #f2f2eb;
 }
 
 .revealed[data-value="1"] {
-  background: #c3000f;
+  background: #2ac400;
 }
 
 .revealed[data-value="2"] {
-  background: #c3000f;
+  background: #9d0aff;
 }
 
 .revealed[data-value="3"] {
-  background: #c3000f;
+  background: #4f60ff;
 }
 
 .revealed[data-value="4"] {
-  background: #c3000f;
+  background: #b36200;
 }
 
 .revealed[data-value="5"] {
-  background: #c3000f;
+  background: #0a19a1;
 }
 
 .revealed[data-value="6"] {
-  background: #c3000f;
+  background: #008c5d;
 }
 
 .revealed[data-value="7"] {
-  background: #c3000f;
+  background: #8c6900;
 }
 
 .revealed[data-value="8"] {
-  background: #c3000f;
-}
-
-.revealed[data-value="9"]:before {
-  color: white;
-  line-height: 15px;
-  content: url('https://api.iconify.design/mdi-bomb.svg?color=red&height=18');
+  background: #990f62;
 }
 
 .revealed[data-value="9"] {
-  background: black;
+  background: red;
+}
+
+.revealed[data-value="9"]:before {
+  content: url('icon/circle.svg');
 }
 
 
