@@ -1,5 +1,5 @@
 import { Board } from './Board';
-import { DOM } from './DOM';
+import DOM from './DOM';
 
 document.getElementById('play').style.display = 'none';
 
@@ -18,12 +18,10 @@ document.getElementById('submit').onclick = function () {
   boardTest.drawBombs(numBombs);
   console.log(boardTest);
 
-  const boardDraw = new DOM(boardTest, document.getElementById('board'), true, numBombs);
+  const boardDraw = new DOM(boardTest, document.getElementById('board'), numBombs);
   boardDraw.update();
 
   if (boardTest.isLose()) {
-    console.log('lose');
   } else if (boardTest.isWin()) {
-    console.log('win');
   }
 };

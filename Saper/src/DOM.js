@@ -1,6 +1,7 @@
 // create DOM representation of board
-export class DOM {
+export default class DOM {
   firstClick = true;
+
   constructor(board, boardContainer, bombs) {
     this.board = board;
     this.bombs = bombs;
@@ -10,12 +11,14 @@ export class DOM {
 
       for (let col = 0; col < this.board.board[row].length; col += 1) {
         const cols = document.createElement('div');
+        cols.setAttribute('data-row', `${row}`);
+        cols.setAttribute('data-col', `${col}`);
         rows.append(cols);
         const field = this.board.board[row][col];
         field.element = cols;
 
         // Left click - fires boardCheck on element click
-        field.element.addEventListener('click', this.clickHandler(row, col));
+        field.element.addEventListener('click', this.clickHandler);
 
         // Right click - flag elements
         field.element.addEventListener('contextmenu', (e) => {
@@ -34,7 +37,10 @@ export class DOM {
     }
   }
 
-  clickHandler = (row, col) => (event) => {
+  clickHandler = (event) => {
+    const row = event.target.getAttribute('data-row');
+    const col = event.target.getAttribute('data-col');
+    console.log(row, col);
     // if this was first click and board.isLose()
     if (this.firstClick && this.board.board[row][col].fill === 9) {
       do { // if firstClick is bomb, drawBombs again
@@ -51,12 +57,14 @@ export class DOM {
       } while (this.board.isLose());
 
       this.update();
+      console.log(this.board);
       this.firstClick = false;
       return;
     }
 
     this.board.boardCheck(row, col);
     this.update();
+    console.log(this.board);
   }
 
   update() {
