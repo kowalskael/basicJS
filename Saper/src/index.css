@@ -132,7 +132,7 @@ body {
 }
 
 .revealed[data-value="9"] {
-  background: red;
+  background: white;
 }
 
 .revealed[data-value="9"]:before {

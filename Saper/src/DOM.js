@@ -14,7 +14,7 @@ export default class DOM {
         rows.append(cols);
         cols.setAttribute('data-row', `${row}`);
         cols.setAttribute('data-col', `${col}`);
-        cols.setAttribute('data-value', `${this.board.board[row][col].fill}`)
+        cols.setAttribute('data-value', `${this.board.board[row][col].fill}`);
         const field = this.board.board[row][col];
         field.element = cols;
 
@@ -56,13 +56,14 @@ export default class DOM {
           this.board.drawBombs(this.bombs);
           this.board.boardCheck(row, col);
         } while (this.board.isLose());
-        this.update();
-      } else {
-        this.board.boardCheck(row, col);
+        console.log(this.board);
         this.update();
       }
+      this.board.boardCheck(row, col);
+      this.update();
       this.firstClick = false;
     } else {
+      console.log(this.board);
       this.board.boardCheck(row, col);
       this.update();
     }

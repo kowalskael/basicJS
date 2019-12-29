@@ -91,6 +91,14 @@ export class Board {
     }
   }
 
+  flagBoard(row, col) {
+    if (this.board[row][col].state === 'hidden') {
+      this.board[row][col].state = 'flagged';
+    } else if (this.board[row][col].state === 'flagged') {
+      this.board[row][col].state = 'hidden';
+    }
+  }
+
   isLose() {
     // true if any board element with bomb is revealed
     for (let row = 0; row < this.board.length; row += 1) {
@@ -123,11 +131,5 @@ export class Board {
     return numberOfNoBombs === numberOfNoBombsRevealed;
   }
 
-  flagBoard(row, col) {
-    if (this.board[row][col].state === 'hidden') {
-      this.board[row][col].state = 'flagged';
-    } else if (this.board[row][col].state === 'flagged') {
-      this.board[row][col].state = 'hidden';
-    }
-  }
+
 }
