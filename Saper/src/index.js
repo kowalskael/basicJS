@@ -3,7 +3,7 @@ import DOM from './DOM';
 
 document.getElementById('play').style.display = 'none';
 
-document.getElementById('submit').onclick = function () {
+document.getElementById('submit').onclick = () => {
   document.getElementById('start').style.display = 'none'; // game menu hidden
   document.getElementById('play').style.display = 'block'; // show play area
 

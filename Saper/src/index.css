@@ -70,46 +70,75 @@ body {
     justify-content: center;
     width: 20px;
     height: 20px;
+  border-style: solid;
+  border-color: white;
+  border-width: 1px;
+  box-sizing: border-box;
 }
 
 .hidden {
-    background: #00cca7;
-    border-style: solid;
-    border-color: white;
-    border-width: 1px;
-    box-sizing: border-box;
+  background: #00cca7;
 }
 
-.revealed-empty {
-    background: #ffcc00;
-    border-style: solid;
-    border-color: white;
-    border-width: 1px;
-    box-sizing: border-box;
-}
-
-.revealed-number {
-    background: #c300ff;
-    border-style: solid;
-    border-color: white;
-    border-width: 1px;
-    box-sizing: border-box;
-}
-
-.revealed-bomb {
-    background: #ff0055;
-    border-style: solid;
-    border-color: white;
-    border-width: 1px;
-    box-sizing: border-box;
+.revealed {
 }
 
 .flagged {
-    background: red;
-    border-style: solid;
-    border-color: white;
-    border-width: 1px;
-    box-sizing: border-box;
+  background: red;
+}
+
+.revealed:before {
+  content: attr(data-value);
+}
+
+[data-value="0"]:before {
+  content: '';
+}
+
+.revealed[data-value="0"] {
+  background: #ffcc00;
+}
+
+.revealed[data-value="1"] {
+  background: #c3000f;
+}
+
+.revealed[data-value="2"] {
+  background: #c3000f;
+}
+
+.revealed[data-value="3"] {
+  background: #c3000f;
+}
+
+.revealed[data-value="4"] {
+  background: #c3000f;
+}
+
+.revealed[data-value="5"] {
+  background: #c3000f;
+}
+
+.revealed[data-value="6"] {
+  background: #c3000f;
+}
+
+.revealed[data-value="7"] {
+  background: #c3000f;
+}
+
+.revealed[data-value="8"] {
+  background: #c3000f;
+}
+
+.revealed[data-value="9"]:before {
+  color: white;
+  line-height: 15px;
+  content: url('https://api.iconify.design/mdi-bomb.svg?color=red&height=18');
+}
+
+.revealed[data-value="9"] {
+  background: black;
 }
 
 

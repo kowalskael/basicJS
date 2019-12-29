@@ -14,6 +14,7 @@ export default class DOM {
         rows.append(cols);
         cols.setAttribute('data-row', `${row}`);
         cols.setAttribute('data-col', `${col}`);
+        cols.setAttribute('data-value', `${this.board.board[row][col].fill}`)
         const field = this.board.board[row][col];
         field.element = cols;
 
@@ -38,33 +39,33 @@ export default class DOM {
   }
 
   clickHandler = (event) => {
-    const row = event.target.getAttribute('data-row');
-    const col = event.target.getAttribute('data-col');
-    console.log(row, col);
+    const row = parseInt(event.target.getAttribute('data-row'));
+    const col = parseInt(event.target.getAttribute('data-col'));
     // if this was first click and board.isLose()
-    if (this.firstClick && this.board.board[row][col].fill === 9) {
-      do { // if firstClick is bomb, drawBombs again
-        // clear previous board fill & state
-        for (let prevRow = 0; prevRow < this.board.board.length; prevRow += 1) {
-          for (let prevCol = 0; prevCol < this.board.board[prevRow].length; prevCol += 1) {
-            this.board.board[prevRow][prevCol].fill = 0;
-            this.board.board[prevRow][prevCol].state = 'hidden';
+    if (this.firstClick) {
+      if (this.board.board[row][col].fill === 9) {
+        do { // if firstClick is bomb, drawBombs again
+          // clear previous board fill & state
+          for (let prevRow = 0; prevRow < this.board.board.length; prevRow += 1) {
+            for (let prevCol = 0; prevCol < this.board.board[prevRow].length; prevCol += 1) {
+              this.board.board[prevRow][prevCol].fill = 0;
+              this.board.board[prevRow][prevCol].state = 'hidden';
+            }
           }
-        }
-
-        this.board.drawBombs(this.bombs);
+          this.board.board[row][col].element.classList.remove('revealed');
+          this.board.drawBombs(this.bombs);
+          this.board.boardCheck(row, col);
+        } while (this.board.isLose());
+        this.update();
+      } else {
         this.board.boardCheck(row, col);
-      } while (this.board.isLose());
-
-      this.update();
-      console.log(this.board);
+        this.update();
+      }
       this.firstClick = false;
-      return;
+    } else {
+      this.board.boardCheck(row, col);
+      this.update();
     }
-
-    this.board.boardCheck(row, col);
-    this.update();
-    console.log(this.board);
   }
 
   update() {
@@ -84,7 +85,7 @@ export default class DOM {
 
         // if user expose empty square, change state to revealed
         if (field.fill === 0 && field.state === 'revealed') {
-          field.element.classList.add('revealed-empty');
+          field.element.classList.add('revealed');
           field.element.classList.remove('hidden');
         }
 
@@ -92,16 +93,14 @@ export default class DOM {
         if (field.fill > 0 && field.fill < 9) {
           if (field.state === 'revealed') {
             field.element.classList.remove('hidden');
-            field.element.classList.add('revealed-number');
-            field.element.innerHTML = field.fill;
+            field.element.classList.add('revealed');
           }
         }
 
         // if user expose empty square, change state to revealed and assign string
         if (field.fill === 9 && field.state === 'revealed') {
           field.element.classList.remove('hidden');
-          field.element.classList.add('revealed-bomb');
-          field.element.innerHTML = 'B';
+          field.element.classList.add('revealed');
         }
 
         if (field.state === 'flagged') {

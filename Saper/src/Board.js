@@ -20,9 +20,9 @@ export class Board {
     this.board = board;
   }
 
-  drawBombs(numBombs) {
+  drawBombs(numBomb) {
     // drawing bombs
-    for (let bomb = 0; bomb <= numBombs; bomb += 1) {
+    for (let bomb = 0; bomb < numBomb; bomb += 1) {
       do {
         const row = Math.floor(Math.random() * this.board.length);
         const col = Math.floor(Math.random() * this.board[row].length);
