@@ -11,10 +11,9 @@ export default class DOM {
 
       for (let col = 0; col < this.board.board[row].length; col += 1) {
         const cols = document.createElement('div');
-        rows.append(cols);
         cols.setAttribute('data-row', `${row}`);
         cols.setAttribute('data-col', `${col}`);
-        cols.setAttribute('data-value', `${this.board.board[row][col].fill}`);
+        rows.append(cols);
         const field = this.board.board[row][col];
         field.element = cols;
 
@@ -23,6 +22,7 @@ export default class DOM {
 
         // Right click - flag elements
         field.element.addEventListener('contextmenu', (e) => {
+          this.firstClick = false;
           e.preventDefault();
           this.board.flagBoard(row, col);
           this.update();
@@ -30,6 +30,7 @@ export default class DOM {
 
         // Dblclick fast revealing
         field.element.addEventListener('dblclick', () => {
+          this.firstClick = false;
           // if all bombs in the neighbourhood of the number are flagged
           // reveal with checkBoard(row, col)
           // else reveal bombs which are not flagged
@@ -75,6 +76,7 @@ export default class DOM {
         const field = this.board.board[row][col];
 
         field.element.classList.add(field.state);
+        field.element.setAttribute('data-value', `${this.board.board[row][col].fill}`);
 
         // update changes made on board
         // color, state, numbers and strings
