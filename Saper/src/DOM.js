@@ -31,9 +31,7 @@ export default class DOM {
         // Dblclick fast revealing
         field.element.addEventListener('dblclick', () => {
           this.firstClick = false;
-          // if all bombs in the neighbourhood of the number are flagged
-          // reveal with checkBoard(row, col)
-          // else reveal bombs which are not flagged
+          this.board.dblClick(row, col);
         });
       }
     }
@@ -57,14 +55,12 @@ export default class DOM {
           this.board.drawBombs(this.bombs);
           this.board.boardCheck(row, col);
         } while (this.board.isLose());
-        console.log(this.board);
         this.update();
       }
       this.board.boardCheck(row, col);
       this.update();
       this.firstClick = false;
     } else {
-      console.log(this.board);
       this.board.boardCheck(row, col);
       this.update();
     }

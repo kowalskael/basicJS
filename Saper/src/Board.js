@@ -66,10 +66,10 @@ export class Board {
         const dir = checkId[check];
 
         if (this.isInBounds(row + dir.row, col + dir.col)) { // pass valid index
-          if (this.board[row + dir.row][col + dir.col].fill > 0 && this.board[row + dir.row][col + dir.col].fill <= 8 && this.board[row][col].state === 'hidden') // if neighbours are numbers, reveal them
+          if (this.board[row + dir.row][col + dir.col].fill > 0 && this.board[row + dir.row][col + dir.col].fill <= 8 && this.board[row + dir.row][col + dir.col].state === 'hidden') // if neighbours are numbers, reveal them
           { this.board[row + dir.row][col + dir.col].state = 'revealed'; }
 
-          if (this.board[row + dir.row][col + dir.col].fill === 0 && this.board[row][col].state === 'hidden') // if neighbour is 0, reveal it and start userClicks() on it
+          if (this.board[row + dir.row][col + dir.col].fill === 0 && this.board[row + dir.row][col + dir.col].state === 'hidden') // if neighbour is 0, reveal it and start userClicks() on it
           { this.board[row + dir.row][col + dir.col].state = 'revealed'; }
           this.boardCheck(row + dir.row, col + dir.col);
         }
@@ -96,6 +96,28 @@ export class Board {
       this.board[row][col].state = 'flagged';
     } else if (this.board[row][col].state === 'flagged') {
       this.board[row][col].state = 'hidden';
+    }
+  }
+
+  dblClick(row, col) {
+    if (this.board[row][col].fill > 0 && this.board[row][col].fill < 9 && this.board[row][col].state === 'revealed') {
+      let numberOfBombs = 0;
+      let numberOfBombsRevealed = 0;
+
+      for (let check = 0; check < checkId.length; check += 1) { // check neighbours
+        const dir = checkId[check];
+
+        if (this.isInBounds(row + dir.row, col + dir.col)) {
+          if (this.board[row + dir.row][col + dir.col].fill === 9 && this.board[row + dir.row][col + dir.col].state === 'flagged') { numberOfBombsRevealed += 1; }
+          if (this.board[row + dir.row][col + dir.col].fill === 9) { numberOfBombs += 1; }
+        }
+      }
+
+      if (numberOfBombs === numberOfBombsRevealed) {
+        console.log('success');
+      } else {
+        console.log('fail');
+      }
     }
   }
 
@@ -130,6 +152,4 @@ export class Board {
 
     return numberOfNoBombs === numberOfNoBombsRevealed;
   }
-
-
 }

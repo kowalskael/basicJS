@@ -1,5 +1,5 @@
 body {
-    background: #000000;
+    background: #8c8c8c;
     display: flex;
     flex-direction: row;
     justify-content: center;
@@ -78,9 +78,6 @@ body {
 
 .hidden {
   background: #8c8c8c;
-}
-
-.revealed {
 }
 
 .flagged {
