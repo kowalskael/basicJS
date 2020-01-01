@@ -22,13 +22,15 @@ export class Board {
 
   drawBombs(numBomb) {
     // drawing bombs
+
     for (let bomb = 0; bomb < numBomb; bomb += 1) {
       do {
         const row = Math.floor(Math.random() * this.board.length);
         const col = Math.floor(Math.random() * this.board[row].length);
         this.board[row][col].fill = 9;
       }
-      while (this.board.find((index) => index.fill === 9));
+      while (this.board.find((index) => index.fill === 9)); // do until false
+      // if this.board[row][col].fill = 9, do drawing again
     }
 
     // assign numbers
@@ -69,7 +71,7 @@ export class Board {
           if (this.board[row + dir.row][col + dir.col].fill > 0 && this.board[row + dir.row][col + dir.col].fill <= 8 && this.board[row + dir.row][col + dir.col].state === 'hidden') // if neighbours are numbers, reveal them
           { this.board[row + dir.row][col + dir.col].state = 'revealed'; }
 
-          if (this.board[row + dir.row][col + dir.col].fill === 0 && this.board[row + dir.row][col + dir.col].state === 'hidden') // if neighbour is 0, reveal it and start userClicks() on it
+          if (this.board[row + dir.row][col + dir.col].fill === 0 && this.board[row][col].state === 'hidden') // if neighbour is 0, reveal it and start userClicks() on it
           { this.board[row + dir.row][col + dir.col].state = 'revealed'; }
           this.boardCheck(row + dir.row, col + dir.col);
         }
@@ -108,8 +110,12 @@ export class Board {
         const dir = checkId[check];
 
         if (this.isInBounds(row + dir.row, col + dir.col)) {
-          if (this.board[row + dir.row][col + dir.col].fill === 9 && this.board[row + dir.row][col + dir.col].state === 'flagged') { numberOfBombsRevealed += 1; }
-          if (this.board[row + dir.row][col + dir.col].fill === 9) { numberOfBombs += 1; }
+          if (this.board[row + dir.row][col + dir.col].fill === 9 && this.board[row + dir.row][col + dir.col].state === 'flagged') {
+            numberOfBombsRevealed += 1;
+          }
+          if (this.board[row + dir.row][col + dir.col].fill === 9) {
+            numberOfBombs += 1;
+          }
         }
       }
 
@@ -120,6 +126,7 @@ export class Board {
       }
     }
   }
+
 
   isLose() {
     // true if any board element with bomb is revealed

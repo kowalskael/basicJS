@@ -16,47 +16,50 @@ body {
 }
 
 #start {
-    display: flex;
-    width: 100%;
-    height: 100%;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+  display: flex;
+  width: 100%;
+  height: 100%;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
 .input {
-    display: flex;
-    flex-direction: column;
-    width: 80%;
+  display: flex;
+  flex-direction: column;
+  width: 80%;
 }
 
 .input > input {
-    margin: 5px;
+  margin: 5px;
 }
 
 #play {
-    display: flex;
-    width: 100%;
-    height: 100%;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+  display: flex;
+  width: 100%;
+  height: 100%;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
 #play > div {
-    display: flex;
-    justify-content: center;
+  display: flex;
+  justify-content: center;
 }
 
 #board {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    font-size: 0.7em;
-    color: white;
-    text-align: center;
-    line-height: 18px;
-    vertical-align: middle;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  font-size: 0.7em;
+  color: white;
+  text-align: center;
+  line-height: 18px;
+  vertical-align: middle;
+  border-width: 1px;
+  border-style: solid;
+  border-color: #ffd445;
 }
 
 #board > div {
@@ -129,7 +132,7 @@ body {
 }
 
 .revealed[data-value="9"] {
-  background: white;
+  background: #f2f2eb;
 }
 
 .revealed[data-value="9"]:before {
