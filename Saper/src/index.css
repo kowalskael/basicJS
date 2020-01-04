@@ -10,42 +10,152 @@ body {
 }
 
 #container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#title-start, #title-play {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 240px;
+  height: 60px;
+  background-color: #ffffff;
+  border-radius: 3px;
+  border: 2px solid grey;
+  box-sizing: border-box;
+  color: black;
+  text-decoration:none;
+  margin-bottom: 20px;
+}
+
+#title-start > p, #title-play > p {
+  margin: 0px 10px 0px 10px;
+}
+
+.translate {
+  transform: rotate(270deg);
 }
 
 #start {
+  background: #dedede;
   display: flex;
-  width: 100%;
-  height: 100%;
+  width: 240px;
+  height: 240px;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  border-width: 1.5px;
+  border-style: solid;
+  border-radius: 3px;
+  border-color: grey;
+  box-sizing: border-box;
 }
 
 .input {
   display: flex;
   flex-direction: column;
-  width: 80%;
+  align-items: center;
+  width: 70%;
+  margin-bottom: 5px;
 }
 
-.input > input {
-  margin: 5px;
-}
-
-#play {
+.field {
+  background: white;
   display: flex;
-  width: 100%;
-  height: 100%;
+  width: 85%;
+  justify-content: flex-start;
+  align-items: center;
+  border-radius: 3px;
+  border: 2px solid #ffd445;
+  color: white;
+  text-decoration:none;
+  margin-bottom: 10px;
+}
+
+.input > .field > input {
+  display: flex;
+  height: 40px;
+  width: 35px;
+}
+
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.input > .field > input[value] {
+  text-align: center;
+  border: none;
+  border-left: 2px solid #ffd445;
+}
+
+.input > .field > label {
+  font-size: 15px;
+  padding: 0px 18px 0px 18px;
+  width: 40px;
+  color: black;
+}
+
+.changeValue {
+  color: black;
+  display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  width: 25px;
+}
+
+.arrow-up {
+  transform: rotate(-90deg);
+}
+
+.arrow-down {
+  transform: rotate(90deg);
+}
+
+#submit, #reset {
+  margin-top: 4px;
+  width: 75px;
+  height: 30px;
+  background-color: #8c8c8c;
+  border-radius: 3px;
+  border: 2px solid grey;
+  display:inline-block;
+  cursor:pointer;
+  color: white;
+  text-decoration:none;
+}
+
+#submit:hover, #reset:hover {
+  background-color: #ffbb00;
+  border: 2px solid #ffd445;
+  color: black;
+}
+
+#play {
+  background: #dedede;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 5px 50px 5px 50px;
+  border: 2px solid grey;
 }
 
 #play > div {
   display: flex;
   justify-content: center;
+}
+
+#timer, #reset {
+  margin: 20px 0px 20px 0px;
+}
+
+#timer {
+  color: black;
+  font-size: 18px;
 }
 
 #board {
@@ -57,9 +167,6 @@ body {
   text-align: center;
   line-height: 18px;
   vertical-align: middle;
-  border-width: 1px;
-  border-style: solid;
-  border-color: #ffd445;
 }
 
 #board > div {
@@ -73,14 +180,29 @@ body {
   justify-content: center;
   width: 20px;
   height: 20px;
+}
+
+.play {
+  border-width: 1px;
   border-style: solid;
   border-color: #ffd445;
+  box-sizing: border-box;
+}
+
+.lose {
+  background: white;
+  border-style: solid;
+  border-color: red;
   border-width: 1px;
   box-sizing: border-box;
 }
 
 .hidden {
   background: #8c8c8c;
+}
+
+.revealed {
+
 }
 
 .flagged {
@@ -137,6 +259,14 @@ body {
 
 .revealed[data-value="9"]:before {
   content: url('icon/circle.svg');
+}
+
+.win {
+  background: red;
+}
+
+.win[data-value="9"]:before {
+  content: url('icon/crown.svg');
 }
 
 

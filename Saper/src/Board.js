@@ -115,7 +115,11 @@ export class Board {
           if (numberOfBombs === numberOfBombsRevealed) {
             this.boardCheck(row + dir.row, col + dir.col);
           } else if (this.board[row + dir.row][col + dir.col].fill === 9) {
-            this.board[row + dir.row][col + dir.col].state = 'revealed';
+            for (let rows = 0; rows < this.board.length; rows += 1) {
+              for (let cols = 0; cols < this.board[rows].length; cols += 1) {
+                this.board[rows][cols].state = 'revealed'; // reveal all elements of board
+              }
+            }
           }
         }
       }

@@ -7,7 +7,9 @@ export default class DOM {
     this.bombs = bombs;
     for (let row = 0; row < this.board.board.length; row += 1) {
       const rows = document.createElement('div');
-      boardContainer.append(rows);
+      this.boardContainer = boardContainer;
+      this.boardContainer.classList.add('play');
+      this.boardContainer.append(rows);
 
       for (let col = 0; col < this.board.board[row].length; col += 1) {
         const cols = document.createElement('div');
@@ -16,6 +18,7 @@ export default class DOM {
         rows.append(cols);
         const field = this.board.board[row][col];
         field.element = cols;
+        field.element.classList.add('play');
 
         // Left click - fires boardCheck on element click
         field.element.addEventListener('click', this.clickHandler);
@@ -106,6 +109,21 @@ export default class DOM {
         if (field.state === 'flagged') {
           field.element.classList.add('flagged');
           field.element.classList.remove('hidden');
+        }
+
+        if (this.board.isLose()) {
+          field.element.classList.remove('play');
+          field.element.classList.add('lose');
+          field.element.classList.remove('play');
+          this.boardContainer.classList.add('lose');
+          console.log('lose');
+        } else if (this.board.isWin()) {
+          if (field.fill === 9) {
+            field.element.classList.remove('revealed');
+            field.element.classList.remove('flagged');
+            field.element.classList.add('win');
+          }
+          console.log('win');
         }
       }
     }
