@@ -32,6 +32,7 @@ export default class DOM {
         field.element.addEventListener('dblclick', () => {
           this.firstClick = false;
           this.board.dblClick(row, col);
+          this.update();
         });
       }
     }

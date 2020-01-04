@@ -22,14 +22,10 @@ export class Board {
 
   drawBombs(numBomb) {
     // drawing bombs
-
     for (let bomb = 0; bomb < numBomb; bomb += 1) {
-      do {
-        const row = Math.floor(Math.random() * this.board.length);
-        const col = Math.floor(Math.random() * this.board[row].length);
-        this.board[row][col].fill = 9;
-      }
-      while (this.board.find((index) => index.fill === 9)); // do until false
+      const row = Math.floor(Math.random() * this.board.length);
+      const col = Math.floor(Math.random() * this.board[row].length);
+      this.board[row][col].fill = 9;
       // if this.board[row][col].fill = 9, do drawing again
     }
 
@@ -116,17 +112,15 @@ export class Board {
           if (this.board[row + dir.row][col + dir.col].fill === 9) {
             numberOfBombs += 1;
           }
+          if (numberOfBombs === numberOfBombsRevealed) {
+            this.boardCheck(row + dir.row, col + dir.col);
+          } else if (this.board[row + dir.row][col + dir.col].fill === 9) {
+            this.board[row + dir.row][col + dir.col].state = 'revealed';
+          }
         }
-      }
-
-      if (numberOfBombs === numberOfBombsRevealed) {
-        console.log('success');
-      } else {
-        console.log('fail');
       }
     }
   }
-
 
   isLose() {
     // true if any board element with bomb is revealed
