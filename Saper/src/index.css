@@ -21,7 +21,7 @@ body {
   justify-content: center;
   width: 240px;
   height: 60px;
-  background-color: #ffffff;
+  background-color: #ebebeb;
   border-radius: 3px;
   border: 2px solid grey;
   box-sizing: border-box;
@@ -35,7 +35,7 @@ body {
 }
 
 #start {
-  background: #dedede;
+  background: #ebebeb;
   display: flex;
   width: 240px;
   height: 240px;
@@ -49,7 +49,7 @@ body {
   box-sizing: border-box;
 }
 
-.input {
+#input {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -70,7 +70,7 @@ body {
   margin-bottom: 10px;
 }
 
-.input > .field > input {
+.field > input {
   display: flex;
   height: 40px;
   width: 35px;
@@ -82,13 +82,13 @@ input[type=number]::-webkit-outer-spin-button {
   margin: 0;
 }
 
-.input > .field > input[value] {
+.field > input[value] {
   text-align: center;
   border: none;
   border-left: 2px solid #ffd445;
 }
 
-.input > .field > label {
+.field > label {
   font-size: 15px;
   padding: 0px 18px 0px 18px;
   width: 40px;
@@ -132,7 +132,7 @@ input[type=number]::-webkit-outer-spin-button {
 }
 
 #play {
-  background: #dedede;
+  background: #ebebeb;
   flex-direction: column;
   align-items: center;
   justify-content: center;
