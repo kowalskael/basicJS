@@ -9,6 +9,7 @@ export default class DOM {
       const rows = document.createElement('div');
       this.boardContainer = boardContainer;
       this.boardContainer.classList.add('play');
+      this.boardContainer.classList.remove('lose');
       this.boardContainer.append(rows);
 
       for (let col = 0; col < this.board.board[row].length; col += 1) {
@@ -116,14 +117,15 @@ export default class DOM {
           field.element.classList.add('lose');
           field.element.classList.remove('play');
           this.boardContainer.classList.add('lose');
-          console.log('lose');
+          document.getElementById('bomb-icon-left').style.fill = 'red';
+          document.getElementById('bomb-icon-right').style.fill = 'red';
+          document.getElementById('timer').style.color = 'red';
         } else if (this.board.isWin()) {
           if (field.fill === 9) {
             field.element.classList.remove('revealed');
             field.element.classList.remove('flagged');
             field.element.classList.add('win');
           }
-          console.log('win');
         }
       }
     }

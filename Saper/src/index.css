@@ -15,7 +15,7 @@ body {
   align-items: center;
 }
 
-#title-start, #title-play {
+#title {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -30,12 +30,8 @@ body {
   margin-bottom: 20px;
 }
 
-#title-start > p, #title-play > p {
+#title > p {
   margin: 0px 10px 0px 10px;
-}
-
-.translate {
-  transform: rotate(270deg);
 }
 
 #start {
@@ -258,15 +254,15 @@ input[type=number]::-webkit-outer-spin-button {
 }
 
 .revealed[data-value="9"]:before {
-  content: url('icon/circle.svg');
+  content: url('icon/bomb-play.svg');
 }
 
 .win {
-  background: red;
+  background: #ffd445;
 }
 
 .win[data-value="9"]:before {
-  content: url('icon/crown.svg');
+  content: url('icon/bomb-play.svg');
 }
 
 
