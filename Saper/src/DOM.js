@@ -2,9 +2,10 @@
 export default class DOM {
   firstClick = true;
 
-  constructor(board, boardContainer, bombs) {
+  constructor(board, boardContainer, bombs, timer) {
     this.board = board;
     this.bombs = bombs;
+    this.timer = timer;
     for (let row = 0; row < this.board.board.length; row += 1) {
       const rows = document.createElement('div');
       this.boardContainer = boardContainer;
@@ -113,6 +114,7 @@ export default class DOM {
         }
 
         if (this.board.isLose()) {
+          this.timer.stop();
           field.element.classList.remove('play');
           field.element.classList.add('lose');
           field.element.classList.remove('play');
@@ -121,6 +123,7 @@ export default class DOM {
           document.getElementById('bomb-icon-right').style.fill = 'red';
           document.getElementById('timer').style.color = 'red';
         } else if (this.board.isWin()) {
+          this.timer.stop();
           if (field.fill === 9) {
             field.element.classList.remove('revealed');
             field.element.classList.remove('flagged');
