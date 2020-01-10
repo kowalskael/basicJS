@@ -23,12 +23,18 @@ export class Board {
   drawBombs(numBomb) {
     // drawing bombs
     for (let bomb = 0; bomb < numBomb; bomb += 1) {
-      const row = Math.floor(Math.random() * this.board.length);
-      const col = Math.floor(Math.random() * this.board[row].length);
-      this.board[row][col].fill = 9;
-      // if this.board[row][col].fill = 9, do drawing again
+      let rows = Math.floor(Math.random() * this.board.length);
+      let cols = Math.floor(Math.random() * this.board[rows].length);
+      if (this.board[rows][cols].fill === 9) {
+        do {
+          rows = Math.floor(Math.random() * this.board.length);
+          cols = Math.floor(Math.random() * this.board[rows].length);
+        } while (this.board[rows][cols].fill === 9);
+        this.board[rows][cols].fill = 9;
+      } else {
+        this.board[rows][cols].fill = 9;
+      }
     }
-
     // assign numbers
     for (let row = 0; row < this.board.length; row += 1) {
       for (let col = 0; col < this.board[row].length; col += 1) {
