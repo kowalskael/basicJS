@@ -3,16 +3,14 @@ export class Timer {
 
   constructor(container) {
     this.container = container;
-    this.prevTimeValue = 0;
     this.display();
   }
 
   rAFCallback = () => {
     this.currTimeValue = performance.now();
-    this.diffValue = this.currTimeValue - this.prevTimeValue;
+    this.diffValue = this.currTimeValue - this.startTime;
     this.display();
     this.timerRAF = requestAnimationFrame(this.rAFCallback);
-    console.log(this.diffValue);
   }
 
   display() {
@@ -23,21 +21,11 @@ export class Timer {
   }
 
   start() { // use when submit btn is clicked
-    if (!this.running) {
-      this.running = true;
-      this.timerRAF = requestAnimationFrame(this.rAFCallback);
-    }
+    this.timerRAF = requestAnimationFrame(this.rAFCallback);
+    this.startTime = performance.now();
   }
 
   stop() { // use when isWin / isLose
-    if (this.running) {
-      cancelAnimationFrame(this.timerRAF);
-      this.timerRAF = undefined;
-      this.running = false;
-    }
-  }
-
-  restart() { // use on page refresh, or reset btn
-    this.prevTimeValue = this.currTimeValue;
+    cancelAnimationFrame(this.timerRAF);
   }
 }

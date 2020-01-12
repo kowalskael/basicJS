@@ -2,8 +2,6 @@ import { Board } from './Board';
 import DOM from './DOM';
 import { Timer } from './Timer';
 
-const timer = document.getElementById('timer');
-const stopwatch = new Timer(timer);
 
 document.getElementById('play').style.display = 'none';
 document.getElementById('bomb-icon-right').setAttribute('transform', 'rotate(-90)');
@@ -25,14 +23,19 @@ document.getElementById('submit').onclick = () => {
   boardTest.drawBombs(numBombs);
   console.log(boardTest);
 
+  const timer = document.getElementById('timer');
+  const stopwatch = new Timer(timer);
   stopwatch.start();
 
   const boardDraw = new DOM(boardTest, board, numBombs, stopwatch);
   boardDraw.update();
+
+  if (boardDraw.board.isLose() || boardDraw.board.isWin()) {
+    stopwatch.stop();
+  }
 };
 
 document.getElementById('reset').onclick = () => {
-  stopwatch.restart();
   document.getElementById('start').style.display = 'flex'; // game menu hidden
   document.getElementById('play').style.display = 'none'; // show play area
   document.getElementById('bomb-icon-left').style.fill = '#383838';
