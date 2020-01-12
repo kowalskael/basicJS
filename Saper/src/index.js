@@ -23,14 +23,20 @@ document.getElementById('submit').onclick = () => {
 
   const boardTest = new Board(columns, rows);
   boardTest.drawBombs(numBombs);
+  console.log(boardTest);
+
   stopwatch.start();
 
   const boardDraw = new DOM(boardTest, board, numBombs, stopwatch);
   boardDraw.update();
+
+  if (boardDraw.board.isWin() || boardDraw.board.isLose()) {
+    stopwatch.stop();
+  }
 };
 
 document.getElementById('reset').onclick = () => {
-  stopwatch.reset();
+  stopwatch.restart();
   document.getElementById('start').style.display = 'flex'; // game menu hidden
   document.getElementById('play').style.display = 'none'; // show play area
   document.getElementById('bomb-icon-left').style.fill = '#383838';
