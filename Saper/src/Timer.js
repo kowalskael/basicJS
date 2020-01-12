@@ -4,6 +4,7 @@ export class Timer {
   constructor(container) {
     this.container = container;
     this.prevTimeValue = 0;
+    this.running = false;
     this.display();
   }
 
@@ -22,11 +23,17 @@ export class Timer {
   }
 
   start() { // use when submit btn is clicked
-    this.timerRAF = requestAnimationFrame(this.rAFCallback);
+    if (!this.running) {
+      this.running = true;
+      this.timerRAF = requestAnimationFrame(this.rAFCallback);
+    }
   }
 
   stop() { // use when isWin / isLose
-    cancelAnimationFrame(this.timerRAF);
+    if (this.running) {
+      cancelAnimationFrame(this.timerRAF);
+      this.running = false;
+    }
   }
 
   restart() { // use on page refresh, or reset btn

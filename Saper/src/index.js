@@ -29,10 +29,6 @@ document.getElementById('submit').onclick = () => {
 
   const boardDraw = new DOM(boardTest, board, numBombs, stopwatch);
   boardDraw.update();
-
-  if (boardDraw.board.isWin() || boardDraw.board.isLose()) {
-    stopwatch.stop();
-  }
 };
 
 document.getElementById('reset').onclick = () => {
