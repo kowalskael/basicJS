@@ -4,7 +4,6 @@ export class Timer {
   constructor(container) {
     this.container = container;
     this.prevTimeValue = 0;
-    this.running = false;
     this.display();
   }
 
@@ -13,6 +12,7 @@ export class Timer {
     this.diffValue = this.currTimeValue - this.prevTimeValue;
     this.display();
     this.timerRAF = requestAnimationFrame(this.rAFCallback);
+    console.log(this.diffValue);
   }
 
   display() {
@@ -32,6 +32,7 @@ export class Timer {
   stop() { // use when isWin / isLose
     if (this.running) {
       cancelAnimationFrame(this.timerRAF);
+      this.timerRAF = undefined;
       this.running = false;
     }
   }
