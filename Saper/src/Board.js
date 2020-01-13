@@ -105,26 +105,28 @@ export class Board {
 
   dblClick(row, col) {
     if (this.board[row][col].fill > 0 && this.board[row][col].fill < 9 && this.board[row][col].state === 'revealed') {
-      let numberOfBombs = 0;
-      let numberOfBombsRevealed = 0;
-
+      let numberOfBombsFlagged = 0;
+      const numberOfBombs = this.board[row][col].fill;
       for (let check = 0; check < checkId.length; check += 1) { // check neighbours
         const dir = checkId[check];
 
         if (this.isInBounds(row + dir.row, col + dir.col)) {
           if (this.board[row + dir.row][col + dir.col].fill === 9 && this.board[row + dir.row][col + dir.col].state === 'flagged') {
-            numberOfBombsRevealed += 1;
+            numberOfBombsFlagged += 1;
           }
-          if (this.board[row + dir.row][col + dir.col].fill === 9) {
-            numberOfBombs += 1;
-          }
-          if (numberOfBombs === numberOfBombsRevealed) {
+        }
+      }
+
+      for (let check = 0; check < checkId.length; check += 1) { // check neighbours
+        const dir = checkId[check];
+        if (numberOfBombs === numberOfBombsFlagged) {
+          if (this.isInBounds(row + dir.row, col + dir.col)) {
             this.boardCheck(row + dir.row, col + dir.col);
-          } else if (this.board[row + dir.row][col + dir.col].fill === 9) {
-            for (let rows = 0; rows < this.board.length; rows += 1) {
-              for (let cols = 0; cols < this.board[rows].length; cols += 1) {
-                this.board[rows][cols].state = 'revealed'; // reveal all elements of board
-              }
+          }
+        } else if (numberOfBombs !== numberOfBombsFlagged) {
+          for (let rows = 0; rows < this.board.length; rows += 1) {
+            for (let cols = 0; cols < this.board[rows].length; cols += 1) {
+              this.board[rows][cols].state = 'revealed'; // reveal all elements of board
             }
           }
         }
