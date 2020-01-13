@@ -42,6 +42,9 @@ document.getElementById('reset').onclick = () => {
   document.getElementById('height').value = '8';
   document.getElementById('width').value = '8';
   document.getElementById('bombNums').value = '10';
+  document.getElementById('play').style.borderColor = 'grey';
+  document.getElementById('title').style.borderColor = 'grey';
+  document.body.style.background = '#8c8c8c';
 
   const boardElements = document.getElementById('board');
   while (boardElements.firstChild) {

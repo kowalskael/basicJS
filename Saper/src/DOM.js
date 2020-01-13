@@ -125,6 +125,10 @@ export default class DOM {
         } else if (this.board.isWin()) {
           this.timer.stop();
           if (field.fill === 9) {
+            document.getElementById('timer').style.color = '#2ac400';
+            document.getElementById('play').style.borderColor = '#2ac400';
+            document.getElementById('title').style.borderColor = '#2ac400';
+            document.body.style.background = '#ffcd19';
             field.element.classList.remove('revealed');
             field.element.classList.remove('flagged');
             field.element.classList.add('win');
